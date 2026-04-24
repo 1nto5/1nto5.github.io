@@ -128,7 +128,7 @@ const DICT = {
       ascii_title: "▮  A D R I A N  /  I T  S U P P",
       uptime: "uptime:  10+ years",
       tickets: "tickets: closed > opened",
-      title_l1: "when the printer",
+      title_l1: "when the computer",
       title_l2: "eats your deck,",
       title_l3: "I PICK UP.",
       user: "user@support:~$",
@@ -194,7 +194,7 @@ const DICT = {
       ],
       code:
 `> adrian.ai.plan({ firma })
-  ├─ darmowa godzinna rozmowa: co pożera wam czas
+  ├─ darmowa godzinna rozmowa: co pożera czas
   ├─ wybór 1-2 procesów do automatyzacji
   ├─ prototyp w 2 tygodnie, nie w 2 kwartały
   └─ szkolenie zespołu i przekazanie kluczy`,
@@ -271,7 +271,7 @@ const DICT = {
       ascii_title: "▮  A D R I A N  /  I T  S U P P",
       uptime: "uptime:  10+ lat",
       tickets: "zgłoszenia: zamknięte > otwarte",
-      title_l1: "gdy drukarka",
+      title_l1: "gdy komputer",
       title_l2: "znów strajkuje,",
       title_l3: "ZADZWOŃ.",
       user: "user@support:~$",
