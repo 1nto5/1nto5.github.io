@@ -24,7 +24,7 @@ const DICT = {
     contact: {
       kicker: "- Let's talk -",
       title_l1: "Got a",
-      title_l2: "project?",
+      title_l2: "question?",
       title_l3: "Write me.",
       email_l: "Email",
       phone_l: "Phone",
@@ -167,7 +167,7 @@ const DICT = {
     contact: {
       kicker: "- Porozmawiajmy -",
       title_l1: "Masz",
-      title_l2: "projekt?",
+      title_l2: "pytanie?",
       title_l3: "Napisz.",
       email_l: "E-mail",
       phone_l: "Telefon",
@@ -228,7 +228,7 @@ const DICT = {
       ],
     },
     web: {
-      meta: [["Status","przyjmuję briefy"]],
+      meta: [["Status","przyjmuję zlecenia"]],
       title_l1: "Strona, która",
       title_l2_em: "zwraca się",
       title_l3: "w pół roku.",
