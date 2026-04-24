@@ -1,0 +1,142 @@
+{
+  "langName": "Polski",
+  "kicker": "Adrian Antosiak · Freelancer · Polska",
+  "email_addr": "czesc@adrianantosiak.pl",
+  "hero": {
+    "lead_hover": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, zaistnieć w sieci i utrzymać to wszystko przy życiu. Najedź kursorem na usługę, żeby zobaczyć jak.",
+    "lead_tap": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, zaistnieć w sieci i utrzymać to wszystko przy życiu. Dotknij usługi, żeby zobaczyć jak.",
+    "email": "czesc@adrianantosiak.pl ↗",
+    "phone": "+48 503 751 676",
+    "index": "Usługi",
+    "hint_hover": "- najedź na wiersz, żeby podejrzeć -",
+    "hint_tap": "- dotknij wiersz, żeby wejść głębiej -",
+    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APLIKACJE · WWW · IT   ◆   PRZYJMUJĘ NOWE PROJEKTY   ◆   "
+  },
+  "nav": {
+    "ai": "AI dla twojej firmy",
+    "app": "Aplikacje szyte na miarę",
+    "web": "Strony i sklepy internetowe",
+    "it": "Wsparcie IT i infrastruktury"
+  },
+  "location": {
+    "city": "Szczytno",
+    "region": "Warmia-Mazury",
+    "line": "Szczytno, Warmia-Mazury. Polska i zdalnie na świecie."
+  },
+  "divider_next": "dalej ↓",
+  "contact": {
+    "kicker": "- Porozmawiajmy -",
+    "title_l1": "Masz",
+    "title_l2": "pytanie?",
+    "title_l3": "Napisz.",
+    "email_l": "E-mail",
+    "phone_l": "Telefon",
+    "loc_l": "Lokalizacja",
+    "loc_v": "Szczytno · Polska · zdalnie na świecie",
+    "avail_l": "Status",
+    "avail_v": "Przyjmuję nowych klientów",
+    "foot_l": "Niezależny. Bez marży agencji."
+  },
+  "ai": {
+    "online": "online",
+    "breadcrumb": "~/adrian/ai-dla-firmy",
+    "title_l1": "AI, które realnie",
+    "title_l2": "oszczędza godziny.",
+    "stdout": "stdout",
+    "streaming": "strumieniowanie…",
+    "idle": "bezczynny",
+    "hint": "[ najedź na sekcję, aby uruchomić stream ]",
+    "cards": [
+      ["CHATBOTY", "Chatboty do obsługi klienta i wewnętrzne, uczone na twoich dokumentach, mailach i katalogu produktów."],
+      ["AUTOMATY", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która dzieje się w tle."],
+      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia ze spotkań i rozmów."],
+      ["SZKOLENIA", "Praktyczne szkolenia z ChatGPT i Copilota dla twojego zespołu - żeby przestali wklejać wrażliwe dane."]
+    ],
+    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa godzinna rozmowa: co pożera czas\n  ├─ wybór 1-2 procesów do automatyzacji\n  ├─ prototyp w 2 tygodnie, nie w 2 kwartały\n  └─ szkolenie zespołu i przekazanie kluczy"
+  },
+  "app": {
+    "kicker": "▚ 02 - Aplikacje szyte na miarę",
+    "stamp": "OPROGRAMOWANIE SZYTE NA MIARĘ",
+    "title_l1": "Aplikacja, której",
+    "title_l2": "potrzebuje twoja firma,",
+    "title_l3": "skrojona pod ciebie.",
+    "lead_a": "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
+    "lead_and": " - ",
+    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i klienckie. Czysty kod, który ty lub ktokolwiek inny może później przejąć i rozwijać.",
+    "prod_live": "PRODUKCJA · NA ŻYWO",
+    "roster_head": "ZESPÓŁ · ZMIANA A",
+    "on_site": "na miejscu",
+    "units": "szt.",
+    "tgt": "cel",
+    "roster_foot": "grafiki · onboarding · oceny · urlopy",
+    "feat": [
+      ["Web", "Panele, portale, narzędzia wewnętrzne"],
+      ["Mobile", "iOS + Android"],
+      ["API", "Integracje z ERP, CRM, księgowością"],
+      ["Przekazanie", "Dokumentacja, testy, kod jest twój"]
+    ],
+    "kpis": [
+      ["4-12 tyg", "typowy czas realizacji"],
+      ["↓ 40%", "mniej ręcznych raportów"],
+      ["1", "jedno źródło prawdy"],
+      ["100%", "twój kod, twoje repo"]
+    ]
+  },
+  "web": {
+    "meta": [["Status", "przyjmuję zlecenia"]],
+    "subtitle": "Strony firmowe i sklepy internetowe",
+    "title_l1": "Strona, która",
+    "title_l2_em": "zwraca się",
+    "title_l3": "w pół roku.",
+    "p1": "Strony firmowe, landingi, portfolia i mniejsze sklepy dla firm, które chcą czegoś lepszego niż szablon, ale nie potrzebują 50-stronicowej oferty od agencji.",
+    "p2": "Każda strona dostaje porządne SEO, CMS, z którego marketing korzysta bez dzwonienia do mnie, szybkość, którą Google docenia, i analitykę, którą umiesz przeczytać.",
+    "steps": [
+      ["01", "Rozmowa startowa i mapa strony"],
+      ["02", "Projekt i przegląd tekstów"],
+      ["03", "Budowa i konfiguracja CMS"],
+      ["04", "SEO, analityka, wdrożenie"],
+      ["05", "Hosting i wsparcie"]
+    ],
+    "mock_nav": ["Realizacje", "O nas", "Kontakt"],
+    "mock_eyebrow": "- Twoja firma",
+    "mock_h1_l1": "Jeden nagłówek.",
+    "mock_h1_l2": "Jedna obietnica.",
+    "mock_h1_l3": "Jedno wezwanie do akcji.",
+    "mock_cta": "Napisz →",
+    "lh": "Lighthouse",
+    "lh_v": "perf",
+    "a11y": "a11y",
+    "seo": "seo",
+    "rail": [
+      ["Landing", "Produkt · kampania · wdrożenie"],
+      ["Firmowe", "Strony firmowe i portfolia"],
+      ["E-commerce", "Katalog · koszyk · płatności"],
+      ["Hosting", "Wdrożenie · monitoring · domena"]
+    ]
+  },
+  "it": {
+    "lead": "Stałe wsparcie IT dla małych i średnich firm w Szczytnie, Warmii-Mazurach i zdalnie. Helpdesk, administracja sieciami, bezpieczeństwo, Microsoft 365 i Google Workspace.",
+    "boot": [
+      "> uruchamiam adrian.it.support v2.6 ...",
+      "  ładuję jądro ............ [OK]",
+      "  mount /helpdesk ......... [OK]",
+      "  sterownik drukarki ...... [OK]",
+      "  stos sieciowy ........... [OK]",
+      "  kawa.dll ................ [OK]",
+      "> gotowe. w czym mogę pomóc?"
+    ],
+    "ascii_title": "▮  A D R I A N  /  I T  S U P P",
+    "uptime": "uptime:  10+ lat",
+    "tickets": "zgłoszenia: zamknięte > otwarte",
+    "title_l1": "gdy komputer",
+    "title_l2": "znów strajkuje,",
+    "title_l3": "ZADZWOŃ.",
+    "user": "user@support:~$",
+    "cols": [
+      ["[ sprzęt ]", ["konfiguracja stacji i laptopów", "sieci i wi-fi w biurze", "drukarki, skanery, urządzenia peryferyjne", "cctv i kontrola dostępu"]],
+      ["[ oprogramowanie ]", ["windows, macos, linux", "microsoft 365 i google workspace", "kopie zapasowe i disaster recovery", "vpn, antywirus, endpoint"]],
+      ["[ ludzie ]", ["onboarding nowych pracowników", "zdalny helpdesk, bez żargonu", "procedury i prosta dokumentacja", "kontakt z twoimi dostawcami"]]
+    ],
+    "foot": "> end_of_file  //  stała umowa albo pomoc doraźna. jak wolisz."
+  }
+}

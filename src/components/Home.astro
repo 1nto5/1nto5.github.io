@@ -1,0 +1,77 @@
+---
+import { getTranslations } from "../i18n/index.js";
+
+const { locale = "pl" } = Astro.props;
+const t = getTranslations(locale);
+const otherLocale = locale === "pl" ? "en" : "pl";
+const otherHref = otherLocale === "en" ? "/en/" : "/";
+const otherLabel = otherLocale === "en" ? "English" : "Polski";
+---
+<main id="prerender">
+  <p class="kicker">{t.kicker}</p>
+  <h1>Adrian Antosiak</h1>
+  <p class="lead">{t.hero.lead_hover}</p>
+
+  <section>
+    <h2>
+      <small>{t.ai.breadcrumb}</small>
+      {t.nav.ai}
+    </h2>
+    <p>{t.ai.title_l1} {t.ai.title_l2}</p>
+    <ul>
+      {t.ai.cards.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>
+      <small>02</small>
+      {t.nav.app}
+    </h2>
+    <p>{t.app.lead_a}{t.app.lead_and}{t.app.lead_b}</p>
+    <ul>
+      {t.app.feat.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>
+      <small>03 - {t.web.subtitle}</small>
+      {t.nav.web}
+    </h2>
+    <p>{t.web.p1}</p>
+    <p>{t.web.p2}</p>
+    <ul>
+      {t.web.rail.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>
+      <small>04</small>
+      {t.nav.it}
+    </h2>
+    <p>{t.it.lead}</p>
+    <ul>
+      {t.it.cols.flatMap(([group, items]) =>
+        items.map((item) => <li><strong>{group}</strong> - {item}</li>)
+      )}
+    </ul>
+  </section>
+
+  <section class="contact">
+    <h2>{t.contact.title_l1} {t.contact.title_l2} {t.contact.title_l3}</h2>
+    <dl>
+      <dt>{t.contact.email_l}</dt>
+      <dd><a href={`mailto:${t.email_addr}`}>{t.email_addr}</a></dd>
+      <dt>{t.contact.phone_l}</dt>
+      <dd>{t.hero.phone}</dd>
+      <dt>{t.contact.loc_l}</dt>
+      <dd>{t.contact.loc_v}</dd>
+      <dt>{t.contact.avail_l}</dt>
+      <dd>{t.contact.avail_v}</dd>
+    </dl>
+    <p>{t.contact.foot_l}</p>
+    <a class="lang-switch" href={otherHref} hreflang={otherLocale}>{otherLabel}</a>
+  </section>
+</main>

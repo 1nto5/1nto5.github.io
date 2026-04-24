@@ -1,0 +1,142 @@
+{
+  "langName": "English",
+  "kicker": "Adrian Antosiak · Independent · Poland",
+  "email_addr": "hi@adrianantosiak.pl",
+  "hero": {
+    "lead_hover": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, put them on the web, and keep the whole thing running. Hover a service to see how.",
+    "lead_tap": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, put them on the web, and keep the whole thing running. Tap a service to see how.",
+    "email": "hi@adrianantosiak.pl ↗",
+    "phone": "+48 503 751 676",
+    "index": "Services",
+    "hint_hover": "- hover a row to preview -",
+    "hint_tap": "- tap a row to jump in -",
+    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APPS · WEB · IT   ◆   TAKING ON NEW CLIENTS   ◆   "
+  },
+  "nav": {
+    "ai": "AI for your business",
+    "app": "Custom applications",
+    "web": "Websites & online stores",
+    "it": "IT support & infrastructure"
+  },
+  "location": {
+    "city": "Szczytno",
+    "region": "Warmia-Masuria",
+    "line": "Based in Szczytno, Warmia-Masuria. Poland and remote worldwide."
+  },
+  "divider_next": "next ↓",
+  "contact": {
+    "kicker": "- Let's talk -",
+    "title_l1": "Got a",
+    "title_l2": "question?",
+    "title_l3": "Write me.",
+    "email_l": "Email",
+    "phone_l": "Phone",
+    "loc_l": "Based in",
+    "loc_v": "Szczytno · Poland · remote worldwide",
+    "avail_l": "Status",
+    "avail_v": "Taking on clients",
+    "foot_l": "Independent. No agency markup."
+  },
+  "ai": {
+    "online": "online",
+    "breadcrumb": "~/adrian/ai-for-business",
+    "title_l1": "AI that actually",
+    "title_l2": "saves you hours.",
+    "stdout": "stdout",
+    "streaming": "streaming…",
+    "idle": "idle",
+    "hint": "[ hover this section to stream ]",
+    "cards": [
+      ["CHATBOTS", "Customer-support and internal bots trained on your docs, emails and product catalogue."],
+      ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - the boring stuff, done in the background."],
+      ["DOCUMENTS", "OCR, contract review, translation, summaries for meetings and calls."],
+      ["TRAINING", "Hands-on ChatGPT and Copilot training for your team - so they stop copy-pasting sensitive data."]
+    ],
+    "code": "> adrian.ai.plan({ company })\n  ├─ 1h free call to map what's eating time\n  ├─ pick 1-2 processes worth automating\n  ├─ prototype in 2 weeks, not 2 quarters\n  └─ train your team, hand over the keys"
+  },
+  "app": {
+    "kicker": "▚ 02 - Custom applications",
+    "stamp": "SOFTWARE BUILT TO FIT",
+    "title_l1": "The app your",
+    "title_l2": "business needs,",
+    "title_l3": "built for you.",
+    "lead_a": "When Excel stops being enough and the SaaS tool costs more than it's worth, I build the web or mobile app you actually need",
+    "lead_and": " - ",
+    "lead_b": "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. Clean code you or anyone else can pick up later.",
+    "prod_live": "PRODUCTION · LIVE",
+    "roster_head": "TEAM · SHIFT A",
+    "on_site": "on site",
+    "units": "units",
+    "tgt": "tgt",
+    "roster_foot": "scheduling · onboarding · reviews · time-off",
+    "feat": [
+      ["Web apps", "Dashboards, portals, internal tools"],
+      ["Mobile", "iOS + Android"],
+      ["APIs", "Integrate your ERP, CRM, accounting"],
+      ["Handover", "Docs, tests, you own the code"]
+    ],
+    "kpis": [
+      ["4-12 wk", "typical build time"],
+      ["↓ 40%", "manual reporting cut"],
+      ["1", "source of truth"],
+      ["100%", "your code, your repo"]
+    ]
+  },
+  "web": {
+    "meta": [["Status", "taking briefs"]],
+    "subtitle": "Business websites and online stores",
+    "title_l1": "A website that",
+    "title_l2_em": "pays for itself",
+    "title_l3": "in six months.",
+    "p1": "Company sites, landing pages, portfolios and small online stores for businesses that want something better than a template but don't need a 50-page agency proposal.",
+    "p2": "Every site ships with proper SEO, a CMS your marketing team can update without calling me, page speeds that Google actually rewards, and an analytics setup you can read.",
+    "steps": [
+      ["01", "Kickoff call & sitemap"],
+      ["02", "Design & copy review"],
+      ["03", "Build & CMS setup"],
+      ["04", "SEO, analytics, launch"],
+      ["05", "Hosting & support"]
+    ],
+    "mock_nav": ["Work", "About", "Contact"],
+    "mock_eyebrow": "- Your company",
+    "mock_h1_l1": "One headline.",
+    "mock_h1_l2": "One promise.",
+    "mock_h1_l3": "One call to action.",
+    "mock_cta": "Get in touch →",
+    "lh": "Lighthouse",
+    "lh_v": "perf",
+    "a11y": "a11y",
+    "seo": "seo",
+    "rail": [
+      ["Landing", "Product · campaign · launch"],
+      ["Corporate", "Company sites · portfolios"],
+      ["E-commerce", "Catalog · cart · checkout"],
+      ["Hosting", "Deploy · monitor · domain"]
+    ]
+  },
+  "it": {
+    "lead": "Ongoing IT support for small and mid-sized businesses in Szczytno, Warmia-Masuria, and remote. Helpdesk, network administration, security, Microsoft 365 and Google Workspace.",
+    "boot": [
+      "> booting adrian.it.support v2.6 ...",
+      "  loading kernel .......... [OK]",
+      "  mounting /helpdesk ...... [OK]",
+      "  printer_driver.sys ...... [OK]",
+      "  network stack ........... [OK]",
+      "  coffee.dll .............. [OK]",
+      "> ready. how can I help?"
+    ],
+    "ascii_title": "▮  A D R I A N  /  I T  S U P P",
+    "uptime": "uptime:  10+ years",
+    "tickets": "tickets: closed > opened",
+    "title_l1": "when the computer",
+    "title_l2": "eats your deck,",
+    "title_l3": "I PICK UP.",
+    "user": "user@support:~$",
+    "cols": [
+      ["[ hardware ]", ["workstation & laptop setup", "office networking & wi-fi", "printers, scanners, peripherals", "cctv & access control"]],
+      ["[ software ]", ["windows, macos, linux", "microsoft 365 & google workspace", "backups & disaster recovery", "vpn, antivirus, endpoint security"]],
+      ["[ people ]", ["onboarding new hires end-to-end", "remote helpdesk, no jargon", "procedures & simple docs", "dealing with your vendors"]]
+    ],
+    "foot": "> end_of_file  //  monthly plans or one-off help. your call."
+  }
+}
