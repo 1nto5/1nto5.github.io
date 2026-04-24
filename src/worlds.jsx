@@ -1,4 +1,4 @@
-// Worlds.jsx — four worlds + neutral baseline
+// Worlds.jsx - four worlds + neutral baseline
 const WORLDS = [
   {
     id: "ai",
@@ -83,7 +83,7 @@ const NEUTRAL = {
   },
 };
 
-// When applying a world, only swap COLOR tokens globally — the font tokens
+// When applying a world, only swap COLOR tokens globally - the font tokens
 // are kept via scoped CSS inside each section's own stylesheet, so the
 // shell (hero, topbar, contact) never reflows on hover.
 const COLOR_KEYS = ["--bg","--fg","--mute","--rule","--accent","--chrome","--chrome-fg"];

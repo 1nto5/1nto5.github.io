@@ -1,6 +1,6 @@
-// Divider — a full-bleed chapter break between sections.
+// Divider - a full-bleed chapter break between sections.
 // Takes `world` (the world id we're transitioning into) and renders with THAT world's colors,
-// regardless of the currently-active global world — so the divider always visibly breaks contrast.
+// regardless of the currently-active global world - so the divider always visibly breaks contrast.
 
 function Divider({ world, onEnter, t }) {
   const w = window.WORLDS.find(x => x.id === world);

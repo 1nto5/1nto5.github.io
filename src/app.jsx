@@ -1,4 +1,4 @@
-// app.jsx — 4-section shell with i18n (EN/PL) + language toggle
+// app.jsx - 4-section shell with i18n (EN/PL) + language toggle
 const { useState, useEffect, useRef, useCallback, createContext, useContext } = React;
 
 const LangCtx = createContext({ lang: "en", t: window.DICT.en, setLang: () => {} });
@@ -46,7 +46,6 @@ function App() {
   }, [world]);
 
   useEffect(() => {
-    if (!isMobile) return;
     const observer = new IntersectionObserver(
       (entries) => {
         let best = null, bestRatio = 0;
@@ -59,7 +58,7 @@ function App() {
     );
     NAV_IDS.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
     return () => observer.disconnect();
-  }, [isMobile, setWorld]);
+  }, [setWorld]);
 
   const handlePageLeave = () => { if (!isMobile) setWorld("neutral"); };
 
