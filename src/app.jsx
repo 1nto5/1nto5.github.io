@@ -79,8 +79,6 @@ function App() {
     };
   }, [setWorld]);
 
-  const handlePageLeave = () => { if (!isMobile) setWorld("neutral"); };
-
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -92,7 +90,7 @@ function App() {
 
   return (
     <LangCtx.Provider value={{ lang, setLang, t }}>
-      <div className="shell" onMouseLeave={handlePageLeave}>
+      <div className="shell">
         <TopBar isMobile={isMobile} active={active} onNav={scrollTo} lang={lang} setLang={setLang} t={t} />
         <Hero world={world} setWorld={setWorld} onJump={scrollTo} isMobile={isMobile} t={t} />
         <Divider world="ai"  onEnter={() => !isMobile && setWorld("ai")}  t={t} />
@@ -273,7 +271,7 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
             {isMobile ? t.hero.lead_tap : t.hero.lead_hover}
           </p>
           <div className="hero__cta">
-            <a href="mailto:aantosiak@icloud.com" className="hero__btn hero__btn--primary">
+            <a href={`mailto:${t.email_addr}`} className="hero__btn hero__btn--primary">
               {t.hero.email}
             </a>
             <a href="tel:+48503751676" className="hero__btn">{t.hero.phone}</a>
@@ -420,8 +418,8 @@ function Contact({ t }) {
           {t.contact.title_l1}<br/>{t.contact.title_l2}<br/><u>{t.contact.title_l3}</u>
         </h2>
         <div className="contact__grid">
-          <a href="mailto:aantosiak@icloud.com" className="contact__item">
-            <span>{t.contact.email_l}</span><b>aantosiak@icloud.com</b>
+          <a href={`mailto:${t.email_addr}`} className="contact__item">
+            <span>{t.contact.email_l}</span><b>{t.email_addr}</b>
           </a>
           <a href="tel:+48503751676" className="contact__item">
             <span>{t.contact.phone_l}</span><b>+48 503 751 676</b>

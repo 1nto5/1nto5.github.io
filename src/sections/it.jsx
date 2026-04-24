@@ -14,7 +14,7 @@ function ITSection({ active, setWorld, t }) {
   }, [active, tt.boot]);
 
   return (
-    <section id="it" data-screen-label="04 IT" className="section section--it" onMouseEnter={() => setWorld("it")}>
+    <section id="it" data-screen-label="04 IT" className="section section--it">
       <div className="crt">
         <div className="scanlines" />
         <div className="it-wrap">

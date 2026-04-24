@@ -23,7 +23,7 @@ function AppSection({ active, setWorld, t }) {
   const ticker = t.hero.ribbon.replace("AVAILABLE FOR WORK","LIVE").repeat(4);
 
   return (
-    <section id="app" data-screen-label="02 App" className="section section--app" onMouseEnter={() => setWorld("app")}>
+    <section id="app" data-screen-label="02 App" className="section section--app">
       <div className="app-ticker">
         <div className="app-ticker__inner" style={{ transform: `translateX(-${shift * 4}px)` }}>{ticker}</div>
       </div>

@@ -1,7 +1,7 @@
 function WebSection({ active, setWorld, t }) {
   const tt = t.web;
   return (
-    <section id="web" data-screen-label="03 Web" className="section section--web" onMouseEnter={() => setWorld("web")}>
+    <section id="web" data-screen-label="03 Web" className="section section--web">
       <div className="web-wrap">
         <div className="web-head">
           <div className="web-num">◐ 03</div>

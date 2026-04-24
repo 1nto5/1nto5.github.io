@@ -3,10 +3,11 @@ const DICT = {
   en: {
     langName: "English",
     kicker: "Adrian Antosiak · Independent · Poland",
+    email_addr: "hi@adrianantosiak.pl",
     hero: {
       lead_hover: "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, put them on the web, and keep the whole thing running. Hover a service to see how.",
       lead_tap:   "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, put them on the web, and keep the whole thing running. Tap a service to see how.",
-      email: "aantosiak@icloud.com ↗",
+      email: "hi@adrianantosiak.pl ↗",
       phone: "+48 503 751 676",
       index: "Services",
       hint_hover: "- hover a row to preview -",
@@ -145,10 +146,11 @@ const DICT = {
   pl: {
     langName: "Polski",
     kicker: "Adrian Antosiak · Freelancer · Polska",
+    email_addr: "czesc@adrianantosiak.pl",
     hero: {
       lead_hover: "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, zaistnieć w sieci i utrzymać to wszystko przy życiu. Najedź kursorem na usługę, żeby zobaczyć jak.",
       lead_tap:   "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, zaistnieć w sieci i utrzymać to wszystko przy życiu. Dotknij usługi, żeby zobaczyć jak.",
-      email: "aantosiak@icloud.com ↗",
+      email: "czesc@adrianantosiak.pl ↗",
       phone: "+48 503 751 676",
       index: "Usługi",
       hint_hover: "- najedź na wiersz, żeby podejrzeć -",

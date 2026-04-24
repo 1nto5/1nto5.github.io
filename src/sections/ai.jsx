@@ -15,7 +15,7 @@ function AISection({ active, setWorld, t }) {
   }, [streaming]);
 
   return (
-    <section id="ai" data-screen-label="01 AI" className="section section--ai" onMouseEnter={() => setWorld("ai")}>
+    <section id="ai" data-screen-label="01 AI" className="section section--ai">
       <div className="ai-grid">
         <aside className="ai-side">
           <div className="ai-side__head"><span className="dot dot--live" /> <span>{tt.online}</span></div>
