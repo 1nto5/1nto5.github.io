@@ -64,7 +64,7 @@ const DICT = {
       title_l3: "built for you.",
       lead_a: "When Excel stops being enough and the SaaS tool costs more than it's worth, I build the web or mobile app you actually need",
       lead_and: " - ",
-      lead_b: "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. React, Node, Postgres. Clean code you or anyone else can pick up later.",
+      lead_b: "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. Clean code you or anyone else can pick up later.",
       prod_live: "PRODUCTION · LIVE",
       roster_head: "TEAM · SHIFT A",
       on_site: "on site",
@@ -73,7 +73,7 @@ const DICT = {
       roster_foot: "scheduling · onboarding · reviews · time-off",
       feat: [
         ["Web apps",  "Dashboards, portals, internal tools"],
-        ["Mobile",    "iOS + Android via React Native"],
+        ["Mobile",    "iOS + Android"],
         ["APIs",      "Integrate your ERP, CRM, accounting"],
         ["Handover",  "Docs, tests, you own the code"],
       ],
@@ -85,7 +85,7 @@ const DICT = {
       ],
     },
     web: {
-      meta: [["Status","taking briefs"],["Stack","Next · Astro · WordPress"],["CMS","Sanity · Payload · WP"]],
+      meta: [["Status","taking briefs"]],
       title_l1: "A website that",
       title_l2_em: "pays for itself",
       title_l3: "in six months.",
@@ -111,8 +111,8 @@ const DICT = {
       rail: [
         ["Landing",    "Product · campaign · launch"],
         ["Corporate",  "Company sites · portfolios"],
-        ["E-commerce", "Shopify · WooCommerce"],
-        ["Hosting",    "Vercel · Cloudflare · own VPS"],
+        ["E-commerce", "Catalog · cart · checkout"],
+        ["Hosting",    "Deploy · monitor · domain"],
       ],
     },
     it: {
@@ -207,7 +207,7 @@ const DICT = {
       title_l3: "skrojona pod ciebie.",
       lead_a: "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
       lead_and: " - ",
-      lead_b: "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i klienckie. React, Node, Postgres. Czysty kod, który ty lub ktokolwiek inny może później przejąć i rozwijać.",
+      lead_b: "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i klienckie. Czysty kod, który ty lub ktokolwiek inny może później przejąć i rozwijać.",
       prod_live: "PRODUKCJA · NA ŻYWO",
       roster_head: "ZESPÓŁ · ZMIANA A",
       on_site: "na miejscu",
@@ -216,7 +216,7 @@ const DICT = {
       roster_foot: "grafiki · onboarding · oceny · urlopy",
       feat: [
         ["Web",         "Panele, portale, narzędzia wewnętrzne"],
-        ["Mobile",      "iOS + Android w React Native"],
+        ["Mobile",      "iOS + Android"],
         ["API",         "Integracje z ERP, CRM, księgowością"],
         ["Przekazanie", "Dokumentacja, testy, kod jest twój"],
       ],
@@ -228,7 +228,7 @@ const DICT = {
       ],
     },
     web: {
-      meta: [["Status","przyjmuję briefy"],["Stack","Next · Astro · WordPress"],["CMS","Sanity · Payload · WP"]],
+      meta: [["Status","przyjmuję briefy"]],
       title_l1: "Strona, która",
       title_l2_em: "zwraca się",
       title_l3: "w pół roku.",
@@ -254,8 +254,8 @@ const DICT = {
       rail: [
         ["Landing",    "Produkt · kampania · wdrożenie"],
         ["Firmowe",    "Strony firmowe i portfolia"],
-        ["E-commerce", "Shopify · WooCommerce"],
-        ["Hosting",    "Vercel · Cloudflare · własny VPS"],
+        ["E-commerce", "Katalog · koszyk · płatności"],
+        ["Hosting",    "Wdrożenie · monitoring · domena"],
       ],
     },
     it: {
