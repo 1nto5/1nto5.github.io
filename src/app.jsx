@@ -46,18 +46,36 @@ function App() {
   }, [world]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        let best = null, bestRatio = 0;
-        entries.forEach(e => {
-          if (e.intersectionRatio > bestRatio) { bestRatio = e.intersectionRatio; best = e.target.id; }
-        });
-        if (best) { setWorld(best); setActive(best); }
-      },
-      { threshold: [0.3, 0.5, 0.75], rootMargin: "-20% 0px -20% 0px" }
-    );
-    NAV_IDS.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
-    return () => observer.disconnect();
+    let rafId = null;
+    const update = () => {
+      if (lockRef.current) return;
+      const vh = window.innerHeight;
+      let best = null, bestScore = 0;
+      NAV_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const visible = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+        const score = visible / vh;
+        if (score > bestScore) { bestScore = score; best = id; }
+      });
+      if (best && bestScore > 0.3) {
+        const w = window.WORLDS.find(x => x.id === best);
+        if (w) window.applyVars(w.vars);
+        setWorld(best);
+        setActive(best);
+      }
+    };
+    const onScroll = () => {
+      if (rafId != null) return;
+      rafId = requestAnimationFrame(() => { rafId = null; update(); });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId != null) cancelAnimationFrame(rafId);
+    };
   }, [setWorld]);
 
   const handlePageLeave = () => { if (!isMobile) setWorld("neutral"); };

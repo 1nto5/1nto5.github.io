@@ -97,11 +97,11 @@ function AppSection({ active, setWorld, t }) {
         .app-wrap{ max-width: 1400px; margin: 0 auto; padding: 80px var(--pad) 0;}
         .app-head{ display:flex; justify-content:space-between; font-family: var(--ff-app-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .2em; color: var(--mute); border-bottom: 1px solid var(--rule); padding-bottom: 20px; margin-bottom: 48px;}
         .app-kicker{ color: var(--accent);}
-        .app-title{ font-family: var(--ff-app-serif); font-weight: 400; font-size: clamp(56px, 10vw, 160px); line-height: .9; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 32px;}
+        .app-title{ font-family: var(--ff-app-serif); font-weight: 400; font-size: clamp(40px, 10vw, 160px); line-height: .9; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 32px; overflow-wrap: anywhere;}
         .app-title em{ color: var(--accent); font-style: italic;}
         .app-lead{ font-family: var(--ff-app-body); font-size: clamp(17px, 1.5vw, 22px); line-height: 1.5; max-width: 60ch; margin-bottom: 64px; color: var(--fg);}
         .app-lead em{ color: var(--accent); font-style: italic; font-weight: 500;}
-        .app-grid{ display:grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-bottom: 64px;}
+        .app-grid{ display:grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; margin-bottom: 64px;}
         .app-panel{ border: 1px solid var(--rule); background: rgba(255,255,255,.02);}
         .app-panel__head{ display:flex; justify-content:space-between; align-items:center; padding: 12px 16px; border-bottom: 1px solid var(--rule); font-family: var(--ff-app-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent);}
         .app-panel__head b{ color: var(--accent); font-weight: 700;}
@@ -124,21 +124,23 @@ function AppSection({ active, setWorld, t }) {
         .app-roster__note{ font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform:uppercase; letter-spacing:.1em;}
         .app-roster__c{ font-family: var(--ff-app-serif); font-size: 22px; color: var(--accent); font-variant-numeric: tabular-nums;}
         .app-panel__foot{ border-top: 1px solid var(--rule); padding: 10px 16px; font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: .15em;}
-        .app-feat{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--rule); margin-bottom: 48px;}
-        .app-feat > div{ padding: 32px 20px; border-right: 1px solid var(--rule);}
+        .app-feat{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); margin-bottom: 48px;}
+        .app-feat > div{ padding: 32px 20px; border-right: 1px solid var(--rule); min-width: 0;}
         .app-feat > div:last-child{ border-right: 0;}
-        .app-feat h3{ font-family: var(--ff-app-serif); font-weight: 400; font-size: 48px; color: var(--accent); margin-bottom: 12px; letter-spacing:-.02em;}
+        .app-feat h3{ font-family: var(--ff-app-serif); font-weight: 400; font-size: 48px; color: var(--accent); margin-bottom: 12px; letter-spacing:-.02em; overflow-wrap: anywhere;}
         .app-feat p{ font-family: var(--ff-app-body); font-size: 14px; line-height: 1.5;}
-        .app-kpis{ display:grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule);}
+        .app-kpis{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--rule);}
         .app-kpis > div{ padding: 28px 20px; border-right: 1px solid var(--rule);}
         .app-kpis > div:last-child{ border-right: 0;}
         .app-kpis b{ font-family: var(--ff-app-serif); font-size: clamp(32px, 4vw, 56px); display:block; color: var(--accent); margin-bottom: 6px; line-height: 1;}
         .app-kpis span{ font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform:uppercase; letter-spacing: .15em;}
         @media (max-width: 900px){
-          .app-grid{ grid-template-columns: 1fr; gap: 24px;}
-          .app-feat, .app-kpis{ grid-template-columns: repeat(2, 1fr);}
+          .app-grid{ grid-template-columns: minmax(0, 1fr); gap: 24px;}
+          .app-feat, .app-kpis{ grid-template-columns: repeat(2, minmax(0, 1fr));}
           .app-feat > div:nth-child(2), .app-kpis > div:nth-child(2){ border-right: 0;}
           .app-feat > div, .app-kpis > div{ border-bottom: 1px solid var(--rule);}
+          .app-feat > div{ padding: 24px 14px;}
+          .app-feat h3{ font-size: 32px;}
         }
       `}</style>
     </section>

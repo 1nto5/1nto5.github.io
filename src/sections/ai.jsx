@@ -71,7 +71,7 @@ function AISection({ active, setWorld, t }) {
           min-height: 100vh;
           color: var(--fg);
         }
-        .ai-grid{ display:grid; grid-template-columns: 260px 1fr; gap: 48px; max-width: 1400px; margin: 0 auto;}
+        .ai-grid{ display:grid; grid-template-columns: 260px minmax(0, 1fr); gap: 48px; max-width: 1400px; margin: 0 auto;}
         .ai-side{ font-family: var(--ff-ai-mono); font-size: 12px; border: 1px solid var(--rule); padding: 16px; height: fit-content; background: rgba(125,255,178,.02);}
         .ai-side__head{ display:flex; gap:8px; align-items:center; text-transform:uppercase; letter-spacing:.08em; color: var(--mute); padding-bottom:12px; border-bottom:1px solid var(--rule);}
         .dot{width:8px;height:8px;border-radius:50%;background: var(--mute)}
@@ -85,7 +85,7 @@ function AISection({ active, setWorld, t }) {
         .ai-glyph{ color: var(--accent); font-size: 18px; margin-right: 6px;}
         .ai-cursor{ color: var(--accent); animation: blink 1s steps(2) infinite;}
         @keyframes blink { 50% { opacity: 0 } }
-        .ai-title{ font-family: var(--ff-ai-mono); font-size: clamp(44px, 7.5vw, 110px); line-height: .95; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; color: var(--fg);}
+        .ai-title{ font-family: var(--ff-ai-mono); font-size: clamp(32px, 7.5vw, 110px); line-height: .95; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; color: var(--fg); overflow-wrap: anywhere;}
         .ai-title__hash{ color: var(--accent); }
         .ai-stream{ border:1px solid var(--rule); font-family: var(--ff-ai-mono); font-size: 14px; margin-bottom: 48px;}
         .ai-stream__head{ display:flex; justify-content:space-between; padding: 8px 12px; border-bottom: 1px solid var(--rule); color: var(--mute); text-transform:uppercase; letter-spacing:.1em; font-size:11px; background: rgba(125,255,178,.03);}
@@ -97,7 +97,7 @@ function AISection({ active, setWorld, t }) {
         .ai-card__k{ font-size: 11px; letter-spacing:.2em; color: var(--accent); margin-bottom: 12px;}
         .ai-card__v{ font-size: 14px; line-height: 1.55; color: var(--fg);}
         .ai-code{ font-family: var(--ff-ai-mono); font-size: 13px; padding: 20px; border: 1px solid var(--rule); background: rgba(125,255,178,.03); color: var(--fg); line-height: 1.7; white-space: pre; overflow-x:auto;}
-        @media (max-width: 800px){ .ai-grid{ grid-template-columns: 1fr; gap: 24px;} .ai-cards{ grid-template-columns: 1fr;}}
+        @media (max-width: 800px){ .ai-grid{ grid-template-columns: minmax(0, 1fr); gap: 24px;} .ai-cards{ grid-template-columns: minmax(0, 1fr);}}
       `}</style>
     </section>
   );
