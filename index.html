@@ -26,6 +26,19 @@
       --chrome-fg: #f3f1ec;
     }
     *, *::before, *::after { box-sizing: border-box; }
+    *, *::before, *::after {
+      transition:
+        background-color 600ms var(--ease),
+        color 600ms var(--ease),
+        border-color 600ms var(--ease),
+        outline-color 600ms var(--ease),
+        fill 600ms var(--ease),
+        stroke 600ms var(--ease),
+        box-shadow 600ms var(--ease);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
     html, body { margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     html, body { overflow-x: clip; }
@@ -35,7 +48,6 @@
       font-family: 'Inter Tight', system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      transition: background 600ms var(--ease), color 600ms var(--ease);
       min-height: 100vh;
     }
     button { background: none; border: none; padding: 0; cursor: pointer; font: inherit; color: inherit; }

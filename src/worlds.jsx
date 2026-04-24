@@ -93,6 +93,10 @@ function applyVars(vars) {
   COLOR_KEYS.forEach(k => {
     if (vars[k] != null) root.style.setProperty(k, vars[k]);
   });
+  if (vars["--bg"] != null) {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", vars["--bg"]);
+  }
 }
 
 Object.assign(window, { WORLDS, NEUTRAL, applyVars });
