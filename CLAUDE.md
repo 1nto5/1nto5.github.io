@@ -11,7 +11,7 @@ Personal site for Adrian Antosiak, independent consultant (AI, apps, web, IT). P
 - Layout + SEO head: `src/layouts/Base.astro` (meta, canonical, hreflang, Open Graph, Twitter Card, JSON-LD Person + ProfessionalService + WebSite).
 - Home page content: `src/components/Home.astro` (static HTML rendered from translations).
 - Pages: `src/pages/index.astro` (PL), `src/pages/en/index.astro` (EN).
-- Legacy `src/*.jsx` (app, worlds, divider, sections) remain in the repo but are not referenced by the Astro build. Port to React islands as needed.
+- React islands (hydrate on client): `src/react-app/App.jsx` (top-level), `Divider.jsx`, `sections/{AI,App,Web,IT}Section.jsx`, plus `worlds.js` (color-token swapper) and `i18n.js` (context).
 - Scripts: `bun run dev` (local), `bun run build` (writes `dist/`), `bun run preview`.
 
 ## Deployment
