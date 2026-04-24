@@ -110,7 +110,7 @@ export default function App({ locale = "pl" }) {
         <WebSection active={world === "web"} t={t} />
         <Divider world="it"  onEnter={() => !isMobile && setWorld("it")}  t={t} />
         <ITSection  active={world === "it"}  t={t} />
-        <Contact t={t} />
+        <Contact t={t} lang={lang} />
         <style>{`.shell{ position: relative; }`}</style>
       </div>
     </LangCtx.Provider>
@@ -418,7 +418,8 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
   );
 }
 
-function Contact({ t }) {
+function Contact({ t, lang }) {
+  const privacyHref = lang === "en" ? "/en/privacy/" : "/prywatnosc/";
   return (
     <footer className="contact">
       <div className="contact__wrap">
@@ -443,6 +444,7 @@ function Contact({ t }) {
         <div className="contact__foot">
           <span>© {new Date().getFullYear()} Adrian Antosiak</span>
           <span>{t.contact.foot_l}</span>
+          <a className="contact__privacy" href={privacyHref}>{t.contact.privacy_l}</a>
         </div>
       </div>
       <style>{`
@@ -494,12 +496,15 @@ function Contact({ t }) {
         .contact__item b{ font-size: clamp(15px, 1.2vw, 18px); font-weight: 600;}
         .contact__item:hover{ color: var(--accent);}
         .contact__foot{
-          display:flex; justify-content: space-between;
+          display:flex; justify-content: space-between; align-items: center;
+          gap: 16px; flex-wrap: wrap;
           font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px;
           letter-spacing: .15em; text-transform: uppercase;
           color: var(--mute);
           padding-top: 24px;
         }
+        .contact__privacy{ text-decoration: underline; transition: color .2s ease;}
+        .contact__privacy:hover{ color: var(--fg);}
         @media (max-width: 820px){
           .contact__grid{ grid-template-columns: 1fr 1fr;}
           .contact__item:nth-child(2n){ border-right: 0;}

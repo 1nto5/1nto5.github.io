@@ -1,0 +1,24 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getTranslations } from "../../i18n/index.js";
+
+const locale = "en";
+const t = getTranslations(locale);
+const p = t.privacy;
+---
+<Base locale={locale} page="privacy">
+  <main class="doc">
+    <h1>{p.heading}</h1>
+    <p class="lead">{p.lead}</p>
+    {p.sections.map(([h, body]) => (
+      <section>
+        <h2>{h}</h2>
+        <p>{body}</p>
+      </section>
+    ))}
+    <div class="meta">
+      <span>{p.updated_l}: {p.updated_v}</span>
+      <a href="/en/">{p.back_home_l}</a>
+    </div>
+  </main>
+</Base>

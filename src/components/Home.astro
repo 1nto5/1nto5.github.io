@@ -73,5 +73,6 @@ const otherLabel = otherLocale === "en" ? "English" : "Polski";
     </dl>
     <p>{t.contact.foot_l}</p>
     <a class="lang-switch" href={otherHref} hreflang={otherLocale}>{otherLabel}</a>
+    <a class="lang-switch" href={locale === "pl" ? "/prywatnosc/" : "/en/privacy/"}>{t.contact.privacy_l}</a>
   </section>
 </main>

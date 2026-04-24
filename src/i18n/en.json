@@ -35,7 +35,25 @@
     "loc_v": "Szczytno · Poland · remote worldwide",
     "avail_l": "Status",
     "avail_v": "Taking on clients",
-    "foot_l": "Independent. No agency markup."
+    "foot_l": "Independent. No agency markup.",
+    "privacy_l": "Privacy policy"
+  },
+  "privacy": {
+    "heading": "Privacy Policy",
+    "lead": "This site - adrianantosiak.pl - uses no tracking cookies, collects no analytics, and shows no ads. Personal data is processed only when you choose to email or call me.",
+    "sections": [
+      ["Data controller", "The data controller is Adrian Antosiak, an independent consultant based in Szczytno (Warmia-Masuria, Poland). For anything related to personal data, contact kontakt@adrianantosiak.pl."],
+      ["What data is collected", "Visiting the site on its own does not store personal data on my side. The host, GitHub Pages, may keep technical server logs (IP address, user-agent, request time) under its own policy - I have no access to them. If you email kontakt@adrianantosiak.pl or call, I retain your name, email or phone number, and the content of your enquiry."],
+      ["Legal basis", "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to enquiries)."],
+      ["Retention", "Emails are kept in my iCloud inbox for as long as needed to handle the enquiry and any reasonable follow-up, after which they are deleted or archived."],
+      ["Recipients", "The site is hosted on GitHub Pages (GitHub, Inc., USA). Email is handled by iCloud+ Custom Email Domain (Apple Inc., USA) - messages sent to @adrianantosiak.pl are delivered to my iCloud inbox. Web fonts (Inter Tight, JetBrains Mono) are loaded from fonts.googleapis.com, so Google Inc. receives your IP address when a font file is fetched. No data is shared with any other recipients."],
+      ["Cookies and tracking", "The site does not set any cookies or write to browser localStorage. I do not use Google Analytics, Meta Pixel, Hotjar, Clarity, or similar tools."],
+      ["Your rights", "You have the right to: access your data, rectify it, erase it, restrict processing, object, data portability, and lodge a complaint with Poland's supervisory authority, the President of the Personal Data Protection Office (uodo.gov.pl). To exercise these rights, email kontakt@adrianantosiak.pl."],
+      ["Contact", "For any questions related to personal data, email kontakt@adrianantosiak.pl."]
+    ],
+    "updated_l": "Last updated",
+    "updated_v": "2026-04-24",
+    "back_home_l": "← Home"
   },
   "ai": {
     "online": "online",

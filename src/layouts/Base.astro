@@ -2,11 +2,13 @@
 import "../styles/global.css";
 import { getMeta } from "../i18n/index.js";
 
-const { locale = "pl" } = Astro.props;
-const meta = getMeta(locale);
+const { locale = "pl", page = "home" } = Astro.props;
+const meta = getMeta(locale, page);
 const SITE = "https://adrianantosiak.pl";
 const canonical = SITE + meta.path;
 const ogImage = SITE + "/og.png";
+const altPl = SITE + meta.altPaths.pl;
+const altEn = SITE + meta.altPaths.en;
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -101,9 +103,9 @@ const websiteJsonLd = {
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="pl" href={SITE + "/"} />
-    <link rel="alternate" hreflang="en" href={SITE + "/en/"} />
-    <link rel="alternate" hreflang="x-default" href={SITE + "/"} />
+    <link rel="alternate" hreflang="pl" href={altPl} />
+    <link rel="alternate" hreflang="en" href={altEn} />
+    <link rel="alternate" hreflang="x-default" href={altPl} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
