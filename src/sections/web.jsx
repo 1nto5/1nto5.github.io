@@ -69,7 +69,7 @@ function WebSection({ active, setWorld, t }) {
         .web-meta{ font-family: var(--ff-web-mono); font-size: 12px; text-align:right; display:flex; flex-direction:column; gap: 4px;}
         .web-meta__row span{ color: var(--mute); margin-right: 8px; text-transform:uppercase; letter-spacing:.12em;}
         .web-meta__row b{ color: var(--fg);}
-        .web-title{ font-family: var(--ff-web-sans); font-size: clamp(32px, 6.4vw, 96px); line-height: 1; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 64px; max-width: 14ch; overflow-wrap: anywhere;}
+        .web-title{ font-family: var(--ff-web-sans); font-size: clamp(32px, 6.4vw, 96px); line-height: 1; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 64px; max-width: 14ch; overflow-wrap: break-word;}
         .web-title em{ font-style: italic; font-weight: 500; color: var(--accent);}
         .web-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 64px; align-items:start; margin-bottom: 72px;}
         .web-copy p{ font-size: clamp(16px, 1.4vw, 20px); line-height: 1.55; margin-bottom: 20px; max-width: 42ch;}

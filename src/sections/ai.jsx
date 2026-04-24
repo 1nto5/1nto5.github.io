@@ -85,7 +85,7 @@ function AISection({ active, setWorld, t }) {
         .ai-glyph{ color: var(--accent); font-size: 18px; margin-right: 6px;}
         .ai-cursor{ color: var(--accent); animation: blink 1s steps(2) infinite;}
         @keyframes blink { 50% { opacity: 0 } }
-        .ai-title{ font-family: var(--ff-ai-mono); font-size: clamp(32px, 7.5vw, 110px); line-height: .95; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; color: var(--fg); overflow-wrap: anywhere;}
+        .ai-title{ font-family: var(--ff-ai-mono); font-size: clamp(32px, 7.5vw, 110px); line-height: .95; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; color: var(--fg); overflow-wrap: break-word;}
         .ai-title__hash{ color: var(--accent); }
         .ai-stream{ border:1px solid var(--rule); font-family: var(--ff-ai-mono); font-size: 14px; margin-bottom: 48px;}
         .ai-stream__head{ display:flex; justify-content:space-between; padding: 8px 12px; border-bottom: 1px solid var(--rule); color: var(--mute); text-transform:uppercase; letter-spacing:.1em; font-size:11px; background: rgba(125,255,178,.03);}

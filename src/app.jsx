@@ -60,6 +60,7 @@ function App() {
         if (score > bestScore) { bestScore = score; best = id; }
       });
       if (best && bestScore > 0.3) {
+        // Apply vars synchronously; iOS Safari defers React commits during momentum scroll.
         const w = window.WORLDS.find(x => x.id === best);
         if (w) window.applyVars(w.vars);
         setWorld(best);

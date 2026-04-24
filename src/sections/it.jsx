@@ -65,7 +65,7 @@ function ITSection({ active, setWorld, t }) {
         @keyframes flicker { 50% { opacity: .85; } }
         .it-wrap{ max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;}
         .it-ascii{ font-family: var(--ff-it-mono); color: var(--accent); font-size: clamp(12px, 1.4vw, 18px); line-height: 1.2; margin-bottom: 40px; text-shadow: 0 0 6px var(--accent);}
-        .it-title{ font-family: var(--ff-it-mono); font-size: clamp(36px, 9vw, 140px); line-height: 1; font-weight: 400; letter-spacing: .02em; color: var(--accent); text-shadow: 0 0 12px rgba(51,255,51,.4); margin-bottom: 56px; text-transform: lowercase; overflow-wrap: anywhere;}
+        .it-title{ font-family: var(--ff-it-mono); font-size: clamp(36px, 9vw, 140px); line-height: 1; font-weight: 400; letter-spacing: .02em; color: var(--accent); text-shadow: 0 0 12px rgba(51,255,51,.4); margin-bottom: 56px; text-transform: lowercase; overflow-wrap: break-word;}
         .it-title__blink{ animation: crtblink 1.1s steps(2) infinite;}
         @keyframes crtblink { 50% { opacity: .25; } }
         .it-term{ border: 1px solid var(--accent); padding: 20px 24px; font-family: var(--ff-it-mono); font-size: clamp(16px, 1.4vw, 20px); line-height: 1.5; margin-bottom: 56px; background: rgba(0,0,0,.3); box-shadow: 0 0 24px rgba(51,255,51,.15), inset 0 0 24px rgba(51,255,51,.05); min-height: 260px;}

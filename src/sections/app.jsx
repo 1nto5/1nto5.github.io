@@ -97,7 +97,7 @@ function AppSection({ active, setWorld, t }) {
         .app-wrap{ max-width: 1400px; margin: 0 auto; padding: 80px var(--pad) 0;}
         .app-head{ display:flex; justify-content:space-between; font-family: var(--ff-app-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .2em; color: var(--mute); border-bottom: 1px solid var(--rule); padding-bottom: 20px; margin-bottom: 48px;}
         .app-kicker{ color: var(--accent);}
-        .app-title{ font-family: var(--ff-app-serif); font-weight: 400; font-size: clamp(40px, 10vw, 160px); line-height: .9; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 32px; overflow-wrap: anywhere;}
+        .app-title{ font-family: var(--ff-app-serif); font-weight: 400; font-size: clamp(40px, 10vw, 160px); line-height: .9; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 32px; overflow-wrap: break-word;}
         .app-title em{ color: var(--accent); font-style: italic;}
         .app-lead{ font-family: var(--ff-app-body); font-size: clamp(17px, 1.5vw, 22px); line-height: 1.5; max-width: 60ch; margin-bottom: 64px; color: var(--fg);}
         .app-lead em{ color: var(--accent); font-style: italic; font-weight: 500;}
@@ -127,7 +127,7 @@ function AppSection({ active, setWorld, t }) {
         .app-feat{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); margin-bottom: 48px;}
         .app-feat > div{ padding: 32px 20px; border-right: 1px solid var(--rule); min-width: 0;}
         .app-feat > div:last-child{ border-right: 0;}
-        .app-feat h3{ font-family: var(--ff-app-serif); font-weight: 400; font-size: 48px; color: var(--accent); margin-bottom: 12px; letter-spacing:-.02em; overflow-wrap: anywhere;}
+        .app-feat h3{ font-family: var(--ff-app-serif); font-weight: 400; font-size: 48px; color: var(--accent); margin-bottom: 12px; letter-spacing:-.02em; overflow-wrap: break-word;}
         .app-feat p{ font-family: var(--ff-app-body); font-size: 14px; line-height: 1.5;}
         .app-kpis{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--rule);}
         .app-kpis > div{ padding: 28px 20px; border-right: 1px solid var(--rule);}
