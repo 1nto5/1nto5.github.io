@@ -97,7 +97,7 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 ## Image assets (in `public/`)
 
 - `public/favicon.svg`, `public/favicon.ico` (32x32), `public/apple-touch-icon.png` (180x180), `public/og.png` (1200x630 share card).
-- `og.png` should render "Adrian Antosiak" + tagline on the site's cream background. One-time hand export. Referenced from `Base.astro` `og:image` / `twitter:image`.
+- All four are generated from inline SVG templates in `scripts/generate-assets.mjs` via `sharp` (devDep). Edit the SVG templates in that script, then run `bun run assets` to regenerate. Commit the regenerated binaries.
 
 ## Search Console verification (pending)
 
