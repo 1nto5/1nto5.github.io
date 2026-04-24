@@ -59,12 +59,16 @@ function App() {
         const score = visible / vh;
         if (score > bestScore) { bestScore = score; best = id; }
       });
+      // Apply vars synchronously; iOS Safari defers React commits during momentum scroll.
       if (best && bestScore > 0.3) {
-        // Apply vars synchronously; iOS Safari defers React commits during momentum scroll.
         const w = window.WORLDS.find(x => x.id === best);
         if (w) window.applyVars(w.vars);
         setWorld(best);
         setActive(best);
+      } else {
+        window.applyVars(window.NEUTRAL.vars);
+        setWorld("neutral");
+        setActive(null);
       }
     };
     const onScroll = () => {
