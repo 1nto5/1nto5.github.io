@@ -3,25 +3,24 @@
   "kicker": "Adrian Antosiak · Freelancer · Polska",
   "email_addr": "czesc@adrianantosiak.pl",
   "hero": {
-    "lead_hover": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, zaistnieć w sieci i utrzymać to wszystko przy życiu. Najedź kursorem na usługę, żeby zobaczyć jak.",
-    "lead_tap": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, zaistnieć w sieci i utrzymać to wszystko przy życiu. Dotknij usługi, żeby zobaczyć jak.",
+    "lead_hover": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu. Kliknij w usługę, aby zobaczyć więcej.",
+    "lead_tap": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu. Kliknij w usługę, aby zobaczyć więcej.",
     "email": "czesc@adrianantosiak.pl ↗",
     "phone": "+48 503 751 676",
     "index": "Usługi",
     "hint_hover": "- najedź na wiersz, żeby podejrzeć -",
     "hint_tap": "- dotknij wiersz, żeby wejść głębiej -",
-    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APLIKACJE · WWW · IT   ◆   PRZYJMUJĘ NOWE PROJEKTY   ◆   "
+    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APLIKACJE · WWW   ◆   PRZYJMUJĘ NOWE PROJEKTY   ◆   "
   },
   "nav": {
-    "ai": "AI dla twojej firmy",
-    "app": "Aplikacje szyte na miarę",
-    "web": "Strony i sklepy internetowe",
-    "it": "Wsparcie IT i infrastruktury"
+    "ai": "AI dla Twojej firmy",
+    "app": "Aplikacje dopasowane do Twoich potrzeb",
+    "web": "Strony i sklepy internetowe"
   },
   "location": {
     "city": "Szczytno",
     "region": "Warmia-Mazury",
-    "line": "Szczytno, Warmia-Mazury. Polska i zdalnie na świecie."
+    "line": "Szczytno, Warmia-Mazury. Działam z Polski, zdalnie wszędzie indziej."
   },
   "divider_next": "dalej ↓",
   "contact": {
@@ -32,7 +31,7 @@
     "email_l": "E-mail",
     "phone_l": "Telefon",
     "loc_l": "Lokalizacja",
-    "loc_v": "Szczytno · Polska · zdalnie na świecie",
+    "loc_v": "Szczytno · Polska · zdalnie wszędzie",
     "avail_l": "Status",
     "avail_v": "Przyjmuję nowych klientów",
     "foot_l": "Niezależny. Bez marży agencji.",
@@ -43,10 +42,10 @@
     "lead": "Ta strona - adrianantosiak.pl - nie używa plików cookie śledzących, nie zbiera analityki ani nie wyświetla reklam. Dane osobowe przetwarzam tylko wtedy, gdy sam wyślesz mi e-mail lub zadzwonisz.",
     "sections": [
       ["Administrator danych", "Administratorem danych jest Adrian Antosiak, niezależny konsultant z siedzibą w Szczytnie (Warmia-Mazury, Polska). Kontakt w sprawach związanych z danymi osobowymi: kontakt@adrianantosiak.pl."],
-      ["Zakres zbieranych danych", "Sama wizyta na stronie nie powoduje zapisu danych osobowych po mojej stronie. Hosting GitHub Pages może prowadzić techniczne logi serwerowe (adres IP, user-agent, czas żądania) zgodnie z własną polityką - nie mam do nich dostępu. Jeśli napiszesz na kontakt@adrianantosiak.pl lub zadzwonisz, zapisuję twoje imię, adres e-mail lub numer telefonu oraz treść zapytania."],
+      ["Zakres zbieranych danych", "Sama wizyta na stronie nie powoduje zapisu danych osobowych po mojej stronie. Hosting GitHub Pages może prowadzić techniczne logi serwerowe (adres IP, user-agent, czas żądania) zgodnie z własną polityką - nie mam do nich dostępu. Jeśli napiszesz na kontakt@adrianantosiak.pl lub zadzwonisz, zapisuję Twoje imię, adres e-mail lub numer telefonu oraz treść zapytania."],
       ["Podstawa prawna", "Podstawą prawną przetwarzania korespondencji jest art. 6 ust. 1 lit. b RODO (działania na żądanie osoby przed zawarciem umowy) oraz art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes w postaci odpowiedzi na zapytanie)."],
       ["Okres przechowywania", "Wiadomości e-mail przechowuję w skrzynce iCloud tak długo, jak jest to potrzebne do obsługi zapytania i sensownego follow-upu, po czym usuwam je lub archiwizuję."],
-      ["Odbiorcy danych", "Strona jest hostowana w GitHub Pages (GitHub, Inc., USA). Pocztę obsługuje iCloud+ Custom Email Domain (Apple Inc., USA) - wiadomości kierowane na adres @adrianantosiak.pl trafiają do mojej skrzynki iCloud. Czcionki (Inter Tight, JetBrains Mono) są ładowane z fonts.googleapis.com, w związku z czym Google Inc. otrzymuje twój adres IP w momencie pobierania pliku czcionki. Nie przekazuję danych żadnym innym odbiorcom."],
+      ["Odbiorcy danych", "Strona jest hostowana w GitHub Pages (GitHub, Inc., USA). Pocztę obsługuje iCloud+ Custom Email Domain (Apple Inc., USA) - wiadomości kierowane na adres @adrianantosiak.pl trafiają do mojej skrzynki iCloud. Czcionki (Inter Tight, JetBrains Mono) są ładowane z fonts.googleapis.com, w związku z czym Google Inc. otrzymuje Twój adres IP w momencie pobierania pliku czcionki. Nie przekazuję danych żadnym innym odbiorcom."],
       ["Cookies i śledzenie", "Strona nie ustawia własnych plików cookie ani nie zapisuje danych w localStorage przeglądarki. Nie korzystam z Google Analytics, Meta Pixel, Hotjar, Clarity ani podobnych narzędzi."],
       ["Twoje prawa", "Masz prawo: dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu, przenoszenia oraz wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl). Aby z nich skorzystać, napisz na kontakt@adrianantosiak.pl."],
       ["Kontakt", "W sprawach dotyczących danych osobowych napisz na kontakt@adrianantosiak.pl."]
@@ -65,22 +64,21 @@
     "idle": "bezczynny",
     "hint": "[ najedź na sekcję, aby uruchomić stream ]",
     "cards": [
-      ["CHATBOTY", "Chatboty do obsługi klienta i wewnętrzne, uczone na twoich dokumentach, mailach i katalogu produktów."],
-      ["AUTOMATY", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która dzieje się w tle."],
-      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia ze spotkań i rozmów."],
-      ["SZKOLENIA", "Praktyczne szkolenia z ChatGPT i Copilota dla twojego zespołu - żeby przestali wklejać wrażliwe dane."]
+      ["CHATBOTY", "Chatboty do obsługi klienta i wewnętrzne, uczone na Twoich dokumentach, mailach i katalogu produktów."],
+      ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która działa w tle."],
+      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań i rozmów."]
     ],
-    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa godzinna rozmowa: co pożera czas\n  ├─ wybór 1-2 procesów do automatyzacji\n  ├─ prototyp w 2 tygodnie, nie w 2 kwartały\n  └─ szkolenie zespołu i przekazanie kluczy"
+    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa godzinna rozmowa: co pożera Ci czas\n  ├─ wybór 1-2 procesów do automatyzacji\n  ├─ prototyp w 3 dni, nie w miesiąc\n  └─ szkolenie zespołu i przekazanie kluczy"
   },
   "app": {
-    "kicker": "▚ 02 - Aplikacje szyte na miarę",
+    "kicker": "▚ 02 - Aplikacje dopasowane do Twoich potrzeb",
     "stamp": "OPROGRAMOWANIE SZYTE NA MIARĘ",
     "title_l1": "Aplikacja, której",
-    "title_l2": "potrzebuje twoja firma,",
-    "title_l3": "skrojona pod ciebie.",
+    "title_l2": "potrzebuje Twoja firma,",
+    "title_l3": "skrojona pod Ciebie.",
     "lead_a": "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
     "lead_and": " - ",
-    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i klienckie. Czysty kod, który ty lub ktokolwiek inny może później przejąć i rozwijać.",
+    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i portale dla klientów. Czysty kod, który Ty lub ktokolwiek inny może później przejąć i rozwijać.",
     "prod_live": "PRODUKCJA · NA ŻYWO",
     "roster_head": "ZESPÓŁ · ZMIANA A",
     "on_site": "na miejscu",
@@ -90,14 +88,12 @@
     "feat": [
       ["Web", "Panele, portale, narzędzia wewnętrzne"],
       ["Mobile", "iOS + Android"],
-      ["API", "Integracje z ERP, CRM, księgowością"],
-      ["Przekazanie", "Dokumentacja, testy, kod jest twój"]
+      ["API", "Integracje z ERP, CRM, księgowością"]
     ],
     "kpis": [
-      ["4-12 tyg", "typowy czas realizacji"],
+      ["4-12 tyg", "typowy czas wdrożenia"],
       ["↓ 40%", "mniej ręcznych raportów"],
-      ["1", "jedno źródło prawdy"],
-      ["100%", "twój kod, twoje repo"]
+      ["1", "jedno źródło prawdy"]
     ]
   },
   "web": {
@@ -107,9 +103,9 @@
     "title_l2_em": "zwraca się",
     "title_l3": "w pół roku.",
     "p1": "Strony firmowe, landingi, portfolia i mniejsze sklepy dla firm, które chcą czegoś lepszego niż szablon, ale nie potrzebują 50-stronicowej oferty od agencji.",
-    "p2": "Każda strona dostaje porządne SEO, CMS, z którego marketing korzysta bez dzwonienia do mnie, szybkość, którą Google docenia, i analitykę, którą umiesz przeczytać.",
+    "p2": "Każda strona dostaje porządne SEO, CMS, z którego marketing korzysta bez dzwonienia do mnie, szybkość, którą Google docenia, i analitykę, którą zrozumiesz.",
     "steps": [
-      ["01", "Rozmowa startowa i mapa strony"],
+      ["01", "Spotkanie startowe i mapa strony"],
       ["02", "Projekt i przegląd tekstów"],
       ["03", "Budowa i konfiguracja CMS"],
       ["04", "SEO, analityka, wdrożenie"],
@@ -117,10 +113,10 @@
     ],
     "mock_nav": ["Realizacje", "O nas", "Kontakt"],
     "mock_eyebrow": "- Twoja firma",
-    "mock_h1_l1": "Jeden nagłówek.",
-    "mock_h1_l2": "Jedna obietnica.",
-    "mock_h1_l3": "Jedno wezwanie do akcji.",
-    "mock_cta": "Napisz →",
+    "mock_h1_l1": "Strona, która sprzedaje.",
+    "mock_h1_l2": "Gotowa w 3 dni.",
+    "mock_h1_l3": "Zaczynamy?",
+    "mock_cta": "Wyceń projekt →",
     "lh": "Lighthouse",
     "lh_v": "perf",
     "a11y": "a11y",
@@ -131,30 +127,5 @@
       ["E-commerce", "Katalog · koszyk · płatności"],
       ["Hosting", "Wdrożenie · monitoring · domena"]
     ]
-  },
-  "it": {
-    "lead": "Stałe wsparcie IT dla małych i średnich firm w Szczytnie, Warmii-Mazurach i zdalnie. Helpdesk, administracja sieciami, bezpieczeństwo, Microsoft 365 i Google Workspace.",
-    "boot": [
-      "> uruchamiam adrian.it.support v2.6 ...",
-      "  ładuję jądro ............ [OK]",
-      "  mount /helpdesk ......... [OK]",
-      "  sterownik drukarki ...... [OK]",
-      "  stos sieciowy ........... [OK]",
-      "  kawa.dll ................ [OK]",
-      "> gotowe. w czym mogę pomóc?"
-    ],
-    "ascii_title": "▮  A D R I A N  /  I T  S U P P",
-    "uptime": "uptime:  10+ lat",
-    "tickets": "zgłoszenia: zamknięte > otwarte",
-    "title_l1": "gdy komputer",
-    "title_l2": "znów strajkuje,",
-    "title_l3": "ZADZWOŃ.",
-    "user": "user@support:~$",
-    "cols": [
-      ["[ sprzęt ]", ["konfiguracja stacji i laptopów", "sieci i wi-fi w biurze", "drukarki, skanery, urządzenia peryferyjne", "cctv i kontrola dostępu"]],
-      ["[ oprogramowanie ]", ["windows, macos, linux", "microsoft 365 i google workspace", "kopie zapasowe i disaster recovery", "vpn, antywirus, endpoint"]],
-      ["[ ludzie ]", ["onboarding nowych pracowników", "zdalny helpdesk, bez żargonu", "procedury i prosta dokumentacja", "kontakt z twoimi dostawcami"]]
-    ],
-    "foot": "> end_of_file  //  stała umowa albo pomoc doraźna. jak wolisz."
   }
 }

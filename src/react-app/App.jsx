@@ -5,10 +5,9 @@ import Divider from "./Divider.jsx";
 import AISection from "./sections/AISection.jsx";
 import AppSection from "./sections/AppSection.jsx";
 import WebSection from "./sections/WebSection.jsx";
-import ITSection from "./sections/ITSection.jsx";
 
-const NAV_IDS = ["ai", "app", "web", "it"];
-const NAV_NUMS = { ai: "01", app: "02", web: "03", it: "04" };
+const NAV_IDS = ["ai", "app", "web"];
+const NAV_NUMS = { ai: "01", app: "02", web: "03" };
 
 function useIsMobile() {
   const [m, setM] = useState(false);
@@ -44,10 +43,10 @@ export default function App({ locale = "pl" }) {
   }, []);
 
   useEffect(() => {
-    if (world === "neutral") applyVars(NEUTRAL.vars);
+    if (world === "neutral") applyVars(NEUTRAL.vars, "neutral");
     else {
       const w = WORLDS.find((x) => x.id === world);
-      if (w) applyVars(w.vars);
+      if (w) applyVars(w.vars, w.id);
     }
   }, [world]);
 
@@ -67,11 +66,11 @@ export default function App({ locale = "pl" }) {
       });
       if (best && bestScore > 0.3) {
         const w = WORLDS.find((x) => x.id === best);
-        if (w) applyVars(w.vars);
+        if (w) applyVars(w.vars, w.id);
         setWorld(best);
         setActive(best);
       } else {
-        applyVars(NEUTRAL.vars);
+        applyVars(NEUTRAL.vars, "neutral");
         setWorld("neutral");
         setActive(null);
       }
@@ -108,8 +107,6 @@ export default function App({ locale = "pl" }) {
         <AppSection active={world === "app"} t={t} />
         <Divider world="web" onEnter={() => !isMobile && setWorld("web")} t={t} />
         <WebSection active={world === "web"} t={t} />
-        <Divider world="it"  onEnter={() => !isMobile && setWorld("it")}  t={t} />
-        <ITSection  active={world === "it"}  t={t} />
         <Contact t={t} lang={lang} />
         <style>{`.shell{ position: relative; }`}</style>
       </div>
@@ -157,7 +154,13 @@ function TopBar({ isMobile, active, onNav, lang, setLang, t }) {
     <>
       <header className="topbar" data-mobile={isMobile}>
         <button className="topbar__brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-          <span className="topbar__mark">A.A</span>
+          <span className="topbar__mark" aria-hidden>
+            <svg viewBox="0 0 64 64" width="22" height="22" fill="currentColor" focusable="false">
+              <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fillRule="evenodd"/>
+              <rect x="30" y="52" width="4" height="8"/>
+              <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fillRule="evenodd"/>
+            </svg>
+          </span>
           <span className="topbar__name">Adrian Antosiak</span>
         </button>
         {!isMobile && (
@@ -276,7 +279,7 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
             <span className="hero__dot"/> {t.kicker}
           </div>
           <h1 className="hero__title">Adrian<br/>Antosiak.</h1>
-          <p className="hero__lead">
+          <p className="hero__lead dropcap">
             {isMobile ? t.hero.lead_tap : t.hero.lead_hover}
           </p>
           <div className="hero__cta">
@@ -288,6 +291,34 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
         </div>
 
         <div className="hero__r">
+          <div className="hero__portrait" aria-hidden>
+            <svg viewBox="0 0 200 240" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" focusable="false">
+              <path d="M30 240 L42 178 Q62 168 100 166 Q138 168 158 178 L170 240"/>
+              <path d="M84 176 L100 204 L116 176"/>
+              <path d="M58 118 Q48 86 58 52 Q70 22 100 20 Q130 22 142 52 Q152 86 142 118"/>
+              <path d="M62 124 Q58 144 70 162 Q82 178 100 180 Q118 178 130 162 Q142 144 138 124"/>
+              <path d="M70 124 Q84 132 100 132 Q116 132 130 124" opacity="0.55"/>
+              <path d="M76 84 Q84 80 92 84"/>
+              <path d="M108 84 Q116 80 124 84"/>
+              <circle cx="84" cy="96" r="1.8" fill="currentColor" stroke="none"/>
+              <circle cx="116" cy="96" r="1.8" fill="currentColor" stroke="none"/>
+              <path d="M100 100 L96 118 Q98 122 102 122"/>
+              <path d="M86 144 Q94 142 100 143 Q106 142 114 144"/>
+              <circle cx="80" cy="148" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="76" cy="156" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="84" cy="162" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="120" cy="148" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="124" cy="156" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="116" cy="162" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="92" cy="168" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="100" cy="172" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="108" cy="168" r="0.8" fill="currentColor" stroke="none"/>
+              <circle cx="80" cy="60" r="0.7" fill="currentColor" stroke="none"/>
+              <circle cx="86" cy="54" r="0.7" fill="currentColor" stroke="none"/>
+              <circle cx="74" cy="70" r="0.7" fill="currentColor" stroke="none"/>
+              <circle cx="78" cy="50" r="0.7" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
           <div className="hero__index">{t.hero.index}</div>
           <ol className="hero__list">
             {NAV.map((n) => (
@@ -366,6 +397,17 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
         .hero__btn--primary:hover{ background: var(--accent); border-color: var(--accent); color: var(--chrome-fg);}
 
         .hero__r{ border-top: 2px solid var(--fg); }
+        .hero__portrait{
+          display: flex; justify-content: flex-end;
+          padding: 14px 0 18px;
+          color: var(--fg);
+          border-bottom: 1px solid var(--rule);
+        }
+        .hero__portrait svg{
+          width: clamp(72px, 9vw, 110px);
+          height: auto;
+          opacity: .85;
+        }
         .hero__index{
           font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;
           letter-spacing: .2em; text-transform: uppercase;

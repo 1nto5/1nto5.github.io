@@ -46,19 +46,6 @@ const otherLabel = otherLocale === "en" ? "English" : "Polski";
     </ul>
   </section>
 
-  <section>
-    <h2>
-      <small>04</small>
-      {t.nav.it}
-    </h2>
-    <p>{t.it.lead}</p>
-    <ul>
-      {t.it.cols.flatMap(([group, items]) =>
-        items.map((item) => <li><strong>{group}</strong> - {item}</li>)
-      )}
-    </ul>
-  </section>
-
   <section class="contact">
     <h2>{t.contact.title_l1} {t.contact.title_l2} {t.contact.title_l3}</h2>
     <dl>

@@ -18,6 +18,7 @@ export default function AISection({ active, t }) {
 
   return (
     <section id="ai" data-screen-label="01 AI" className="section section--ai">
+      <div className="folio">p. 01</div>
       <div className="ai-grid">
         <aside className="ai-side">
           <div className="ai-side__head"><span className="dot dot--live" /> <span>{tt.online}</span></div>
@@ -67,12 +68,25 @@ export default function AISection({ active, t }) {
           font-family: var(--ff-ai-mono);
           --pad: clamp(24px, 4vw, 56px);
           padding: 120px var(--pad) 140px;
+          position: relative;
           background:
+            repeating-linear-gradient(0deg,
+              transparent 0 3px,
+              color-mix(in srgb, var(--accent) 8%, transparent) 3px 4px),
             linear-gradient(transparent 31px, rgba(125,255,178,.05) 31px) 0 0/32px 32px,
-            linear-gradient(90deg, transparent 31px, rgba(125,255,178,.05) 31px) 0 0/32px 32px;
+            linear-gradient(90deg, transparent 31px, rgba(125,255,178,.05) 31px) 0 0/32px 32px,
+            var(--bg);
           min-height: 100vh;
           color: var(--fg);
         }
+        @media (prefers-reduced-motion: no-preference){
+          .section--ai{ animation: aiScan 2.4s linear infinite; }
+        }
+        @keyframes aiScan {
+          from { background-position: 0 0, 0 0, 0 0, 0 0; }
+          to   { background-position: 0 4px, 0 0, 0 0, 0 0; }
+        }
+        .ai-grid{ position: relative; z-index: 1; }
         .ai-grid{ display:grid; grid-template-columns: 260px minmax(0, 1fr); gap: 48px; max-width: 1400px; margin: 0 auto;}
         .ai-side{ font-family: var(--ff-ai-mono); font-size: 12px; border: 1px solid var(--rule); padding: 16px; height: fit-content; background: rgba(125,255,178,.02);}
         .ai-side__head{ display:flex; gap:8px; align-items:center; text-transform:uppercase; letter-spacing:.08em; color: var(--mute); padding-bottom:12px; border-bottom:1px solid var(--rule);}
@@ -94,7 +108,7 @@ export default function AISection({ active, t }) {
         .ai-stream__body{ padding: 16px; min-height: 64px; color: var(--accent);}
         .ai-stream__hint{ color: var(--mute)}
         .ai-tok{ transition: opacity .3s ease;}
-        .ai-cards{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top:1px solid var(--rule); border-left:1px solid var(--rule); margin-bottom: 48px;}
+        .ai-cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top:1px solid var(--rule); border-left:1px solid var(--rule); margin-bottom: 48px;}
         .ai-card{ border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); padding: 28px; font-family: var(--ff-ai-mono);}
         .ai-card__k{ font-size: 11px; letter-spacing:.2em; color: var(--accent); margin-bottom: 12px;}
         .ai-card__v{ font-size: 14px; line-height: 1.55; color: var(--fg);}

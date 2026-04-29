@@ -26,6 +26,7 @@ export default function AppSection({ active, t }) {
 
   return (
     <section id="app" data-screen-label="02 App" className="section section--app">
+      <div className="folio">p. 02</div>
       <div className="app-ticker">
         <div className="app-ticker__inner" style={{ transform: `translateX(-${shift * 4}px)` }}>{ticker}</div>
       </div>
@@ -94,6 +95,27 @@ export default function AppSection({ active, t }) {
           min-height: 100vh; position: relative; overflow: hidden;
           color: var(--fg);
         }
+        .section--app::before{
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          opacity: .07;
+          mix-blend-mode: screen;
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+          background-size: 240px 240px;
+          z-index: 0;
+        }
+        @media (prefers-reduced-motion: no-preference){
+          .section--app::before{
+            animation: appGrain 14s ease-in-out infinite alternate;
+          }
+        }
+        @keyframes appGrain {
+          from { background-position: 0 0; }
+          to   { background-position: 36px 60px; }
+        }
+        .section--app > *{ position: relative; z-index: 1; }
         .app-ticker{ border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); overflow: hidden; white-space: nowrap; font-family: var(--ff-app-mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); padding: 12px 0; background: rgba(255,85,0,.08);}
         .app-ticker__inner{ display:inline-block; padding-left: 100%; transition: transform 80ms linear;}
         .app-wrap{ max-width: 1400px; margin: 0 auto; padding: 80px var(--pad) 0;}
@@ -126,12 +148,12 @@ export default function AppSection({ active, t }) {
         .app-roster__note{ font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform:uppercase; letter-spacing:.1em;}
         .app-roster__c{ font-family: var(--ff-app-serif); font-size: 22px; color: var(--accent); font-variant-numeric: tabular-nums;}
         .app-panel__foot{ border-top: 1px solid var(--rule); padding: 10px 16px; font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: .15em;}
-        .app-feat{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); margin-bottom: 48px;}
+        .app-feat{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); margin-bottom: 48px;}
         .app-feat > div{ padding: 32px 20px; border-right: 1px solid var(--rule); min-width: 0;}
         .app-feat > div:last-child{ border-right: 0;}
         .app-feat h3{ font-family: var(--ff-app-serif); font-weight: 400; font-size: 48px; color: var(--accent); margin-bottom: 12px; letter-spacing:-.02em; overflow-wrap: break-word;}
         .app-feat p{ font-family: var(--ff-app-body); font-size: 14px; line-height: 1.5;}
-        .app-kpis{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--rule);}
+        .app-kpis{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule);}
         .app-kpis > div{ padding: 28px 20px; border-right: 1px solid var(--rule);}
         .app-kpis > div:last-child{ border-right: 0;}
         .app-kpis b{ font-family: var(--ff-app-serif); font-size: clamp(32px, 4vw, 56px); display:block; color: var(--accent); margin-bottom: 6px; line-height: 1;}

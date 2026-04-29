@@ -3,36 +3,35 @@
   "kicker": "Adrian Antosiak · Independent · Poland",
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
-    "lead_hover": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, put them on the web, and keep the whole thing running. Hover a service to see how.",
-    "lead_tap": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, put them on the web, and keep the whole thing running. Tap a service to see how.",
+    "lead_hover": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running. Click a service to see more.",
+    "lead_tap": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running. Click a service to see more.",
     "email": "hi@adrianantosiak.pl ↗",
     "phone": "+48 503 751 676",
     "index": "Services",
     "hint_hover": "- hover a row to preview -",
     "hint_tap": "- tap a row to jump in -",
-    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APPS · WEB · IT   ◆   TAKING ON NEW CLIENTS   ◆   "
+    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APPS · WEB   ◆   TAKING ON NEW CLIENTS   ◆   "
   },
   "nav": {
     "ai": "AI for your business",
     "app": "Custom applications",
-    "web": "Websites & online stores",
-    "it": "IT support & infrastructure"
+    "web": "Websites & online stores"
   },
   "location": {
     "city": "Szczytno",
     "region": "Warmia-Masuria",
-    "line": "Based in Szczytno, Warmia-Masuria. Poland and remote worldwide."
+    "line": "Based in Szczytno, Warmia-Masuria. Poland and remote anywhere."
   },
   "divider_next": "next ↓",
   "contact": {
     "kicker": "- Let's talk -",
     "title_l1": "Got a",
     "title_l2": "question?",
-    "title_l3": "Write me.",
+    "title_l3": "Email me.",
     "email_l": "Email",
     "phone_l": "Phone",
     "loc_l": "Based in",
-    "loc_v": "Szczytno · Poland · remote worldwide",
+    "loc_v": "Szczytno · Poland · remote anywhere",
     "avail_l": "Status",
     "avail_v": "Taking on clients",
     "foot_l": "Independent. No agency markup.",
@@ -67,10 +66,9 @@
     "cards": [
       ["CHATBOTS", "Customer-support and internal bots trained on your docs, emails and product catalogue."],
       ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - the boring stuff, done in the background."],
-      ["DOCUMENTS", "OCR, contract review, translation, summaries for meetings and calls."],
-      ["TRAINING", "Hands-on ChatGPT and Copilot training for your team - so they stop copy-pasting sensitive data."]
+      ["DOCUMENTS", "OCR, contract review, translation, summaries of meetings and calls."]
     ],
-    "code": "> adrian.ai.plan({ company })\n  ├─ 1h free call to map what's eating time\n  ├─ pick 1-2 processes worth automating\n  ├─ prototype in 2 weeks, not 2 quarters\n  └─ train your team, hand over the keys"
+    "code": "> adrian.ai.plan({ company })\n  ├─ 1h free call to map what's eating time\n  ├─ pick 1-2 processes worth automating\n  ├─ prototype in 3 days, not a month\n  └─ train your team, hand over the keys"
   },
   "app": {
     "kicker": "▚ 02 - Custom applications",
@@ -90,14 +88,12 @@
     "feat": [
       ["Web apps", "Dashboards, portals, internal tools"],
       ["Mobile", "iOS + Android"],
-      ["APIs", "Integrate your ERP, CRM, accounting"],
-      ["Handover", "Docs, tests, you own the code"]
+      ["APIs", "Integrate your ERP, CRM, accounting"]
     ],
     "kpis": [
-      ["4-12 wk", "typical build time"],
-      ["↓ 40%", "manual reporting cut"],
-      ["1", "source of truth"],
-      ["100%", "your code, your repo"]
+      ["4-12 weeks", "typical build time"],
+      ["↓ 40%", "fewer manual reports"],
+      ["1", "source of truth"]
     ]
   },
   "web": {
@@ -117,10 +113,10 @@
     ],
     "mock_nav": ["Work", "About", "Contact"],
     "mock_eyebrow": "- Your company",
-    "mock_h1_l1": "One headline.",
-    "mock_h1_l2": "One promise.",
-    "mock_h1_l3": "One call to action.",
-    "mock_cta": "Get in touch →",
+    "mock_h1_l1": "A site that sells.",
+    "mock_h1_l2": "Live in 3 days.",
+    "mock_h1_l3": "Ready to start?",
+    "mock_cta": "Get a quote →",
     "lh": "Lighthouse",
     "lh_v": "perf",
     "a11y": "a11y",
@@ -131,30 +127,5 @@
       ["E-commerce", "Catalog · cart · checkout"],
       ["Hosting", "Deploy · monitor · domain"]
     ]
-  },
-  "it": {
-    "lead": "Ongoing IT support for small and mid-sized businesses in Szczytno, Warmia-Masuria, and remote. Helpdesk, network administration, security, Microsoft 365 and Google Workspace.",
-    "boot": [
-      "> booting adrian.it.support v2.6 ...",
-      "  loading kernel .......... [OK]",
-      "  mounting /helpdesk ...... [OK]",
-      "  printer_driver.sys ...... [OK]",
-      "  network stack ........... [OK]",
-      "  coffee.dll .............. [OK]",
-      "> ready. how can I help?"
-    ],
-    "ascii_title": "▮  A D R I A N  /  I T  S U P P",
-    "uptime": "uptime:  10+ years",
-    "tickets": "tickets: closed > opened",
-    "title_l1": "when the computer",
-    "title_l2": "eats your deck,",
-    "title_l3": "I PICK UP.",
-    "user": "user@support:~$",
-    "cols": [
-      ["[ hardware ]", ["workstation & laptop setup", "office networking & wi-fi", "printers, scanners, peripherals", "cctv & access control"]],
-      ["[ software ]", ["windows, macos, linux", "microsoft 365 & google workspace", "backups & disaster recovery", "vpn, antivirus, endpoint security"]],
-      ["[ people ]", ["onboarding new hires end-to-end", "remote helpdesk, no jargon", "procedures & simple docs", "dealing with your vendors"]]
-    ],
-    "foot": "> end_of_file  //  monthly plans or one-off help. your call."
   }
 }

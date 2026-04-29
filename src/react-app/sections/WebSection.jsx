@@ -2,6 +2,7 @@ export default function WebSection({ active, t }) {
   const tt = t.web;
   return (
     <section id="web" data-screen-label="03 Web" className="section section--web">
+      <div className="folio">p. 03</div>
       <div className="web-wrap">
         <div className="web-head">
           <div className="web-num">◐ 03</div>
@@ -62,7 +63,27 @@ export default function WebSection({ active, t }) {
           padding: 120px var(--pad) 140px;
           background: radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 50%), var(--bg);
           min-height: 100vh; color: var(--fg);
+          position: relative;
         }
+        .section--web::before{
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background:
+            linear-gradient(transparent 31px, color-mix(in srgb, var(--accent) 14%, transparent) 31px) 0 0/32px 32px,
+            linear-gradient(90deg, transparent 31px, color-mix(in srgb, var(--accent) 14%, transparent) 31px) 0 0/32px 32px;
+          opacity: .45;
+          z-index: 0;
+        }
+        @media (prefers-reduced-motion: no-preference){
+          .section--web::before{ animation: webGridPulse 4.8s ease-in-out infinite; }
+        }
+        @keyframes webGridPulse {
+          0%, 100% { opacity: .35; }
+          50%      { opacity: .7; }
+        }
+        .section--web > *{ position: relative; z-index: 1; }
         .web-wrap{max-width:1400px;margin:0 auto;}
         .web-head{ display:flex; justify-content:space-between; align-items:flex-start; border-top: 2px solid var(--fg); padding-top: 16px; margin-bottom: 40px;}
         .web-num{ font-family: var(--ff-web-sans); font-size: clamp(72px, 14vw, 220px); line-height: .8; font-weight: 800; letter-spacing: -0.04em; color: var(--fg); margin-left: -6px;}

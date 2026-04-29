@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Adrian Antosiak">
+  <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fill-rule="evenodd" fill="currentColor"/>
+  <rect x="30" y="52" width="4" height="8" fill="currentColor"/>
+  <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fill-rule="evenodd" fill="currentColor"/>
+</svg>

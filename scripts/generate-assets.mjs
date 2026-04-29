@@ -12,17 +12,17 @@ const FG = "#0b0b0b";
 const BG = "#f3f1ec";
 const ACCENT = "#ff5a1f";
 
-// Monochrome "A.A" favicon.
+// Geometric A.A monogram - two angular A's flanking a square period.
+const MARK_PATHS = `
+  <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fill-rule="evenodd"/>
+  <rect x="30" y="52" width="4" height="8"/>
+  <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fill-rule="evenodd"/>
+`;
+
 const faviconSvg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" fill="${FG}"/>
-  <text x="32" y="44"
-        font-family="'Inter Tight', system-ui, sans-serif"
-        font-size="28"
-        font-weight="800"
-        letter-spacing="-1"
-        text-anchor="middle"
-        fill="${BG}">A.A</text>
+  <g fill="${BG}">${MARK_PATHS}</g>
 </svg>`;
 
 // 1200x630 share card - name + tagline + location on cream background.
@@ -58,7 +58,7 @@ const ogSvg = `<?xml version="1.0" encoding="UTF-8"?>
         font-size="22"
         letter-spacing="2"
         fill="${FG}" opacity="0.55">Szczytno - Warmia-Mazury - Polska i zdalnie na swiecie</text>
-  <circle cx="1100" cy="72" r="14" fill="${ACCENT}"/>
+  <g transform="translate(1040 36) scale(1.4)" fill="${FG}">${MARK_PATHS}</g>
 </svg>`;
 
 await mkdir(OUT, { recursive: true });

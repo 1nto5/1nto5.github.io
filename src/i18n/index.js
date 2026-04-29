@@ -45,13 +45,13 @@ export function getMeta(locale, page = "home") {
   return {
     ...localeBase,
     title: isEn
-      ? "Adrian Antosiak - AI, Apps, Web, IT | Independent Consultant"
-      : "Adrian Antosiak - AI, aplikacje, strony, IT | Niezależny konsultant",
+      ? "Adrian Antosiak - AI, Apps, Web | Independent Consultant"
+      : "Adrian Antosiak - AI, aplikacje, strony | Niezależny konsultant",
     description: isEn
-      ? "Independent consultant based in Szczytno, Poland. AI for business, custom applications, websites and online stores, IT support. Serving Poland and remote worldwide."
-      : "Niezależny konsultant ze Szczytna (Warmia-Mazury). Wdrożenia AI dla firm, aplikacje szyte na miarę, strony i sklepy internetowe, wsparcie IT. Polska i zdalnie na świecie.",
+      ? "Independent consultant based in Szczytno, Poland. AI for business, custom applications, websites and online stores. Working from Poland, remote anywhere."
+      : "Niezależny konsultant ze Szczytna (Warmia-Mazury). Wdrożenia AI dla firm, aplikacje dopasowane do Twoich potrzeb, strony i sklepy internetowe. Działam z Polski, zdalnie wszędzie indziej.",
     ogImageAlt: isEn
-      ? "Adrian Antosiak - AI, Apps, Web, IT"
-      : "Adrian Antosiak - AI, aplikacje, strony, IT",
+      ? "Adrian Antosiak - AI, Apps, Web"
+      : "Adrian Antosiak - AI, aplikacje, strony",
   };
 }
