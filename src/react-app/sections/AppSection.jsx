@@ -49,7 +49,7 @@ export default function AppSection({ active, t }) {
                 <div className="app-line" key={l.name}>
                   <div className="app-line__head">
                     <span>{l.name}</span>
-                    <b style={{ color: l.eff < 85 ? "#ff4d2e" : l.eff > 100 ? "#7bff9d" : "var(--accent)" }}>{l.eff}%</b>
+                    <b style={{ color: l.eff < 85 ? "#ff4d2e" : l.eff > 100 ? "var(--accent-2)" : "var(--accent)" }}>{l.eff}%</b>
                   </div>
                   <div className="app-bar"><div className="app-bar__fill" style={{ width: `${Math.min(100, (l.out / l.tgt) * 100)}%` }} /></div>
                   <div className="app-line__foot"><span>{l.out.toLocaleString()} / {l.tgt.toLocaleString()} {tt.units}</span><span>{tt.tgt}</span></div>
@@ -91,7 +91,10 @@ export default function AppSection({ active, t }) {
           font-family: var(--ff-app-body);
           --pad: clamp(20px, 4vw, 72px);
           padding-bottom: 120px;
-          background: radial-gradient(ellipse 80% 40% at 50% 0, rgba(255,85,0,.18), transparent 60%), var(--bg);
+          background:
+            radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 60%),
+            radial-gradient(ellipse 40% 30% at 90% 80%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 70%),
+            var(--bg);
           min-height: 100vh; position: relative; overflow: hidden;
           color: var(--fg);
         }
@@ -116,7 +119,7 @@ export default function AppSection({ active, t }) {
           to   { background-position: 36px 60px; }
         }
         .section--app > *{ position: relative; z-index: 1; }
-        .app-ticker{ border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); overflow: hidden; white-space: nowrap; font-family: var(--ff-app-mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); padding: 12px 0; background: rgba(255,85,0,.08);}
+        .app-ticker{ border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); overflow: hidden; white-space: nowrap; font-family: var(--ff-app-mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); padding: 12px 0; background: color-mix(in srgb, var(--accent) 12%, transparent);}
         .app-ticker__inner{ display:inline-block; padding-left: 100%; transition: transform 80ms linear;}
         .app-wrap{ max-width: 1400px; margin: 0 auto; padding: 80px var(--pad) 0;}
         .app-head{ display:flex; justify-content:space-between; font-family: var(--ff-app-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .2em; color: var(--mute); border-bottom: 1px solid var(--rule); padding-bottom: 20px; margin-bottom: 48px;}
@@ -137,7 +140,7 @@ export default function AppSection({ active, t }) {
         .app-line__head{ display:flex; justify-content:space-between; font-family: var(--ff-app-mono); font-size: 12px; letter-spacing: .08em;}
         .app-line__head b{ font-weight: 700;}
         .app-bar{ height: 6px; background: var(--rule); margin: 10px 0; position:relative; overflow:hidden;}
-        .app-bar__fill{ height: 100%; background: repeating-linear-gradient(90deg, var(--accent) 0 8px, rgba(255,85,0,.5) 8px 12px); transition: width .6s var(--ease);}
+        .app-bar__fill{ height: 100%; background: repeating-linear-gradient(90deg, var(--accent) 0 8px, color-mix(in srgb, var(--accent-2) 80%, transparent) 8px 12px); transition: width .6s var(--ease);}
         .app-line__foot{ display:flex; justify-content:space-between; font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: .15em;}
         .app-roster{ list-style:none; padding: 8px 16px;}
         .app-roster li{ display:grid; grid-template-columns: 12px 1.2fr 1fr auto; gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px dashed var(--rule);}
@@ -146,17 +149,19 @@ export default function AppSection({ active, t }) {
         .app-roster__led.on{ background: var(--accent); box-shadow: 0 0 8px var(--accent);}
         .app-roster__n{ font-family: var(--ff-app-serif); font-size: 20px; font-weight: 400;}
         .app-roster__note{ font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform:uppercase; letter-spacing:.1em;}
-        .app-roster__c{ font-family: var(--ff-app-serif); font-size: 22px; color: var(--accent); font-variant-numeric: tabular-nums;}
+        .app-roster__c{ font-family: var(--ff-app-serif); font-size: 22px; color: var(--accent-2); font-variant-numeric: tabular-nums;}
         .app-panel__foot{ border-top: 1px solid var(--rule); padding: 10px 16px; font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: .15em;}
         .app-feat{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); margin-bottom: 48px;}
         .app-feat > div{ padding: 32px 20px; border-right: 1px solid var(--rule); min-width: 0;}
         .app-feat > div:last-child{ border-right: 0;}
         .app-feat h3{ font-family: var(--ff-app-serif); font-weight: 400; font-size: 48px; color: var(--accent); margin-bottom: 12px; letter-spacing:-.02em; overflow-wrap: break-word;}
+        .app-feat > div:nth-child(2) h3{ color: var(--accent-2); }
         .app-feat p{ font-family: var(--ff-app-body); font-size: 14px; line-height: 1.5;}
         .app-kpis{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule);}
         .app-kpis > div{ padding: 28px 20px; border-right: 1px solid var(--rule);}
         .app-kpis > div:last-child{ border-right: 0;}
         .app-kpis b{ font-family: var(--ff-app-serif); font-size: clamp(32px, 4vw, 56px); display:block; color: var(--accent); margin-bottom: 6px; line-height: 1;}
+        .app-kpis > div:nth-child(2) b{ color: var(--accent-2); }
         .app-kpis span{ font-family: var(--ff-app-mono); font-size: 11px; color: var(--mute); text-transform:uppercase; letter-spacing: .15em;}
         @media (max-width: 900px){
           .app-grid{ grid-template-columns: minmax(0, 1fr); gap: 24px;}

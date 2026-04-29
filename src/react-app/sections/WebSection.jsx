@@ -61,7 +61,10 @@ export default function WebSection({ active, t }) {
           font-family: var(--ff-web-sans);
           --pad: clamp(24px, 4vw, 80px);
           padding: 120px var(--pad) 140px;
-          background: radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 50%), var(--bg);
+          background:
+            radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 45%),
+            radial-gradient(circle at 82% 88%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 50%),
+            var(--bg);
           min-height: 100vh; color: var(--fg);
           position: relative;
         }
@@ -75,6 +78,22 @@ export default function WebSection({ active, t }) {
             linear-gradient(90deg, transparent 31px, color-mix(in srgb, var(--accent) 14%, transparent) 31px) 0 0/32px 32px;
           opacity: .45;
           z-index: 0;
+        }
+        .section--web::after{
+          /* Bauhaus geometric mark: a circle/square overlap riso-printed in the corner */
+          content: "";
+          position: absolute;
+          top: 60px; right: clamp(20px, 4vw, 60px);
+          width: clamp(120px, 18vw, 220px);
+          aspect-ratio: 1 / 1;
+          background:
+            radial-gradient(circle at 35% 35%, var(--accent-2) 0 38%, transparent 38%),
+            linear-gradient(135deg, var(--accent) 0 60%, transparent 60%);
+          mix-blend-mode: multiply;
+          opacity: .85;
+          pointer-events: none;
+          z-index: 0;
+          filter: contrast(1.05);
         }
         @media (prefers-reduced-motion: no-preference){
           .section--web::before{ animation: webGridPulse 4.8s ease-in-out infinite; }
@@ -95,7 +114,8 @@ export default function WebSection({ active, t }) {
         .web-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 64px; align-items:start; margin-bottom: 72px;}
         .web-copy p{ font-size: clamp(16px, 1.4vw, 20px); line-height: 1.55; margin-bottom: 20px; max-width: 42ch;}
         .web-services{ list-style:none; margin-top: 32px; border-top: 1px solid var(--rule);}
-        .web-services li{ display:flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px;}
+        .web-services li{ display:flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; transition: padding-left .25s var(--ease), background .25s var(--ease);}
+        .web-services li:hover{ padding-left: 8px; background: color-mix(in srgb, var(--accent-2) 16%, transparent);}
         .web-services b{ color: var(--accent); font-family: var(--ff-web-mono); font-weight: 500;}
         .web-browser{ border: 1px solid var(--fg); background: #fff; box-shadow: 12px 12px 0 var(--fg); overflow: hidden;}
         .web-browser__bar{ display:flex; align-items:center; gap:12px; padding: 10px 14px; border-bottom: 1px solid var(--fg); background: var(--fg); color: var(--bg); font-family: var(--ff-web-mono); font-size: 12px;}
@@ -112,17 +132,21 @@ export default function WebSection({ active, t }) {
         .web-mock__cta{ display:inline-block; padding: 10px 16px; background: var(--accent); color: #fff; font-family: var(--ff-web-mono); font-size: 12px; letter-spacing: .08em;}
         .web-mock__grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px;}
         .web-mock__tile{ aspect-ratio: 4/3; background: repeating-linear-gradient(135deg, #eef1f7 0 10px, #dce2ec 10px 20px); border: 1px solid #dce2ec;}
-        .web-browser__foot{ display:flex; justify-content: space-between; padding: 8px 14px; border-top: 1px solid var(--fg); font-family: var(--ff-web-mono); font-size: 12px; color: var(--mute);}
+        .web-browser__foot{ display:flex; justify-content: space-between; padding: 8px 14px; border-top: 1px solid var(--fg); font-family: var(--ff-web-mono); font-size: 12px; color: var(--mute); background: #f7f4ec;}
         .web-browser__foot b{ color: var(--accent); font-weight: 700;}
         .web-rail{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--fg); font-family: var(--ff-web-mono); font-size: 13px;}
-        .web-rail > div{ padding: 20px 12px; border-right: 1px solid var(--rule);}
+        .web-rail > div{ padding: 20px 12px; border-right: 1px solid var(--rule); position: relative;}
+        .web-rail > div::before{ content:""; position:absolute; left:12px; top:0; width: 28px; height: 4px; background: var(--accent);}
+        .web-rail > div:nth-child(2)::before, .web-rail > div:nth-child(4)::before{ background: var(--accent-2);}
         .web-rail > div:last-child{ border-right: 0;}
         .web-rail b{ display:block; color: var(--accent); margin-bottom:6px; font-weight:600;}
+        .web-rail > div:nth-child(2) b, .web-rail > div:nth-child(4) b{ color: color-mix(in srgb, var(--accent-2) 80%, var(--fg));}
         @media (max-width: 900px){
           .web-grid{ grid-template-columns: minmax(0, 1fr); gap: 32px;}
           .web-rail{ grid-template-columns: repeat(2, minmax(0, 1fr));}
           .web-rail > div{ border-bottom: 1px solid var(--rule);}
           .web-browser{ box-shadow: 6px 6px 0 var(--fg);}
+          .section--web::after{ display: none;}
         }
       `}</style>
     </section>

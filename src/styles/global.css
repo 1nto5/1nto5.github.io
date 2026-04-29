@@ -1,12 +1,13 @@
 :root {
   --ease: cubic-bezier(.4, 0, .2, 1);
-  --bg: #f3f1ec;
-  --fg: #0b0b0b;
-  --mute: #6b6b66;
-  --rule: #0b0b0b;
-  --accent: #0b0b0b;
-  --chrome: #0b0b0b;
-  --chrome-fg: #f3f1ec;
+  --bg: #ebe5d3;
+  --fg: #0d0c08;
+  --mute: #7a7460;
+  --rule: #0d0c08;
+  --accent: #c4391f;
+  --accent-2: #0d0c08;
+  --chrome: #0d0c08;
+  --chrome-fg: #ebe5d3;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -55,6 +56,19 @@ body::after {
 :root[data-world="app"] body::after {
   mix-blend-mode: screen;
   opacity: 0.09;
+}
+
+/* Editorial flourish: a thin accent rule that travels with the active world */
+:root::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 1001;
+  pointer-events: none;
+  transform-origin: left;
+  opacity: 0.85;
 }
 
 .dropcap::first-letter {

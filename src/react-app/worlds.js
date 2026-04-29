@@ -7,13 +7,14 @@ export const WORLDS = [
     kicker: "Applied intelligence",
     glyph: "⌬",
     vars: {
-      "--bg": "#000000",
-      "--fg": "#ffffff",
-      "--mute": "#6b7280",
-      "--rule": "#1a2e22",
-      "--accent": "#00ff94",
-      "--chrome": "#00ff94",
-      "--chrome-fg": "#000000",
+      "--bg": "#0b1024",
+      "--fg": "#eef0fa",
+      "--mute": "#7079a0",
+      "--rule": "#1d2557",
+      "--accent": "#c8ff2e",
+      "--accent-2": "#7c5cff",
+      "--chrome": "#c8ff2e",
+      "--chrome-fg": "#0b1024",
     },
   },
   {
@@ -24,13 +25,14 @@ export const WORLDS = [
     kicker: "Production + people, one app",
     glyph: "▚",
     vars: {
-      "--bg": "#3d1d08",
-      "--fg": "#fff1d6",
-      "--mute": "#b08660",
-      "--rule": "#7a3e16",
-      "--accent": "#ff6a1a",
-      "--chrome": "#ff6a1a",
-      "--chrome-fg": "#1f0d04",
+      "--bg": "#2a140a",
+      "--fg": "#f4e3c5",
+      "--mute": "#a08160",
+      "--rule": "#5e2e15",
+      "--accent": "#ff7a35",
+      "--accent-2": "#ffce4a",
+      "--chrome": "#ff7a35",
+      "--chrome-fg": "#1f0d05",
     },
   },
   {
@@ -41,13 +43,14 @@ export const WORLDS = [
     kicker: "Marketing sites that ship",
     glyph: "◐",
     vars: {
-      "--bg": "#ffffff",
-      "--fg": "#0a0f3d",
-      "--mute": "#5b6b80",
-      "--rule": "#0a0f3d",
-      "--accent": "#0019ff",
-      "--chrome": "#0019ff",
-      "--chrome-fg": "#ffffff",
+      "--bg": "#f3edda",
+      "--fg": "#0a1428",
+      "--mute": "#5b6680",
+      "--rule": "#0a1428",
+      "--accent": "#1933ff",
+      "--accent-2": "#ffba00",
+      "--chrome": "#1933ff",
+      "--chrome-fg": "#f3edda",
     },
   },
 ];
@@ -55,17 +58,18 @@ export const WORLDS = [
 export const NEUTRAL = {
   id: "neutral",
   vars: {
-    "--bg": "#f3f1ec",
-    "--fg": "#0b0b0b",
-    "--mute": "#6b6b66",
-    "--rule": "#0b0b0b",
-    "--accent": "#0b0b0b",
-    "--chrome": "#0b0b0b",
-    "--chrome-fg": "#f3f1ec",
+    "--bg": "#ebe5d3",
+    "--fg": "#0d0c08",
+    "--mute": "#7a7460",
+    "--rule": "#0d0c08",
+    "--accent": "#c4391f",
+    "--accent-2": "#0d0c08",
+    "--chrome": "#0d0c08",
+    "--chrome-fg": "#ebe5d3",
   },
 };
 
-const COLOR_KEYS = ["--bg", "--fg", "--mute", "--rule", "--accent", "--chrome", "--chrome-fg"];
+const COLOR_KEYS = ["--bg", "--fg", "--mute", "--rule", "--accent", "--accent-2", "--chrome", "--chrome-fg"];
 
 export function applyVars(vars, worldId) {
   if (typeof document === "undefined") return;

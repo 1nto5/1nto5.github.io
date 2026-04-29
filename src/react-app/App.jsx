@@ -277,8 +277,11 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
         <div className="hero__l">
           <div className="hero__kicker">
             <span className="hero__dot"/> {t.kicker}
+            <span className="hero__stamp" aria-hidden>№ 01 · EST. 2024</span>
           </div>
-          <h1 className="hero__title">Adrian<br/>Antosiak.</h1>
+          <h1 className="hero__title">
+            Adrian<br/>Antosiak<span className="hero__stop" aria-hidden>.</span>
+          </h1>
           <p className="hero__lead dropcap">
             {isMobile ? t.hero.lead_tap : t.hero.lead_hover}
           </p>
@@ -363,13 +366,28 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
           font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;
           text-transform: uppercase; letter-spacing: .2em;
           color: var(--mute);
-          display: flex; align-items: center; gap: 10px;
+          display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
           margin-bottom: 40px;
         }
         .hero__dot{
           width: 8px; height: 8px; border-radius: 50%;
           background: var(--accent);
-          box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+          box-shadow:
+            0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent),
+            0 0 14px color-mix(in srgb, var(--accent) 45%, transparent);
+        }
+        .hero__stamp{
+          display: inline-block;
+          padding: 3px 8px;
+          border: 1px solid var(--rule);
+          font-size: 10px;
+          letter-spacing: .25em;
+          color: var(--mute);
+          margin-left: 4px;
+        }
+        .hero__stop{
+          color: var(--accent);
+          margin-left: -.05em;
         }
         .hero__title{
           font-family: 'Inter Tight', system-ui, sans-serif;
