@@ -3,12 +3,12 @@
   "kicker": "Adrian Antosiak · Freelancer · Polska",
   "email_addr": "czesc@adrianantosiak.pl",
   "hero": {
-    "lead_hover": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu. Kliknij w usługę, aby zobaczyć więcej.",
-    "lead_tap": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu. Kliknij w usługę, aby zobaczyć więcej.",
+    "lead_hover": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu.",
+    "lead_tap": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu.",
     "email": "czesc@adrianantosiak.pl ↗",
     "phone": "+48 503 751 676",
     "index": "Usługi",
-    "hint_hover": "- najedź na wiersz, żeby podejrzeć -",
+    "hint_hover": "- kliknij, aby zobaczyć -",
     "hint_tap": "- dotknij wiersz, żeby wejść głębiej -",
     "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APLIKACJE · WWW   ◆   PRZYJMUJĘ NOWE PROJEKTY   ◆   "
   },

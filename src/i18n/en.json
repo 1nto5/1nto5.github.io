@@ -3,12 +3,12 @@
   "kicker": "Adrian Antosiak · Independent · Poland",
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
-    "lead_hover": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running. Click a service to see more.",
-    "lead_tap": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running. Click a service to see more.",
+    "lead_hover": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running.",
+    "lead_tap": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running.",
     "email": "hi@adrianantosiak.pl ↗",
     "phone": "+48 503 751 676",
     "index": "Services",
-    "hint_hover": "- hover a row to preview -",
+    "hint_hover": "- click to see -",
     "hint_tap": "- tap a row to jump in -",
     "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APPS · WEB   ◆   TAKING ON NEW CLIENTS   ◆   "
   },
