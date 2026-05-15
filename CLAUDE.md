@@ -23,9 +23,9 @@ Personal site for Adrian Antosiak, independent consultant (AI, apps, web, IT). P
 - HTTPS: free Let's Encrypt cert auto-provisioned and auto-renewed by GitHub. "Enforce HTTPS" is enabled in repo Settings > Pages.
 - `public/CNAME` contains `adrianantosiak.pl` and is copied to `dist/` by Astro on every build. Do not delete.
 
-## Location
+## Location / positioning
 
-- Adrian is based in **Szczytno**, Warmian-Masurian Voivodeship, Poland. Surfaced in meta description, JSON-LD (`addressLocality`, `addressRegion`, `geo`, `areaServed`), and visible copy for local-SEO queries.
+- Adrian is based in Szczytno, but **the site intentionally does not surface location, role labels, or local-SEO signals.** Do not reintroduce "freelancer", "niezależny konsultant" / "independent consultant", "Szczytno", "Warmia-Mazury" / "Warmia-Masuria", "Polska" / "Poland", or year/EST. stamps in visible UI, `<title>`, `<meta name="description">`, JSON-LD, OG image, or privacy text unless explicitly asked.
 
 ## Domain
 
@@ -39,23 +39,23 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 
 ### GitHub Pages
 
-| Type | Host | Value |
-|------|------|-------|
-| A | empty | 185.199.108.153 |
-| A | empty | 185.199.109.153 |
-| A | empty | 185.199.110.153 |
-| A | empty | 185.199.111.153 |
-| CNAME | www | 1nto5.github.io. |
+| Type  | Host  | Value            |
+| ----- | ----- | ---------------- |
+| A     | empty | 185.199.108.153  |
+| A     | empty | 185.199.109.153  |
+| A     | empty | 185.199.110.153  |
+| A     | empty | 185.199.111.153  |
+| CNAME | www   | 1nto5.github.io. |
 
 ### iCloud+ Custom Email Domain
 
-| Type | Host | Value | Priority |
-|------|------|-------|----------|
-| MX | empty | mx01.mail.icloud.com. | 10 |
-| MX | empty | mx02.mail.icloud.com. | 10 |
-| TXT | empty | apple-domain=MufmXtpgSMGhbhwf | - |
-| TXT | empty | v=spf1 include:icloud.com ~all | - |
-| CNAME | sig1._domainkey | sig1.dkim.adrianantosiak.pl.at.icloudmailadmin.com. | - |
+| Type  | Host             | Value                                               | Priority |
+| ----- | ---------------- | --------------------------------------------------- | -------- |
+| MX    | empty            | mx01.mail.icloud.com.                               | 10       |
+| MX    | empty            | mx02.mail.icloud.com.                               | 10       |
+| TXT   | empty            | apple-domain=MufmXtpgSMGhbhwf                       | -        |
+| TXT   | empty            | v=spf1 include:icloud.com ~all                      | -        |
+| CNAME | sig1.\_domainkey | sig1.dkim.adrianantosiak.pl.at.icloudmailadmin.com. | -        |
 
 ### home.pl DNS quirks
 
@@ -70,9 +70,9 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 - Provider: **iCloud+ Custom Email Domain** (included with user's iCloud+ plan, not a separate paid service).
 - Primary Apple ID inbox: `aantosiak@icloud.com`. All mail to the custom domain lands there.
 - Configured sendable addresses on `adrianantosiak.pl`:
-  - `kontakt@` (primary public contact)
-  - `hi@`
-  - `a@`
+- `kontakt@` (primary public contact)
+- `hi@`
+- `a@`
 - **Catch-all is enabled** ("Allow All Incoming Messages" = On). Any address at `adrianantosiak.pl` that doesn't match the three explicit addresses still delivers to the iCloud inbox.
 - Management UI: https://www.icloud.com/icloudplus/customdomain
 
@@ -89,7 +89,7 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 ## Conventions
 
 - Site is bilingual (PL/EN) via `src/i18n/pl.json` + `src/i18n/en.json`. When editing user-facing strings, update both locales.
-- Typography: hyphens only (`-`); never em dash (`—`) or en dash (`–`) in UI strings, comments, or docs.
+- Typography: hyphens only (`-`); never em dash (`-`) or en dash (`-`) in UI strings, comments, or docs.
 - Git interactions (commit messages, branch names, PR titles/descriptions) in English.
 - All commits require user approval of the message before creation.
 - Before every push, confirm `bun run build` succeeds locally - the deploy action repeats the build, but catching errors here saves a failed Actions run.

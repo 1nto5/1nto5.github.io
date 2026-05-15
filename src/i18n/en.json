@@ -1,6 +1,6 @@
 {
   "langName": "English",
-  "kicker": "Adrian Antosiak · Independent · Poland",
+  "kicker": "AI · Apps · Web",
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
     "lead_hover": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running.",
@@ -17,11 +17,6 @@
     "app": "Custom applications",
     "web": "Websites & online stores"
   },
-  "location": {
-    "city": "Szczytno",
-    "region": "Warmia-Masuria",
-    "line": "Based in Szczytno, Warmia-Masuria. Poland and remote anywhere."
-  },
   "divider_next": "next ↓",
   "contact": {
     "kicker": "- Let's talk -",
@@ -30,18 +25,15 @@
     "title_l3": "Email me.",
     "email_l": "Email",
     "phone_l": "Phone",
-    "loc_l": "Based in",
-    "loc_v": "Szczytno · Poland · remote anywhere",
     "avail_l": "Status",
     "avail_v": "Taking on clients",
-    "foot_l": "Independent. No agency markup.",
     "privacy_l": "Privacy policy"
   },
   "privacy": {
     "heading": "Privacy Policy",
     "lead": "This site - adrianantosiak.pl - uses no tracking cookies, collects no analytics, and shows no ads. Personal data is processed only when you choose to email or call me.",
     "sections": [
-      ["Data controller", "The data controller is Adrian Antosiak, an independent consultant based in Szczytno (Warmia-Masuria, Poland). For anything related to personal data, contact kontakt@adrianantosiak.pl."],
+      ["Data controller", "The data controller is Adrian Antosiak. For anything related to personal data, contact kontakt@adrianantosiak.pl."],
       ["What data is collected", "Visiting the site on its own does not store personal data on my side. The host, GitHub Pages, may keep technical server logs (IP address, user-agent, request time) under its own policy - I have no access to them. If you email kontakt@adrianantosiak.pl or call, I retain your name, email or phone number, and the content of your enquiry."],
       ["Legal basis", "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to enquiries)."],
       ["Retention", "Emails are kept in my iCloud inbox for as long as needed to handle the enquiry and any reasonable follow-up, after which they are deleted or archived."],

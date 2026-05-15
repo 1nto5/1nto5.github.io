@@ -277,7 +277,6 @@ function Hero({ world, setWorld, onJump, isMobile, t }) {
         <div className="hero__l">
           <div className="hero__kicker">
             <span className="hero__dot"/> {t.kicker}
-            <span className="hero__stamp" aria-hidden>№ 01 · EST. 2024</span>
           </div>
           <h1 className="hero__title">
             Adrian<br/>Antosiak<span className="hero__stop" aria-hidden>.</span>
@@ -495,15 +494,11 @@ function Contact({ t, lang }) {
             <span>{t.contact.phone_l}</span><b>+48 503 751 676</b>
           </a>
           <div className="contact__item">
-            <span>{t.contact.loc_l}</span><b>{t.contact.loc_v}</b>
-          </div>
-          <div className="contact__item">
             <span>{t.contact.avail_l}</span><b>{t.contact.avail_v}</b>
           </div>
         </div>
         <div className="contact__foot">
           <span>© {new Date().getFullYear()} Adrian Antosiak</span>
-          <span>{t.contact.foot_l}</span>
           <a className="contact__privacy" href={privacyHref}>{t.contact.privacy_l}</a>
         </div>
       </div>

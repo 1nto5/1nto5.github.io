@@ -15,9 +15,6 @@ const personJsonLd = {
   "@type": "Person",
   name: "Adrian Antosiak",
   url: SITE + "/",
-  jobTitle: "Independent Consultant",
-  description:
-    "Independent consultant specialising in AI for business, custom applications, and websites.",
   knowsAbout: [
     "Artificial Intelligence",
     "Large Language Models",
@@ -32,49 +29,7 @@ const personJsonLd = {
   ],
   email: "mailto:kontakt@adrianantosiak.pl",
   telephone: "+48503751676",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Szczytno",
-    addressRegion: "warmińsko-mazurskie",
-    addressCountry: "PL",
-  },
   knowsLanguage: ["pl", "en"],
-};
-
-const serviceJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Adrian Antosiak",
-  url: SITE + "/",
-  image: ogImage,
-  priceRange: "$$",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Szczytno",
-    addressRegion: "warmińsko-mazurskie",
-    addressCountry: "PL",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 53.5634,
-    longitude: 21.0017,
-  },
-  areaServed: [
-    { "@type": "City", name: "Szczytno" },
-    { "@type": "AdministrativeArea", name: "Warmia-Mazury" },
-    { "@type": "Country", name: "Poland" },
-    { "@type": "Place", name: "Worldwide (remote)" },
-  ],
-  availableLanguage: ["pl", "en"],
-  serviceType: [
-    "AI consulting",
-    "Business process automation",
-    "Custom application development",
-    "Web development",
-  ],
-  founder: { "@type": "Person", name: "Adrian Antosiak" },
-  telephone: "+48503751676",
-  email: "kontakt@adrianantosiak.pl",
 };
 
 const websiteJsonLd = {
@@ -132,7 +87,6 @@ const websiteJsonLd = {
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
-    <script type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
 
     <script is:inline>

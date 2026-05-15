@@ -45,11 +45,11 @@ export function getMeta(locale, page = "home") {
   return {
     ...localeBase,
     title: isEn
-      ? "Adrian Antosiak - AI, Apps, Web | Independent Consultant"
-      : "Adrian Antosiak - AI, aplikacje, strony | Niezależny konsultant",
+      ? "Adrian Antosiak - AI, Apps, Web"
+      : "Adrian Antosiak - AI, aplikacje, strony",
     description: isEn
-      ? "Independent consultant based in Szczytno, Poland. AI for business, custom applications, websites and online stores. Working from Poland, remote anywhere."
-      : "Niezależny konsultant ze Szczytna (Warmia-Mazury). Wdrożenia AI dla firm, aplikacje dopasowane do Twoich potrzeb, strony i sklepy internetowe. Działam z Polski, zdalnie wszędzie indziej.",
+      ? "AI for business, custom applications, websites and online stores."
+      : "Wdrożenia AI dla firm, aplikacje dopasowane do Twoich potrzeb, strony i sklepy internetowe.",
     ogImageAlt: isEn
       ? "Adrian Antosiak - AI, Apps, Web"
       : "Adrian Antosiak - AI, aplikacje, strony",

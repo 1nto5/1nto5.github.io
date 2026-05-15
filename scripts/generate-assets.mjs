@@ -52,12 +52,12 @@ const ogSvg = `<?xml version="1.0" encoding="UTF-8"?>
         font-family="'Inter Tight', system-ui, sans-serif"
         font-size="36"
         font-weight="500"
-        fill="${FG}">AI  -  aplikacje  -  strony  -  IT</text>
+        fill="${FG}">AI  -  aplikacje  -  strony</text>
   <text x="72" y="570"
         font-family="'JetBrains Mono', ui-monospace, monospace"
         font-size="22"
         letter-spacing="2"
-        fill="${FG}" opacity="0.55">Szczytno - Warmia-Mazury - Polska i zdalnie na swiecie</text>
+        fill="${FG}" opacity="0.55">adrianantosiak.pl</text>
   <g transform="translate(1040 36) scale(1.4)" fill="${FG}">${MARK_PATHS}</g>
 </svg>`;
 
