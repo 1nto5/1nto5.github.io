@@ -148,6 +148,9 @@ export default function Backdrop() {
     let raf = 0;
     let lastY = -1;
     let dirty = true;
+    // Eased scroll: wheel input arrives in ~100px steps - chasing the target
+    // with a short lerp turns those steps into continuous motion.
+    let syEase = -1;
 
     // Reused every frame - no per-frame allocation.
     const px = new Float64Array(N);
@@ -197,17 +200,26 @@ export default function Backdrop() {
     };
 
     const drawFrame = (time) => {
-      const scrollY = window.scrollY;
+      const target = window.scrollY;
       const reduced = mql.matches;
-      // With reduced motion there is no shimmer, so a still page needs no redraw.
-      if (reduced && scrollY === lastY && !dirty) {
+      // With reduced motion the scrub is direct and a still page needs no redraw.
+      if (reduced && target === lastY && !dirty) {
         return;
       }
-      lastY = scrollY;
+      lastY = target;
       dirty = false;
 
+      if (syEase < 0 || reduced) syEase = target;
+      else {
+        syEase += (target - syEase) * 0.16;
+        if (Math.abs(target - syEase) < 0.3) syEase = target;
+      }
+      const scrollY = syEase;
+
       // Global phase progress - r1: mark -> starfield, r2: starfield -> "@".
-      const r1 = h > 0 ? clamp01((scrollY - h * 0.45) / (h * 0.75)) : 0;
+      // The dissolve starts almost immediately so the backdrop answers the
+      // very first wheel tick from the default view.
+      const r1 = h > 0 ? clamp01((scrollY - h * 0.06) / (h * 0.94)) : 0;
       const r2 = clamp01((scrollY - cStart) / cSpan);
       const lit = Math.max(1 - smoothstep(r1), smoothstep(r2));
       // Dim floor keeps phase B node alpha at or below ~0.15.
