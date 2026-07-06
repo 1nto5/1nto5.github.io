@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DICT, LangCtx } from "./i18n.js";
 import Backdrop from "./Backdrop.jsx";
 import AISection from "./sections/AISection.jsx";
@@ -16,6 +16,15 @@ export default function App({ locale = "pl" }) {
     if (window.location.pathname !== target) window.location.href = target;
   };
 
+  useEffect(() => {
+    // Entering the page with a #section hash should also show the
+    // developed scene, not its blank start.
+    const id = window.location.hash.slice(1);
+    if (PINNED_IDS.includes(id)) {
+      requestAnimationFrame(() => jumpToSection(id));
+    }
+  }, []);
+
   return (
     <LangCtx.Provider value={{ lang, setLang, t }}>
       <div className="font-sans text-white">
@@ -28,6 +37,19 @@ export default function App({ locale = "pl" }) {
       </div>
     </LangCtx.Provider>
   );
+}
+
+// Pinned scenes develop over their scroll span - direct navigation should
+// land at the developed end of the scene (p ~ 1), not its blank start.
+const PINNED_IDS = ["ai", "app", "web"];
+
+function jumpToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const span = Math.max(0, el.offsetHeight - window.innerHeight);
+  const y = PINNED_IDS.includes(id) ? el.offsetTop + Math.max(0, span - 2) : el.offsetTop;
+  window.scrollTo({ top: y, left: 0, behavior: "instant" });
+  history.replaceState(null, "", "#" + id);
 }
 
 function Mark({ className }) {
@@ -43,10 +65,15 @@ function Mark({ className }) {
 function Navbar({ t, lang }) {
   const [open, setOpen] = useState(false);
   const links = [
-    { href: "#ai", label: t.nav_pill.ai },
-    { href: "#app", label: t.nav_pill.app },
-    { href: "#web", label: t.nav_pill.web },
+    { id: "ai", href: "#ai", label: t.nav_pill.ai },
+    { id: "app", href: "#app", label: t.nav_pill.app },
+    { id: "web", href: "#web", label: t.nav_pill.web },
   ];
+  const onNav = (e, id) => {
+    e.preventDefault();
+    setOpen(false);
+    jumpToSection(id);
+  };
   const other = lang === "pl" ? { href: "/en/", label: "EN", hreflang: "en" } : { href: "/", label: "PL", hreflang: "pl" };
 
   return (
@@ -59,7 +86,12 @@ function Navbar({ t, lang }) {
 
         <div className="hidden items-center gap-7 md:flex">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-[13px] font-medium text-gray-700 transition-colors hover:text-black">
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={(e) => onNav(e, l.id)}
+              className="text-[13px] font-medium text-gray-700 transition-colors hover:text-black"
+            >
               {l.label}
             </a>
           ))}
@@ -111,7 +143,7 @@ function Navbar({ t, lang }) {
               key={l.href}
               href={l.href}
               className="rounded-xl px-4 py-3 text-[15px] font-medium text-gray-800 hover:bg-black/5"
-              onClick={() => setOpen(false)}
+              onClick={(e) => onNav(e, l.id)}
             >
               {l.label}
             </a>
