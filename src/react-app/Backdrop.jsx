@@ -1,12 +1,14 @@
 import { useEffect, useRef } from "react";
 
-// Scroll-scrubbed constellation backdrop. One set of particles morphs between
-// formations as the page scrolls: A.A monogram (hero) -> neural net (AI) ->
-// UI grid (apps) -> globe (web) -> dispersal (contact). No self-running
-// timeline - scroll position is the clock; only a faint shimmer is ambient.
+// Scroll-scrubbed connective backdrop in three phases:
+// A - hero: the A.A monogram constellation, fully lit, with data pulses.
+// B - the long middle: particles dissolve into a very dim ambient starfield
+//     (no edges, no pulses) so the section scenes above own the stage.
+// C - contact: particles regroup into an "@" glyph behind the contact card
+//     and the hero brightness returns.
+// Scroll position is the clock; wall-clock time only adds a <= 2px shimmer.
 
 const N = 150;
-const SECTION_IDS = ["ai", "app", "web", "kontakt"];
 
 // Geometric A.A monogram as polylines (same shape as the favicon mark).
 const MARK_POLYS = [
@@ -17,10 +19,41 @@ const MARK_POLYS = [
   [[50, 18], [43, 38], [57, 38], [50, 18]],
 ];
 
+// "@" glyph in the same 64x64 space: inner loop, stem, and an outer open
+// arc that begins with a short outward tail at the lower right.
+function buildAtPolys() {
+  const polys = [];
+
+  const inner = [];
+  for (let k = 0; k <= 28; k++) {
+    const a = (k / 28) * Math.PI * 2;
+    inner.push([30 + 10 * Math.cos(a), 32 + 10 * Math.sin(a)]);
+  }
+  polys.push(inner);
+
+  polys.push([[40, 23], [40, 41]]);
+
+  const outer = [[32 + 27 * Math.cos(0.32), 32 + 27 * Math.sin(0.32)]];
+  const a0 = 0.55;
+  const sweep = Math.PI * 2 - 1.1;
+  for (let k = 0; k <= 56; k++) {
+    const a = a0 + (k / 56) * sweep;
+    outer.push([32 + 22 * Math.cos(a), 32 + 22 * Math.sin(a)]);
+  }
+  polys.push(outer);
+
+  return polys;
+}
+const AT_POLYS = buildAtPolys();
+
 // Deterministic pseudo-random in [0, 1) - keeps formations stable across renders.
 function rand(i, salt) {
   const x = Math.sin(i * 127.1 + salt * 311.7) * 43758.5453;
   return x - Math.floor(x);
+}
+
+function clamp01(t) {
+  return t <= 0 ? 0 : t >= 1 ? 1 : t;
 }
 
 function smoothstep(t) {
@@ -61,62 +94,26 @@ function buildFormations(w, h) {
 
   // Hero: the monogram, centered in the space above the bottom-anchored copy.
   // Sized against both axes so it stays fully visible on narrow screens.
-  const size = Math.min(w * 0.8, h * 0.46);
-  const raw = samplePolylines(MARK_POLYS, N);
-  const mark = raw.map(([x, y]) => [
-    cx + ((x - 32) / 64) * size,
-    h * 0.33 + ((y - 32) / 64) * size,
+  const markSize = Math.min(w * 0.8, h * 0.46);
+  const mark = samplePolylines(MARK_POLYS, N).map(([x, y]) => [
+    cx + ((x - 32) / 64) * markSize,
+    h * 0.33 + ((y - 32) / 64) * markSize,
   ]);
 
-  // AI: layered neural net, left to right.
-  const LAYERS = 5;
-  const perLayer = Math.ceil(N / LAYERS);
-  const net = [];
+  // Middle: an even ambient scatter across the whole viewport.
+  const star = [];
   for (let i = 0; i < N; i++) {
-    const layer = i % LAYERS;
-    const idx = Math.floor(i / LAYERS);
-    const x = w * (0.16 + (0.68 * layer) / (LAYERS - 1)) + (rand(i, 1) - 0.5) * w * 0.05;
-    const y = h * (0.14 + (0.62 * (idx + 0.5)) / perLayer) + (rand(i, 2) - 0.5) * h * 0.06;
-    net.push([x, y]);
+    star.push([rand(i, 7) * w, rand(i, 8) * h]);
   }
 
-  // Apps: an ordered grid of modules.
-  const COLS = 15;
-  const ROWS = Math.ceil(N / COLS);
-  const gw = Math.min(w * 0.72, 900);
-  const gh = h * 0.52;
-  const grid = [];
-  for (let i = 0; i < N; i++) {
-    const c = i % COLS;
-    const r = Math.floor(i / COLS);
-    grid.push([
-      cx - gw / 2 + (gw * (c + 0.5)) / COLS,
-      h * 0.16 + (gh * (r + 0.5)) / ROWS,
-    ]);
-  }
+  // Contact: the "@" glyph, centered so it glows behind/around the card.
+  const atSize = Math.min(w * 0.85, h * 0.6);
+  const at = samplePolylines(AT_POLYS, N).map(([x, y]) => [
+    cx + ((x - 32) / 64) * atSize,
+    h * 0.5 + ((y - 32) / 64) * atSize,
+  ]);
 
-  // Web: fibonacci sphere, stored in 3D; rotated + projected at draw time.
-  const R = Math.min(w, h) * 0.3;
-  const sphere = [];
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < N; i++) {
-    const yy = 1 - (2 * (i + 0.5)) / N;
-    const rr = Math.sqrt(1 - yy * yy);
-    const th = golden * i;
-    sphere.push([Math.cos(th) * rr * R, yy * R, Math.sin(th) * rr * R]);
-  }
-
-  return { mark, net, grid, sphere, sphereCenter: [cx, h * 0.42], sphereR: R };
-}
-
-function globePoint(F, i, rot) {
-  const [x, y, z] = F.sphere[i];
-  const cos = Math.cos(rot);
-  const sin = Math.sin(rot);
-  const rx = x * cos - z * sin;
-  const rz = x * sin + z * cos;
-  const persp = 1 + rz / (F.sphereR * 4);
-  return [F.sphereCenter[0] + rx * persp, F.sphereCenter[1] + y * persp, rz];
+  return { mark, star, at };
 }
 
 export default function Backdrop() {
@@ -126,14 +123,21 @@ export default function Backdrop() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let w = 0;
     let h = 0;
     let dpr = 1;
     let F = null;
-    let anchors = [];
+    let cStart = 0;
+    let cSpan = 1;
     let raf = 0;
+    let lastY = -1;
+    let dirty = true;
+
+    // Reused every frame - no per-frame allocation.
+    const px = new Float64Array(N);
+    const py = new Float64Array(N);
 
     const measure = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 1.75);
@@ -143,97 +147,96 @@ export default function Backdrop() {
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       F = buildFormations(w, h);
-      anchors = SECTION_IDS.map((id) => {
-        const el = document.getElementById(id);
-        return el ? el.offsetTop : Number.MAX_SAFE_INTEGER;
-      });
-    };
 
-    const phaseAt = (scrollY) => {
-      // Each transition plays out over ~0.8 viewport just before its section.
-      let p = 0;
-      for (const top of anchors) {
-        p += smoothstep((scrollY - (top - h * 0.95)) / (h * 0.8));
-      }
-      return p; // 0..4
-    };
-
-    const posAt = (i, phase, time, rot) => {
-      const a = Math.min(3, Math.floor(phase));
-      // Per-node stagger: each particle departs on its own cue, so morphs
-      // read as a swarm instead of a rigid tween.
-      const lag = rand(i, 5) * 0.35;
-      const t = smoothstep(Math.max(0, Math.min(1, (phase - a - lag) / (1 - lag))));
-      const forms = [
-        () => F.mark[i],
-        () => F.net[i],
-        () => F.grid[i],
-        () => globePoint(F, i, rot),
-        () => {
-          // Dispersal: the globe exhales outward.
-          const [gx, gy] = globePoint(F, i, rot);
-          const [cx, cy] = F.sphereCenter;
-          return [cx + (gx - cx) * 1.6, cy + (gy - cy) * 1.6];
-        },
-      ];
-      const [x1, y1] = forms[a]();
-      const [x2, y2] = forms[a + 1]();
-      const shimmer = reduced ? 0 : 1;
-      return [
-        x1 + (x2 - x1) * t + Math.sin(time * 0.0006 + i * 2.1) * 1.6 * shimmer,
-        y1 + (y2 - y1) * t + Math.cos(time * 0.0005 + i * 1.7) * 1.6 * shimmer,
-      ];
+      // Phase C window: the sections above are tall, so measure the contact
+      // anchor - never assume. Fully formed by the time the card is centered.
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - h);
+      const el = document.getElementById("kontakt");
+      const cTop = el ? el.offsetTop : maxScroll;
+      const cEnd = Math.min(cTop - h * 0.15, maxScroll);
+      // Short ramp: regrouping starts only once the Web finale is mostly gone.
+      cSpan = Math.max(h * 0.55, 1);
+      cStart = cEnd - cSpan;
+      dirty = true;
     };
 
     const draw = (time) => {
+      // Re-arm first so a one-off exception cannot kill the loop for good.
+      raf = requestAnimationFrame(draw);
+      drawFrame(time);
+    };
+
+    const drawFrame = (time) => {
       const scrollY = window.scrollY;
-      const phase = phaseAt(scrollY);
-      const rot = scrollY * 0.0009; // globe spin is scroll-driven too
-      // The hero owns the stage; once content sections arrive the whole net
-      // recedes so text stays readable, and it fades further at dispersal.
-      const fade =
-        (1 - 0.5 * smoothstep(Math.min(phase, 1))) *
-        (1 - 0.55 * smoothstep(phase - 3));
+      const reduced = mql.matches;
+      // With reduced motion there is no shimmer, so a still page needs no redraw.
+      if (reduced && scrollY === lastY && !dirty) {
+        return;
+      }
+      lastY = scrollY;
+      dirty = false;
+
+      // Global phase progress - r1: mark -> starfield, r2: starfield -> "@".
+      const r1 = h > 0 ? clamp01((scrollY - h * 0.45) / (h * 0.75)) : 0;
+      const r2 = clamp01((scrollY - cStart) / cSpan);
+      const lit = Math.max(1 - smoothstep(r1), smoothstep(r2));
+      // Dim floor keeps phase B node alpha at or below ~0.15.
+      const fade = 0.25 + 0.75 * lit;
+      const shimmer = reduced ? 0 : 1;
 
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = "#050505";
       ctx.fillRect(0, 0, w, h);
 
-      const pts = new Array(N);
-      for (let i = 0; i < N; i++) pts[i] = posAt(i, phase, time, rot);
-
-      // Edges: one proximity rule everywhere - outline, layers, grid and
-      // globe wireframe all emerge from it. Data pulses ride a subset of
-      // edges; their travel is scroll-driven with a slow idle drift.
-      const REACH = Math.max(44, Math.min(w, h) * 0.085);
-      const pulseClock = scrollY * 0.0012 + (reduced ? 0 : time * 0.00004);
-      ctx.lineWidth = 1;
       for (let i = 0; i < N; i++) {
-        for (let j = i + 1; j < N; j++) {
-          const dx = pts[i][0] - pts[j][0];
-          const dy = pts[i][1] - pts[j][1];
-          const d2 = dx * dx + dy * dy;
-          if (d2 > REACH * REACH) continue;
-          const d = Math.sqrt(d2);
-          const k = 1 - d / REACH;
-          ctx.strokeStyle = `rgba(255,255,255,${(0.11 * k * fade).toFixed(3)})`;
-          ctx.beginPath();
-          ctx.moveTo(pts[i][0], pts[i][1]);
-          ctx.lineTo(pts[j][0], pts[j][1]);
-          ctx.stroke();
+        // Per-node stagger: each particle departs on its own cue, so morphs
+        // read as a swarm instead of a rigid tween.
+        const lag = rand(i, 5) * 0.35;
+        const t1 = smoothstep(clamp01((r1 - lag) / (1 - lag)));
+        const t2 = smoothstep(clamp01((r2 - lag) / (1 - lag)));
+        const mx = F.mark[i][0] + (F.star[i][0] - F.mark[i][0]) * t1;
+        const my = F.mark[i][1] + (F.star[i][1] - F.mark[i][1]) * t1;
+        px[i] = mx + (F.at[i][0] - mx) * t2 + Math.sin(time * 0.0006 + i * 2.1) * 1.6 * shimmer;
+        py[i] = my + (F.at[i][1] - my) * t2 + Math.cos(time * 0.0005 + i * 1.7) * 1.6 * shimmer;
+      }
 
-          if ((i * 31 + j * 17) % 9 === 0) {
-            const p = (rand(i * 91 + j, 6) + pulseClock) % 1;
-            const px = pts[i][0] + (pts[j][0] - pts[i][0]) * p;
-            const py = pts[i][1] + (pts[j][1] - pts[i][1]) * p;
-            ctx.fillStyle = `rgba(255,255,255,${(0.1 * k * fade).toFixed(3)})`;
+      // Edges + pulses only while a formation is lit (phases A and C) - the
+      // ambient middle stays edge-free and cheap. Pulse travel is scroll-driven
+      // with a slow idle drift.
+      // White marks modulated via globalAlpha - no per-pair string allocation.
+      ctx.strokeStyle = "#fff";
+      ctx.fillStyle = "#fff";
+      if (lit > 0.04) {
+        const REACH = Math.max(44, Math.min(w, h) * 0.085);
+        // Pulse travel is purely scroll-scrubbed and reversible.
+        const pulseClock = scrollY * 0.0012;
+        ctx.lineWidth = 1;
+        for (let i = 0; i < N; i++) {
+          for (let j = i + 1; j < N; j++) {
+            const dx = px[i] - px[j];
+            const dy = py[i] - py[j];
+            const d2 = dx * dx + dy * dy;
+            if (d2 > REACH * REACH) continue;
+            const k = 1 - Math.sqrt(d2) / REACH;
+            ctx.globalAlpha = 0.11 * k * lit;
             ctx.beginPath();
-            ctx.arc(px, py, 3.2, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = `rgba(255,255,255,${(0.5 * k * fade).toFixed(3)})`;
-            ctx.beginPath();
-            ctx.arc(px, py, 1.2, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.moveTo(px[i], py[i]);
+            ctx.lineTo(px[j], py[j]);
+            ctx.stroke();
+
+            if ((i * 31 + j * 17) % 9 === 0) {
+              const p = (rand(i * 91 + j, 6) + pulseClock) % 1;
+              const qx = px[i] + (px[j] - px[i]) * p;
+              const qy = py[i] + (py[j] - py[i]) * p;
+              ctx.globalAlpha = 0.1 * k * lit;
+              ctx.beginPath();
+              ctx.arc(qx, qy, 3.2, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.globalAlpha = 0.5 * k * lit;
+              ctx.beginPath();
+              ctx.arc(qx, qy, 1.2, 0, Math.PI * 2);
+              ctx.fill();
+            }
           }
         }
       }
@@ -243,18 +246,17 @@ export default function Backdrop() {
         const r = 0.8 + big * 1.1;
         if (big > 0.82) {
           // A soft halo on the handful of hub nodes.
-          ctx.fillStyle = `rgba(255,255,255,${(0.07 * fade).toFixed(3)})`;
+          ctx.globalAlpha = 0.07 * fade;
           ctx.beginPath();
-          ctx.arc(pts[i][0], pts[i][1], r * 4, 0, Math.PI * 2);
+          ctx.arc(px[i], py[i], r * 4, 0, Math.PI * 2);
           ctx.fill();
         }
-        ctx.fillStyle = `rgba(255,255,255,${((0.38 + rand(i, 4) * 0.22) * fade).toFixed(3)})`;
+        ctx.globalAlpha = (0.38 + rand(i, 4) * 0.22) * fade;
         ctx.beginPath();
-        ctx.arc(pts[i][0], pts[i][1], r, 0, Math.PI * 2);
+        ctx.arc(px[i], py[i], r, 0, Math.PI * 2);
         ctx.fill();
       }
-
-      raf = requestAnimationFrame(draw);
+      ctx.globalAlpha = 1;
     };
 
     measure();

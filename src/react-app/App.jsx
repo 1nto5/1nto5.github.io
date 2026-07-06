@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DICT, LangCtx } from "./i18n.js";
 import Backdrop from "./Backdrop.jsx";
 import AISection from "./sections/AISection.jsx";
@@ -15,23 +15,6 @@ export default function App({ locale = "pl" }) {
     const target = l === "en" ? "/en/" : "/";
     if (window.location.pathname !== target) window.location.href = target;
   };
-
-  useEffect(() => {
-    const els = document.querySelectorAll("[data-reveal]");
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("in");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
 
   return (
     <LangCtx.Provider value={{ lang, setLang, t }}>
@@ -210,7 +193,7 @@ function Contact({ t, lang }) {
   return (
     <footer id="kontakt" className="border-t border-white/10">
       <div className="mx-auto max-w-[1100px] px-6 py-24 md:py-32">
-        <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center text-black md:py-20" data-reveal>
+        <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center text-black md:py-20">
           <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-black/50">{t.contact.kicker}</div>
           <h2 className="mt-4 text-[36px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
             {t.contact.title_l1} {t.contact.title_l2}
