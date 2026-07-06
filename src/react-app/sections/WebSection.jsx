@@ -40,6 +40,7 @@ export default function WebSection({ t }) {
     let raf = 0;
     let lastNum = -1;
     let lastKey = -1;
+    let idleTick = false;
     const L = {};
 
     function layout() {
@@ -315,6 +316,11 @@ export default function WebSection({ t }) {
       if (changed) {
         stageHtml(p, enter);
         lastKey = key;
+        idleTick = false;
+      } else {
+        // Idle: shimmer-only repaints run at half rate.
+        idleTick = !idleTick;
+        if (idleTick) return;
       }
       // Draw output is deterministic in p when now is 0 - skipping is lossless.
       if (changed || !mql.matches) draw(p, mql.matches ? 0 : now);

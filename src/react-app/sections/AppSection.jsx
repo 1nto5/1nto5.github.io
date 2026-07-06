@@ -46,6 +46,7 @@ export default function AppSection({ t }) {
     let behind = false;
     let leadHides = false;
     let lastP = -1;
+    let idleTick = false;
     let G = null;
 
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -59,7 +60,7 @@ export default function AppSection({ t }) {
       const rect = canvas.getBoundingClientRect();
       cw = rect.width;
       chh = rect.height;
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.max(1, Math.round(cw * dpr));
       canvas.height = Math.max(1, Math.round(chh * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -362,6 +363,11 @@ export default function AppSection({ t }) {
       if (changed) {
         stage(p, enter);
         lastP = key;
+        idleTick = false;
+      } else {
+        // Idle: shimmer-only repaints run at half rate.
+        idleTick = !idleTick;
+        if (idleTick) return;
       }
       if (changed || !reduced) draw(p, reduced ? 0 : now);
     };

@@ -3,7 +3,7 @@ import { Eyebrow } from "./primitives.jsx";
 
 // Neuron counts per column, left to right. Last column is the output neuron.
 const LAYERS = [3, 5, 6, 5, 1];
-const DPR_CAP = 1.75;
+const DPR_CAP = 1.5;
 
 // Wave sweep: p 0.25-0.70 maps to wavefront x -0.12..1.12 in layer space.
 const WAVE_P0 = 0.25;
@@ -82,6 +82,7 @@ export default function AISection({ t }) {
     let dpr = 1;
     let mobile = false;
     let lastP = -1;
+    let idleTick = false;
     let raf = 0;
 
     const measure = () => {
@@ -119,9 +120,16 @@ export default function AISection({ t }) {
       const enter = clamp01((vh - rect.top) / (vh * 0.5));
       const reduced = mql.matches;
       const time = now / 1000;
-      // Under reduced motion nothing is time-driven - skip identical frames.
+      // Identical frames: skip entirely under reduced motion, halve the
+      // repaint rate otherwise - the idle shimmer does not need 60fps.
       const key = p + enter;
-      if (reduced && key === lastP) return;
+      if (key === lastP) {
+        if (reduced) return;
+        idleTick = !idleTick;
+        if (idleTick) return;
+      } else {
+        idleTick = false;
+      }
       lastP = key;
 
       // ---- HTML staging (direct style writes, fully reversible) ----
@@ -276,7 +284,7 @@ export default function AISection({ t }) {
                   cardEls.current[i] = el;
                 }}
                 style={{ opacity: 0 }}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md md:p-6"
+                className="rounded-2xl border border-white/10 bg-[#0C0C0C]/95 p-4 md:p-6"
               >
                 <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7DD3FC]">{k}</div>
                 <p className="mt-2 text-[13px] leading-snug text-[#D1D1D1] md:mt-3 md:text-[15px] md:leading-relaxed">
@@ -289,7 +297,7 @@ export default function AISection({ t }) {
           <div
             ref={codeRef}
             style={{ opacity: 0 }}
-            className="mt-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md md:mt-4 md:p-6"
+            className="mt-3 rounded-2xl border border-white/10 bg-[#0C0C0C]/95 p-4 md:mt-4 md:p-6"
           >
             <pre className="overflow-x-auto font-mono text-[12px] leading-6 text-[#D1D1D1] md:text-[13px] md:leading-7">
               {lines.map((ln, i) => (

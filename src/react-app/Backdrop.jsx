@@ -60,6 +60,16 @@ function smoothstep(t) {
   return t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
 }
 
+function polylineLength(polys) {
+  let total = 0;
+  for (const poly of polys) {
+    for (let i = 0; i < poly.length - 1; i++) {
+      total += Math.hypot(poly[i + 1][0] - poly[i][0], poly[i + 1][1] - poly[i][1]);
+    }
+  }
+  return total;
+}
+
 function samplePolylines(polys, n) {
   const segs = [];
   let total = 0;
@@ -111,6 +121,9 @@ function buildFormations(w, h) {
     cx + ((x - 32) / 64) * markSize,
     markCy + ((y - 32) / 64) * markSize,
   ]);
+  // Glyph-phase reach: just above the sample spacing, so edges trace the
+  // outline instead of webbing across the letter counters.
+  const markReach = Math.max(12, (polylineLength(MARK_POLYS) / N / 64) * markSize * 1.75);
 
   // Middle: an even ambient scatter across the whole viewport.
   const star = [];
@@ -124,8 +137,9 @@ function buildFormations(w, h) {
     cx + ((x - 32) / 64) * atSize,
     h * 0.5 + ((y - 32) / 64) * atSize,
   ]);
+  const atReach = Math.max(10, (polylineLength(AT_POLYS) / N / 64) * atSize * 1.75);
 
-  return { mark, star, at };
+  return { mark, star, at, markReach, atReach };
 }
 
 export default function Backdrop() {
@@ -151,6 +165,7 @@ export default function Backdrop() {
     // Eased scroll: wheel input arrives in ~100px steps - chasing the target
     // with a short lerp turns those steps into continuous motion.
     let syEase = -1;
+    let idleTick = false;
 
     // Reused every frame - no per-frame allocation.
     const px = new Float64Array(N);
@@ -206,6 +221,13 @@ export default function Backdrop() {
       if (reduced && target === lastY && !dirty) {
         return;
       }
+      // Fully settled: shimmer-only repaints run at half rate.
+      if (!reduced && !dirty && target === lastY && syEase === target) {
+        idleTick = !idleTick;
+        if (idleTick) return;
+      } else {
+        idleTick = false;
+      }
       lastY = target;
       dirty = false;
 
@@ -251,7 +273,13 @@ export default function Backdrop() {
       ctx.strokeStyle = "#fff";
       ctx.fillStyle = "#fff";
       if (lit > 0.04) {
-        const REACH = Math.max(44, Math.min(w, h) * 0.085);
+        // Reach morphs with the phases: tight along the glyph outlines
+        // (crisp, legible letterforms), wide for the ambient net.
+        const base = Math.max(44, Math.min(w, h) * 0.085);
+        const s1 = smoothstep(r1);
+        const s2 = smoothstep(r2);
+        let REACH = F.markReach + (base - F.markReach) * s1;
+        REACH += (F.atReach - REACH) * s2;
         const R2 = REACH * REACH;
         let ne = 0;
         for (let i = 0; i < N; i++) {
@@ -282,7 +310,9 @@ export default function Backdrop() {
             any = true;
           }
           if (any) {
-            ctx.globalAlpha = 0.11 * (k0 + 0.1) * lit;
+            // Glyph phases get firmer strokes so the letterforms read clearly.
+            const firmness = 0.11 + 0.09 * Math.max(1 - s1, s2);
+            ctx.globalAlpha = firmness * (k0 + 0.25) * lit;
             ctx.stroke();
           }
         }
