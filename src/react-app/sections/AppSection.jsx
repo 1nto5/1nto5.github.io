@@ -48,6 +48,9 @@ export default function AppSection({ t }) {
     let lastP = -1;
     let idleTick = false;
     let G = null;
+    // Eased progress - see AISection: scenes glide instead of teleporting.
+    let eP = -1;
+    let eEnter = 0;
 
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
     let reduced = mql.matches;
@@ -356,8 +359,19 @@ export default function AppSection({ t }) {
       // Fully off-screen: skip all work, keep the loop armed.
       if (rect.bottom <= 0 || rect.top >= vh) return;
       const denom = rect.height - vh;
-      const p = denom > 0 ? clamp01(-rect.top / denom) : rect.top <= 0 ? 1 : 0;
-      const enter = clamp01((vh - rect.top) / (vh * 0.5));
+      const pRaw = denom > 0 ? clamp01(-rect.top / denom) : rect.top <= 0 ? 1 : 0;
+      const enterRaw = clamp01((vh - rect.top) / (vh * 0.5));
+      if (eP < 0 || reduced) {
+        eP = pRaw;
+        eEnter = enterRaw;
+      } else {
+        eP += (pRaw - eP) * 0.18;
+        if (Math.abs(pRaw - eP) < 0.0006) eP = pRaw;
+        eEnter += (enterRaw - eEnter) * 0.18;
+        if (Math.abs(enterRaw - eEnter) < 0.0015) eEnter = enterRaw;
+      }
+      const p = eP;
+      const enter = eEnter;
       const key = p + enter;
       const changed = Math.abs(key - lastP) > 0.0004;
       if (changed) {

@@ -84,6 +84,10 @@ export default function AISection({ t }) {
     let lastP = -1;
     let idleTick = false;
     let raf = 0;
+    // Eased progress: fast wheel flicks jump scroll by hundreds of px;
+    // chasing the target keeps the scene gliding instead of teleporting.
+    let eP = -1;
+    let eEnter = 0;
 
     const measure = () => {
       const box = canvas.getBoundingClientRect();
@@ -114,11 +118,22 @@ export default function AISection({ t }) {
         return;
       }
       const denom = rect.height - vh;
-      const p = denom > 0 ? clamp01(-rect.top / denom) : rect.top <= 0 ? 1 : 0;
+      const pRaw = denom > 0 ? clamp01(-rect.top / denom) : rect.top <= 0 ? 1 : 0;
       // Approach progress - anchor jumps and natural entry both land with
       // the header (and the wired network) already on stage at p = 0.
-      const enter = clamp01((vh - rect.top) / (vh * 0.5));
+      const enterRaw = clamp01((vh - rect.top) / (vh * 0.5));
       const reduced = mql.matches;
+      if (eP < 0 || reduced) {
+        eP = pRaw;
+        eEnter = enterRaw;
+      } else {
+        eP += (pRaw - eP) * 0.18;
+        if (Math.abs(pRaw - eP) < 0.0006) eP = pRaw;
+        eEnter += (enterRaw - eEnter) * 0.18;
+        if (Math.abs(enterRaw - eEnter) < 0.0015) eEnter = enterRaw;
+      }
+      const p = eP;
+      const enter = eEnter;
       const time = now / 1000;
       // Identical frames: skip entirely under reduced motion, halve the
       // repaint rate otherwise - the idle shimmer does not need 60fps.

@@ -41,6 +41,9 @@ export default function WebSection({ t }) {
     let lastNum = -1;
     let lastKey = -1;
     let idleTick = false;
+    // Eased progress - see AISection: scenes glide instead of teleporting.
+    let eP = -1;
+    let eEnter = 0;
     const L = {};
 
     function layout() {
@@ -309,8 +312,19 @@ export default function WebSection({ t }) {
       const vh = window.innerHeight || 1;
       // fully off-screen: skip all work, keep the loop cheap
       if (rect.bottom < -80 || rect.top > vh + 80) return;
-      const p = clamp01(-rect.top / Math.max(1, rect.height - vh));
-      const enter = clamp01((vh - rect.top) / (vh * 0.5));
+      const pRaw = clamp01(-rect.top / Math.max(1, rect.height - vh));
+      const enterRaw = clamp01((vh - rect.top) / (vh * 0.5));
+      if (eP < 0 || mql.matches) {
+        eP = pRaw;
+        eEnter = enterRaw;
+      } else {
+        eP += (pRaw - eP) * 0.18;
+        if (Math.abs(pRaw - eP) < 0.0006) eP = pRaw;
+        eEnter += (enterRaw - eEnter) * 0.18;
+        if (Math.abs(enterRaw - eEnter) < 0.0015) eEnter = enterRaw;
+      }
+      const p = eP;
+      const enter = eEnter;
       const key = p + enter;
       const changed = Math.abs(key - lastKey) > 0.0005;
       if (changed) {

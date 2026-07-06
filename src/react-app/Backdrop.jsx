@@ -155,6 +155,7 @@ export default function Backdrop() {
 
     let w = 0;
     let h = 0;
+    let hStable = 0;
     let dpr = 1;
     let F = null;
     let cStart = 0;
@@ -189,12 +190,21 @@ export default function Backdrop() {
       // Full-viewport layer - 1.5x is visually indistinguishable for 1px
       // wireframes and meaningfully cheaper to rasterize than 1.75x.
       dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      w = window.innerWidth;
-      h = window.innerHeight;
+      const nw = window.innerWidth;
+      const nh = window.innerHeight;
+      // Mobile browsers fire resize when the URL bar collapses on the first
+      // scroll; rebuilding formations then makes the constellation teleport.
+      // Rebuild only for real layout changes (width, orientation).
+      const full = !F || nw !== w || Math.abs(nh - hStable) > 160;
+      w = nw;
+      h = nh;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      F = buildFormations(w, h);
+      if (full) {
+        hStable = nh;
+        F = buildFormations(w, nh);
+      }
 
       // Phase C window: the sections above are tall, so measure the contact
       // anchor - never assume. Fully formed by the time the card is centered.
@@ -239,9 +249,9 @@ export default function Backdrop() {
       const scrollY = syEase;
 
       // Global phase progress - r1: mark -> starfield, r2: starfield -> "@".
-      // The dissolve starts almost immediately so the backdrop answers the
-      // very first wheel tick from the default view.
-      const r1 = h > 0 ? clamp01((scrollY - h * 0.06) / (h * 0.94)) : 0;
+      // No dead zone: the dissolve is in motion from the very first pixel
+      // of scroll, so there is no static-then-snap moment leaving the hero.
+      const r1 = hStable > 0 ? clamp01(scrollY / (hStable * 0.95)) : 0;
       const r2 = clamp01((scrollY - cStart) / cSpan);
       const lit = Math.max(1 - smoothstep(r1), smoothstep(r2));
       // Dim floor keeps phase B node alpha at or below ~0.15.
