@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import { Eyebrow } from "./primitives.jsx";
 
 const TAU = Math.PI * 2;
+// Section accent: violet - the performance gauge and step ticks.
+const ACCENT_RGB = "196,181,253";
 // step activation thresholds along scroll progress p
 const TS = [0.5, 0.58, 0.66, 0.74, 0.82];
 const DASH = [0, 0];
@@ -243,7 +245,7 @@ export default function WebSection({ t }) {
         }
         if (sweep > 0) {
           ctx.lineWidth = 1.5;
-          ctx.strokeStyle = "rgba(255,255,255," + 0.5 * D + ")";
+          ctx.strokeStyle = "rgba(" + ACCENT_RGB + "," + 0.65 * D + ")";
           ctx.beginPath();
           ctx.arc(L.gx, L.gy, L.gr, -Math.PI / 2, -Math.PI / 2 + ang);
           ctx.stroke();
@@ -251,7 +253,7 @@ export default function WebSection({ t }) {
           const pulse = now ? 0.8 * Math.sin(now / 700) : 0;
           ctx.beginPath();
           ctx.arc(L.gx + Math.cos(ha) * L.gr, L.gy + Math.sin(ha) * L.gr, 2.5 + pulse, 0, TAU);
-          ctx.fillStyle = "rgba(255,255,255," + 0.85 * D + ")";
+          ctx.fillStyle = "rgba(" + ACCENT_RGB + "," + 0.9 * D + ")";
           ctx.fill();
         }
       }
@@ -335,7 +337,7 @@ export default function WebSection({ t }) {
 
         <span
           ref={numRef}
-          className="absolute left-0 top-0 z-10 hidden font-mono text-[22px] font-semibold text-white md:block"
+          className="absolute left-0 top-0 z-10 hidden font-mono text-[22px] font-semibold text-[#C4B5FD] md:block"
           style={{ opacity: 0 }}
           aria-hidden="true"
         />
@@ -343,7 +345,7 @@ export default function WebSection({ t }) {
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col justify-center px-6 pb-6 pt-[90px] md:pb-10 md:pt-24">
           <div className="max-w-[560px]">
             <div ref={headerRef} style={{ opacity: 0, transform: "translate(0px,18px)" }}>
-              <Eyebrow>03 · {t.nav.web}</Eyebrow>
+              <Eyebrow><span className="text-[#C4B5FD]">03</span> · {t.nav.web}</Eyebrow>
               <h2 className="mt-4 text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px]">
                 {tt.title_l1} <em className="italic">{tt.title_l2_em}</em> {tt.title_l3}
               </h2>
@@ -379,7 +381,7 @@ export default function WebSection({ t }) {
                   <span className="relative h-[14px] w-[14px] shrink-0 rounded-full border border-white/25">
                     <span
                       ref={(el) => (dotRefs.current[i] = el)}
-                      className="absolute inset-[3px] rounded-full bg-white"
+                      className="absolute inset-[3px] rounded-full bg-[#C4B5FD]"
                       style={{ transform: "scale(0)" }}
                     />
                   </span>

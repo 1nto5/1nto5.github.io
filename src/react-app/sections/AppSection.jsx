@@ -5,6 +5,9 @@ const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const rng = (p, a, b) => clamp01((p - a) / (b - a));
 const ease = (t) => t * t * (3 - 2 * t);
 
+// Section accent: amber - live data points in the dashboard.
+const ACCENT = "rgb(252,211,77)";
+
 const BAR_H = [0.45, 0.7, 0.55, 0.85, 0.6, 1, 0.75, 0.9];
 const ROW_W = [0.62, 0.48, 0.72, 0.42];
 const DASH = [0, 0];
@@ -168,12 +171,14 @@ export default function AppSection({ t }) {
       ctx.setLineDash(NO_DASH);
     };
 
-    const dot = (x, y, r, a) => {
+    const dot = (x, y, r, a, color) => {
       if (a <= 0.004) return;
+      ctx.fillStyle = color || "#fff";
       ctx.globalAlpha = Math.min(a, 0.85);
       ctx.beginPath();
       ctx.arc(x, y, r, 0, 6.2832);
       ctx.fill();
+      ctx.fillStyle = "#fff";
     };
 
     const draw = (p, now) => {
@@ -262,7 +267,7 @@ export default function AppSection({ t }) {
         ctx.moveTo(bx, baseY - 1);
         ctx.lineTo(bx, baseY - 1 - bh);
         ctx.stroke();
-        dot(bx, baseY - 1 - bh, 1.4, (0.55 + 0.2 * e0) * gr * A);
+        dot(bx, baseY - 1 - bh, 1.4, (0.55 + 0.2 * e0) * gr * A, ACCENT);
       }
       ctx.lineWidth = 1;
       // Table rows slide in, status dot per row.
@@ -279,22 +284,26 @@ export default function AppSection({ t }) {
         ctx.stroke();
         const pulse = now ? Math.sin(now * 0.002 + i * 1.7) * 0.08 : 0;
         const dx = chart.x + rowW + 12;
-        dot(dx, y, 1.6, (0.7 + pulse) * er * A);
+        dot(dx, y, 1.6, (0.7 + pulse) * er * A, ACCENT);
         // Soft halo: extra low-alpha arc, no shadowBlur.
-        ctx.globalAlpha = Math.min(0.1 * er * A, 0.5);
+        ctx.strokeStyle = ACCENT;
+        ctx.globalAlpha = Math.min(0.12 * er * A, 0.5);
         ctx.beginPath();
         ctx.arc(dx, y, 3.6, 0, 6.2832);
         ctx.stroke();
+        ctx.strokeStyle = "#fff";
       }
       // Scanline sweep.
       const st = rng(p, 0.45, 0.6);
       if (st > 0 && st < 1) {
-        ctx.globalAlpha = 0.2 * (4 * st * (1 - st)) * A;
+        ctx.strokeStyle = ACCENT;
+        ctx.globalAlpha = 0.22 * (4 * st * (1 - st)) * A;
         const sy = R.y + R.h * st;
         ctx.beginPath();
         ctx.moveTo(R.x + 4, sy);
         ctx.lineTo(R.x + R.w - 4, sy);
         ctx.stroke();
+        ctx.strokeStyle = "#fff";
       }
       // "Mobile" echo: small phone traces in.
       if (traceOn(0.38 * A, 2 * (phone.w + phone.h), e1)) {
@@ -376,7 +385,7 @@ export default function AppSection({ t }) {
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pt-[96px] md:pt-[104px]">
           <div ref={headRef} style={{ opacity: 0 }}>
-            <Eyebrow>02 · {t.nav.app}</Eyebrow>
+            <Eyebrow><span className="text-[#FCD34D]">02</span> · {t.nav.app}</Eyebrow>
             <h2 className="mt-3 max-w-[620px] text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px]">
               {tt.title_l1} {tt.title_l2} {tt.title_l3}
             </h2>
@@ -412,7 +421,7 @@ export default function AppSection({ t }) {
             >
               {tt.kpis.map(([b, s], i) => (
                 <div key={s} ref={(el) => (kpiRefs.current[i] = el)} style={{ opacity: 0 }}>
-                  <div className="text-[20px] font-semibold tracking-tight text-white md:text-[34px]">
+                  <div className="text-[20px] font-semibold tracking-tight text-[#FCD34D] md:text-[34px]">
                     {i === 1 ? <span ref={numRef}>{b}</span> : b}
                   </div>
                   <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.15em] text-[#8A8A8A] md:text-[11px]">

@@ -4,7 +4,7 @@
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
     "heading": "Less busywork. More business.",
-    "sub": "I put AI to work, build apps you can't buy off the shelf, and make websites that look sharp.",
+    "sub": "I put AI to work, build custom apps around your process, and ship websites that look sharp.",
     "cta": "Get in touch",
     "phone": "+48 503 751 676",
     "areas": ["Chatbots", "Automation", "Integrations", "E-commerce"]
@@ -63,9 +63,9 @@
     "code": "> adrian.ai.plan({ company })\n  ├─ 1h free call to map what's eating time\n  ├─ pick 1-2 processes worth automating\n  ├─ prototype in 3 days, not a month\n  └─ train your team, hand over the keys"
   },
   "app": {
-    "title_l1": "The app your",
-    "title_l2": "business needs,",
-    "title_l3": "built for you.",
+    "title_l1": "The app you",
+    "title_l2": "can't buy",
+    "title_l3": "off the shelf.",
     "lead_a": "When Excel stops being enough and the SaaS tool costs more than it's worth, I build the web or mobile app you actually need",
     "lead_and": " - ",
     "lead_b": "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. Clean code any developer can pick up later.",

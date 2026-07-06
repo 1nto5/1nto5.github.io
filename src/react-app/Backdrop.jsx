@@ -134,7 +134,9 @@ export default function Backdrop() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    // Opaque context: the backdrop paints its own #050505 ground every frame,
+    // so an alpha channel would only make compositing more expensive.
+    const ctx = canvas.getContext("2d", { alpha: false });
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let w = 0;
@@ -150,9 +152,25 @@ export default function Backdrop() {
     // Reused every frame - no per-frame allocation.
     const px = new Float64Array(N);
     const py = new Float64Array(N);
+    const MAXE = 4096;
+    const eI = new Int32Array(MAXE);
+    const eJ = new Int32Array(MAXE);
+    const eK = new Float32Array(MAXE);
+    // Per-node draw classes, fixed for the component's lifetime.
+    const nodeR = new Float64Array(N);
+    const nodeA = new Float64Array(N);
+    const nodeHub = new Uint8Array(N);
+    for (let i = 0; i < N; i++) {
+      const big = rand(i, 3);
+      nodeR[i] = 0.8 + big * 1.1;
+      nodeA[i] = 0.38 + rand(i, 4) * 0.22;
+      nodeHub[i] = big > 0.82 ? 1 : 0;
+    }
 
     const measure = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      // Full-viewport layer - 1.5x is visually indistinguishable for 1px
+      // wireframes and meaningfully cheaper to rasterize than 1.75x.
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       w = window.innerWidth;
       h = window.innerHeight;
       canvas.width = Math.round(w * dpr);
@@ -215,58 +233,95 @@ export default function Backdrop() {
       // Edges + pulses only while a formation is lit (phases A and C) - the
       // ambient middle stays edge-free and cheap. Pulse travel is scroll-driven
       // with a slow idle drift.
-      // White marks modulated via globalAlpha - no per-pair string allocation.
+      // White marks modulated via globalAlpha. Everything is drawn in batches
+      // (one path per alpha bucket) - hundreds of individual stroke()/fill()
+      // calls per frame were the main source of scroll jank.
       ctx.strokeStyle = "#fff";
       ctx.fillStyle = "#fff";
       if (lit > 0.04) {
         const REACH = Math.max(44, Math.min(w, h) * 0.085);
-        // Pulse travel is purely scroll-scrubbed and reversible.
-        const pulseClock = scrollY * 0.0012;
-        ctx.lineWidth = 1;
+        const R2 = REACH * REACH;
+        let ne = 0;
         for (let i = 0; i < N; i++) {
           for (let j = i + 1; j < N; j++) {
             const dx = px[i] - px[j];
             const dy = py[i] - py[j];
             const d2 = dx * dx + dy * dy;
-            if (d2 > REACH * REACH) continue;
-            const k = 1 - Math.sqrt(d2) / REACH;
-            ctx.globalAlpha = 0.11 * k * lit;
-            ctx.beginPath();
-            ctx.moveTo(px[i], py[i]);
-            ctx.lineTo(px[j], py[j]);
-            ctx.stroke();
-
-            if ((i * 31 + j * 17) % 9 === 0) {
-              const p = (rand(i * 91 + j, 6) + pulseClock) % 1;
-              const qx = px[i] + (px[j] - px[i]) * p;
-              const qy = py[i] + (py[j] - py[i]) * p;
-              ctx.globalAlpha = 0.1 * k * lit;
-              ctx.beginPath();
-              ctx.arc(qx, qy, 3.2, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.globalAlpha = 0.5 * k * lit;
-              ctx.beginPath();
-              ctx.arc(qx, qy, 1.2, 0, Math.PI * 2);
-              ctx.fill();
-            }
+            if (d2 > R2 || ne >= MAXE) continue;
+            eI[ne] = i;
+            eJ[ne] = j;
+            eK[ne] = 1 - Math.sqrt(d2) / REACH;
+            ne++;
           }
+        }
+
+        // Edges: 5 alpha buckets, one stroked path each.
+        ctx.lineWidth = 1;
+        for (let b = 0; b < 5; b++) {
+          const k0 = b / 5;
+          const k1 = (b + 1) / 5;
+          let any = false;
+          ctx.beginPath();
+          for (let e = 0; e < ne; e++) {
+            const k = eK[e];
+            if (k < k0 || k >= k1) continue;
+            ctx.moveTo(px[eI[e]], py[eI[e]]);
+            ctx.lineTo(px[eJ[e]], py[eJ[e]]);
+            any = true;
+          }
+          if (any) {
+            ctx.globalAlpha = 0.11 * (k0 + 0.1) * lit;
+            ctx.stroke();
+          }
+        }
+
+        // Pulses: scroll-scrubbed travel, two batched fills (glow + core).
+        const pulseClock = scrollY * 0.0012;
+        for (let pass = 0; pass < 2; pass++) {
+          const r = pass === 0 ? 3.2 : 1.2;
+          ctx.globalAlpha = (pass === 0 ? 0.08 : 0.42) * lit;
+          ctx.beginPath();
+          for (let e = 0; e < ne; e++) {
+            const i = eI[e];
+            const j = eJ[e];
+            if ((i * 31 + j * 17) % 9 !== 0) continue;
+            const p = (rand(i * 91 + j, 6) + pulseClock) % 1;
+            const qx = px[i] + (px[j] - px[i]) * p;
+            const qy = py[i] + (py[j] - py[i]) * p;
+            ctx.moveTo(qx + r, qy);
+            ctx.arc(qx, qy, r, 0, Math.PI * 2);
+          }
+          ctx.fill();
         }
       }
 
+      // Hub halos: one batched fill.
+      ctx.globalAlpha = 0.07 * fade;
+      ctx.beginPath();
       for (let i = 0; i < N; i++) {
-        const big = rand(i, 3);
-        const r = 0.8 + big * 1.1;
-        if (big > 0.82) {
-          // A soft halo on the handful of hub nodes.
-          ctx.globalAlpha = 0.07 * fade;
-          ctx.beginPath();
-          ctx.arc(px[i], py[i], r * 4, 0, Math.PI * 2);
+        if (!nodeHub[i]) continue;
+        ctx.moveTo(px[i] + nodeR[i] * 4, py[i]);
+        ctx.arc(px[i], py[i], nodeR[i] * 4, 0, Math.PI * 2);
+      }
+      ctx.fill();
+
+      // Nodes: 3 alpha buckets, one filled path each.
+      for (let b = 0; b < 3; b++) {
+        const a0 = 0.38 + (b * 0.22) / 3;
+        const a1 = 0.38 + ((b + 1) * 0.22) / 3;
+        let any = false;
+        ctx.beginPath();
+        for (let i = 0; i < N; i++) {
+          const a = nodeA[i];
+          if (a < a0 || a >= a1) continue;
+          ctx.moveTo(px[i] + nodeR[i], py[i]);
+          ctx.arc(px[i], py[i], nodeR[i], 0, Math.PI * 2);
+          any = true;
+        }
+        if (any) {
+          ctx.globalAlpha = ((a0 + a1) / 2) * fade;
           ctx.fill();
         }
-        ctx.globalAlpha = (0.38 + rand(i, 4) * 0.22) * fade;
-        ctx.beginPath();
-        ctx.arc(px[i], py[i], r, 0, Math.PI * 2);
-        ctx.fill();
       }
       ctx.globalAlpha = 1;
     };

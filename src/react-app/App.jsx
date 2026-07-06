@@ -151,6 +151,9 @@ const AREA_TYPE = [
   "text-[15px] font-medium",
 ];
 
+// Ribbon glyphs pick up the section hues used deeper in the page.
+const AREA_COLOR = ["text-[#7DD3FC]", "text-[#FCD34D]", "text-[#C4B5FD]", "text-[#6EE7B7]"];
+
 function Hero({ t, lang }) {
   return (
     <section id="top" className="relative h-svh w-full overflow-hidden md:h-screen">
@@ -177,7 +180,7 @@ function Hero({ t, lang }) {
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-70 md:gap-10">
           {t.hero.areas.map((label, i) => (
             <span key={label} className="flex items-center gap-2 text-white">
-              <svg viewBox="0 0 20 20" className="h-[17px] w-[17px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg viewBox="0 0 20 20" className={`h-[17px] w-[17px] ${AREA_COLOR[i]}`} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 {AREA_GLYPHS[i]}
               </svg>
               <span className={AREA_TYPE[i]}>{label}</span>

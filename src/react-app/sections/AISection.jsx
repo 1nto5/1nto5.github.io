@@ -19,6 +19,9 @@ const CARD_P = [crossP(0.25), crossP(0.5), crossP(0.75)];
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const ease = (t) => t * t * (3 - 2 * t);
 
+// Section accent: sky - the color of the activation wave.
+const ACCENT = "rgb(125,211,252)";
+
 // Deterministic pseudo-random in [0,1).
 function hash(n) {
   const s = Math.sin(n * 127.1) * 43758.5453;
@@ -192,14 +195,18 @@ export default function AISection({ t }) {
           if (pos > 0 && pos < 1) {
             const dx = ax + (bx - ax) * pos;
             const dy = ay + (by - ay) * pos;
-            ctx.globalAlpha = dim * 0.8;
+            ctx.fillStyle = ACCENT;
+            ctx.strokeStyle = ACCENT;
+            ctx.globalAlpha = dim * 0.9;
             ctx.beginPath();
             ctx.arc(dx, dy, 1.3, 0, Math.PI * 2);
             ctx.fill();
-            ctx.globalAlpha = dim * 0.12;
+            ctx.globalAlpha = dim * 0.16;
             ctx.beginPath();
             ctx.arc(dx, dy, 4, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.fillStyle = "#fff";
+            ctx.strokeStyle = "#fff";
           }
         }
       }
@@ -217,21 +224,26 @@ export default function AISection({ t }) {
         ctx.beginPath();
         ctx.arc(px[i], py[i], 1.8 + flare * 1.8, 0, Math.PI * 2);
         ctx.fill();
-        ctx.globalAlpha = dim * nodeIn * (0.06 + flare * 0.18);
+        // Flaring neurons ring in the accent hue.
+        if (flare > 0.05) ctx.strokeStyle = ACCENT;
+        ctx.globalAlpha = dim * nodeIn * (0.06 + flare * 0.22);
         ctx.beginPath();
         ctx.arc(px[i], py[i], 5 + flare * 3, 0, Math.PI * 2);
         ctx.stroke();
+        if (flare > 0.05) ctx.strokeStyle = "#fff";
       }
 
       // Output neuron flares with thin concentric rings while the plan writes.
       if (outGlow > 0) {
         const oi = nodes.length - 1;
+        ctx.strokeStyle = ACCENT;
         for (let r = 0; r < 3; r++) {
           ctx.globalAlpha = dim * outGlow * pulse * (0.3 - r * 0.1);
           ctx.beginPath();
           ctx.arc(px[oi], py[oi], 7 + r * 5 + outGlow * 4, 0, Math.PI * 2);
           ctx.stroke();
         }
+        ctx.strokeStyle = "#fff";
       }
       ctx.globalAlpha = 1;
     };
@@ -250,7 +262,7 @@ export default function AISection({ t }) {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pb-6 pt-[96px] md:pb-10 md:pt-[110px]">
           <div ref={headRef} style={{ opacity: 0 }}>
-            <Eyebrow>01 · {t.nav.ai}</Eyebrow>
+            <Eyebrow><span className="text-[#7DD3FC]">01</span> · {t.nav.ai}</Eyebrow>
             <h2 className="mt-3 max-w-[640px] text-[32px] font-semibold leading-[1.08] tracking-tight md:mt-4 md:text-[44px]">
               {tt.title_l1} {tt.title_l2}
             </h2>
@@ -266,7 +278,7 @@ export default function AISection({ t }) {
                 style={{ opacity: 0 }}
                 className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md md:p-6"
               >
-                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-white">{k}</div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7DD3FC]">{k}</div>
                 <p className="mt-2 text-[13px] leading-snug text-[#D1D1D1] md:mt-3 md:text-[15px] md:leading-relaxed">
                   {v}
                 </p>
@@ -294,7 +306,7 @@ export default function AISection({ t }) {
                     <span
                       ref={caretRef}
                       style={{ opacity: 0 }}
-                      className="ml-1 inline-block h-[0.95em] w-[7px] translate-y-[2px] bg-white/80"
+                      className="ml-1 inline-block h-[0.95em] w-[7px] translate-y-[2px] bg-[#7DD3FC]"
                       aria-hidden="true"
                     />
                   )}
