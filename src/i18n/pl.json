@@ -4,7 +4,7 @@
   "email_addr": "czesc@adrianantosiak.pl",
   "hero": {
     "heading": "Technologia, która się zwraca",
-    "sub": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie szyte na miarę i porządnie wyglądać w sieci.",
+    "sub": "Wdrażam AI, buduję aplikacje dopasowane do Twoich potrzeb i strony, które porządnie wyglądają.",
     "cta": "Napisz do mnie",
     "phone": "+48 503 751 676",
     "areas": ["Chatboty", "Automatyzacje", "Integracje", "E-commerce"]
@@ -42,7 +42,7 @@
       ["Administrator danych", "Administratorem danych jest Adrian Antosiak. Kontakt w sprawach związanych z danymi osobowymi: kontakt@adrianantosiak.pl."],
       ["Zakres zbieranych danych", "Sama wizyta na stronie nie powoduje zapisu danych osobowych po mojej stronie. Hosting GitHub Pages może prowadzić techniczne logi serwerowe (adres IP, user-agent, czas żądania) zgodnie z własną polityką - nie mam do nich dostępu. Jeśli napiszesz na kontakt@adrianantosiak.pl lub zadzwonisz, zapisuję Twoje imię, adres e-mail lub numer telefonu oraz treść zapytania."],
       ["Podstawa prawna", "Podstawą prawną przetwarzania korespondencji jest art. 6 ust. 1 lit. b RODO (działania na żądanie osoby przed zawarciem umowy) oraz art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes w postaci odpowiedzi na zapytanie)."],
-      ["Okres przechowywania", "Wiadomości e-mail przechowuję w skrzynce iCloud tak długo, jak jest to potrzebne do obsługi zapytania i sensownego follow-upu, po czym usuwam je lub archiwizuję."],
+      ["Okres przechowywania", "Wiadomości przechowuję w skrzynce mailowej tak długo, jak jest to potrzebne do obsługi zapytania i ewentualnego dalszego kontaktu, po czym usuwam je lub archiwizuję."],
       ["Odbiorcy danych", "Strona jest hostowana w GitHub Pages (GitHub, Inc., USA). Pocztę obsługuje iCloud+ Custom Email Domain (Apple Inc., USA) - wiadomości kierowane na adres @adrianantosiak.pl trafiają do mojej skrzynki iCloud. Czcionki (Inter Tight, JetBrains Mono) są ładowane z fonts.googleapis.com, w związku z czym Google Inc. otrzymuje Twój adres IP w momencie pobierania pliku czcionki. Nie przekazuję danych żadnym innym odbiorcom."],
       ["Cookies i śledzenie", "Strona nie ustawia własnych plików cookie ani nie zapisuje danych w localStorage przeglądarki. Nie korzystam z Google Analytics, Meta Pixel, Hotjar, Clarity ani podobnych narzędzi."],
       ["Twoje prawa", "Masz prawo: dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu, przenoszenia oraz wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl). Aby z nich skorzystać, napisz na kontakt@adrianantosiak.pl."],
@@ -56,8 +56,8 @@
     "title_l1": "AI, które realnie",
     "title_l2": "oszczędza godziny.",
     "cards": [
-      ["CHATBOTY", "Chatboty do obsługi klienta i wewnętrzne, uczone na Twoich dokumentach, mailach i katalogu produktów."],
-      ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która działa w tle."],
+      ["CHATBOTY", "Chatboty dla Twoich klientów i pracowników, uczone na Twoich dokumentach, mailach i katalogu produktów."],
+      ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która robi się sama."],
       ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań i rozmów."]
     ],
     "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa godzinna rozmowa: co pożera Ci czas\n  ├─ wybór 1-2 procesów do automatyzacji\n  ├─ prototyp w 3 dni, nie w miesiąc\n  └─ szkolenie zespołu i przekazanie kluczy"
@@ -66,9 +66,9 @@
     "title_l1": "Aplikacja, której",
     "title_l2": "potrzebuje Twoja firma,",
     "title_l3": "skrojona pod Ciebie.",
-    "lead_a": "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
+    "lead_a": "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej, niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
     "lead_and": " - ",
-    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i portale dla klientów. Czysty kod, który Ty lub ktokolwiek inny może później przejąć i rozwijać.",
+    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i portale dla klientów. Czysty kod, który każdy programista może później przejąć i rozwijać.",
     "feat": [
       ["Web", "Panele, portale, narzędzia wewnętrzne"],
       ["Mobile", "iOS + Android"],
@@ -77,7 +77,7 @@
     "kpis": [
       ["4-12 tyg", "typowy czas wdrożenia"],
       ["↓ 40%", "mniej ręcznych raportów"],
-      ["1", "jedno źródło prawdy"]
+      ["1", "miejsce na wszystkie dane"]
     ]
   },
   "web": {
@@ -86,7 +86,7 @@
     "title_l2_em": "zwraca się",
     "title_l3": "w pół roku.",
     "p1": "Strony firmowe, landingi, portfolia i mniejsze sklepy dla firm, które chcą czegoś lepszego niż szablon, ale nie potrzebują 50-stronicowej oferty od agencji.",
-    "p2": "Każda strona dostaje porządne SEO, CMS, z którego marketing korzysta bez dzwonienia do mnie, szybkość, którą Google docenia, i analitykę, którą zrozumiesz.",
+    "p2": "Każda strona dostaje porządne SEO, szybkie ładowanie i przejrzyste statystyki odwiedzin. Do tego CMS, w którym treści zmienisz bez dzwonienia do mnie.",
     "steps": [
       ["01", "Spotkanie startowe i mapa strony"],
       ["02", "Projekt i przegląd tekstów"],
@@ -96,9 +96,9 @@
     ],
     "rail": [
       ["Landing", "Produkt · kampania · wdrożenie"],
-      ["Firmowe", "Strony firmowe i portfolia"],
+      ["Firmowe", "Wizytówka · oferta · portfolio"],
       ["E-commerce", "Katalog · koszyk · płatności"],
-      ["Hosting", "Wdrożenie · monitoring · domena"]
+      ["Hosting", "Utrzymanie · monitoring · domena"]
     ]
   }
 }

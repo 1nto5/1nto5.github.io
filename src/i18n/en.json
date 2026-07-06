@@ -4,7 +4,7 @@
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
     "heading": "Technology that pays for itself",
-    "sub": "I help small and mid-sized companies use AI properly, build software they can't buy off the shelf, and look sharp online.",
+    "sub": "I put AI to work, build apps you can't buy off the shelf, and make websites that look sharp.",
     "cta": "Get in touch",
     "phone": "+48 503 751 676",
     "areas": ["Chatbots", "Automation", "Integrations", "E-commerce"]
@@ -32,7 +32,7 @@
     "email_l": "Email",
     "phone_l": "Phone",
     "avail_l": "Status",
-    "avail_v": "Taking on clients",
+    "avail_v": "Taking on new clients",
     "privacy_l": "Privacy policy"
   },
   "privacy": {
@@ -40,9 +40,9 @@
     "lead": "This site - adrianantosiak.pl - uses no tracking cookies, collects no analytics, and shows no ads. Personal data is processed only when you choose to email or call me.",
     "sections": [
       ["Data controller", "The data controller is Adrian Antosiak. For anything related to personal data, contact kontakt@adrianantosiak.pl."],
-      ["What data is collected", "Visiting the site on its own does not store personal data on my side. The host, GitHub Pages, may keep technical server logs (IP address, user-agent, request time) under its own policy - I have no access to them. If you email kontakt@adrianantosiak.pl or call, I retain your name, email or phone number, and the content of your enquiry."],
-      ["Legal basis", "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to enquiries)."],
-      ["Retention", "Emails are kept in my iCloud inbox for as long as needed to handle the enquiry and any reasonable follow-up, after which they are deleted or archived."],
+      ["What data is collected", "Visiting the site on its own does not store personal data on my side. The host, GitHub Pages, may keep technical server logs (IP address, user-agent, request time) under its own policy - I have no access to them. If you email kontakt@adrianantosiak.pl or call, I retain your name, email or phone number, and the content of your inquiry."],
+      ["Legal basis", "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to inquiries)."],
+      ["Retention", "Emails are kept in my inbox for as long as needed to handle the inquiry and any reasonable follow-up, after which they are deleted or archived."],
       ["Recipients", "The site is hosted on GitHub Pages (GitHub, Inc., USA). Email is handled by iCloud+ Custom Email Domain (Apple Inc., USA) - messages sent to @adrianantosiak.pl are delivered to my iCloud inbox. Web fonts (Inter Tight, JetBrains Mono) are loaded from fonts.googleapis.com, so Google Inc. receives your IP address when a font file is fetched. No data is shared with any other recipients."],
       ["Cookies and tracking", "The site does not set any cookies or write to browser localStorage. I do not use Google Analytics, Meta Pixel, Hotjar, Clarity, or similar tools."],
       ["Your rights", "You have the right to: access your data, rectify it, erase it, restrict processing, object, data portability, and lodge a complaint with Poland's supervisory authority, the President of the Personal Data Protection Office (uodo.gov.pl). To exercise these rights, email kontakt@adrianantosiak.pl."],
@@ -56,7 +56,7 @@
     "title_l1": "AI that actually",
     "title_l2": "saves you hours.",
     "cards": [
-      ["CHATBOTS", "Customer-support and internal bots trained on your docs, emails and product catalogue."],
+      ["CHATBOTS", "Customer-support and internal bots trained on your docs, emails and product catalog."],
       ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - the boring stuff, done in the background."],
       ["DOCUMENTS", "OCR, contract review, translation, summaries of meetings and calls."]
     ],
@@ -68,7 +68,7 @@
     "title_l3": "built for you.",
     "lead_a": "When Excel stops being enough and the SaaS tool costs more than it's worth, I build the web or mobile app you actually need",
     "lead_and": " - ",
-    "lead_b": "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. Clean code you or anyone else can pick up later.",
+    "lead_b": "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. Clean code any developer can pick up later.",
     "feat": [
       ["Web apps", "Dashboards, portals, internal tools"],
       ["Mobile", "iOS + Android"],
@@ -77,7 +77,7 @@
     "kpis": [
       ["4-12 weeks", "typical build time"],
       ["↓ 40%", "fewer manual reports"],
-      ["1", "source of truth"]
+      ["1", "place for all your data"]
     ]
   },
   "web": {
@@ -86,7 +86,7 @@
     "title_l2_em": "pays for itself",
     "title_l3": "in six months.",
     "p1": "Company sites, landing pages, portfolios and small online stores for businesses that want something better than a template but don't need a 50-page agency proposal.",
-    "p2": "Every site ships with proper SEO, a CMS your marketing team can update without calling me, page speeds that Google actually rewards, and an analytics setup you can read.",
+    "p2": "Every site ships with proper SEO, fast load times, and clear visitor stats. Plus a CMS you can update yourself - without calling me.",
     "steps": [
       ["01", "Kickoff call & sitemap"],
       ["02", "Design & copy review"],
