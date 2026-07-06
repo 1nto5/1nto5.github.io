@@ -100,7 +100,7 @@ function buildFormations(w, h) {
   let markCy;
   if (narrow) {
     const bandTop = 96;
-    const band = Math.max(140, h - 350 - bandTop);
+    const band = Math.max(140, h - 300 - bandTop);
     markSize = Math.min(w * 0.72, band * 0.78);
     markCy = bandTop + band / 2;
   } else {

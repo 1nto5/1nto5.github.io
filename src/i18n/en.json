@@ -3,8 +3,7 @@
   "kicker": "AI · Apps · Web",
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
-    "heading": "Less busywork. More business.",
-    "sub": "I put AI to work, build custom apps around your process, and ship websites that look sharp.",
+    "sub": "I put AI to work, build custom apps around your process, and ship websites that sell.",
     "cta": "Get in touch",
     "phone": "+48 503 751 676",
     "areas": ["Chatbots", "Automation", "Integrations", "E-commerce"]
@@ -56,7 +55,7 @@
     "title_l1": "AI that actually",
     "title_l2": "saves you hours.",
     "cards": [
-      ["CHATBOTS", "Customer-support and internal bots trained on your docs, emails and product catalog."],
+      ["CHATBOTS", "Chatbots for customers and your team, trained on your docs, emails and product catalog."],
       ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - the boring stuff, done in the background."],
       ["DOCUMENTS", "OCR, contract review, translation, summaries of meetings and calls."]
     ],

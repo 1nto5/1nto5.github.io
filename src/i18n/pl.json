@@ -3,15 +3,14 @@
   "kicker": "AI · Aplikacje · WWW",
   "email_addr": "czesc@adrianantosiak.pl",
   "hero": {
-    "heading": "Mniej roboty. Więcej firmy.",
-    "sub": "Wdrażam AI, buduję aplikacje dopasowane do Twoich potrzeb i strony, które porządnie wyglądają.",
+    "sub": "Wdrażam AI, buduję aplikacje dopasowane do Twoich potrzeb i strony, które sprzedają.",
     "cta": "Napisz do mnie",
     "phone": "+48 503 751 676",
     "areas": ["Chatboty", "Automatyzacje", "Integracje", "E-commerce"]
   },
   "nav": {
     "ai": "AI dla Twojej firmy",
-    "app": "Aplikacje dopasowane do Twoich potrzeb",
+    "app": "Aplikacje szyte na miarę",
     "web": "Strony i sklepy internetowe"
   },
   "nav_pill": {
@@ -56,7 +55,7 @@
     "title_l1": "AI, które realnie",
     "title_l2": "oszczędza godziny.",
     "cards": [
-      ["CHATBOTY", "Chatboty dla Twoich klientów i pracowników, uczone na Twoich dokumentach, mailach i katalogu produktów."],
+      ["CHATBOTY", "Chatboty dla klientów i zespołu, uczone na Twoich dokumentach, mailach i katalogu produktów."],
       ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która robi się sama."],
       ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań i rozmów."]
     ],
@@ -68,7 +67,7 @@
     "title_l3": "z półki.",
     "lead_a": "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej, niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
     "lead_and": " - ",
-    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i portale dla klientów. Czysty kod, który każdy programista może później przejąć i rozwijać.",
+    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale dla pracowników i klientów. Czysty kod, który każdy programista może później przejąć i rozwijać.",
     "feat": [
       ["Web", "Panele, portale, narzędzia wewnętrzne"],
       ["Mobile", "iOS + Android"],
