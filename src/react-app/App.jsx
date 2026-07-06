@@ -1,25 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { DICT, LangCtx } from "./i18n.js";
-import { WORLDS, NEUTRAL, applyVars } from "./worlds.js";
-import Divider from "./Divider.jsx";
+import Backdrop from "./Backdrop.jsx";
 import AISection from "./sections/AISection.jsx";
 import AppSection from "./sections/AppSection.jsx";
 import WebSection from "./sections/WebSection.jsx";
-
-const NAV_IDS = ["ai", "app", "web"];
-const NAV_NUMS = { ai: "01", app: "02", web: "03" };
-
-function useIsMobile() {
-  const [m, setM] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 820px)");
-    const on = () => setM(mq.matches);
-    on();
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-  return m;
-}
 
 export default function App({ locale = "pl" }) {
   const lang = locale === "en" ? "en" : "pl";
@@ -32,541 +16,238 @@ export default function App({ locale = "pl" }) {
     if (window.location.pathname !== target) window.location.href = target;
   };
 
-  const [world, setWorldRaw] = useState("neutral");
-  const [active, setActive] = useState(null);
-  const isMobile = useIsMobile();
-  const lockRef = useRef(false);
-
-  const setWorld = useCallback((id) => {
-    if (lockRef.current) return;
-    setWorldRaw(id);
+  useEffect(() => {
+    const els = document.querySelectorAll("[data-reveal]");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
-
-  useEffect(() => {
-    if (world === "neutral") applyVars(NEUTRAL.vars, "neutral");
-    else {
-      const w = WORLDS.find((x) => x.id === world);
-      if (w) applyVars(w.vars, w.id);
-    }
-  }, [world]);
-
-  useEffect(() => {
-    let rafId = null;
-    const update = () => {
-      if (lockRef.current) return;
-      const vh = window.innerHeight;
-      let best = null, bestScore = 0;
-      NAV_IDS.forEach((id) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const visible = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-        const score = visible / vh;
-        if (score > bestScore) { bestScore = score; best = id; }
-      });
-      if (best && bestScore > 0.3) {
-        const w = WORLDS.find((x) => x.id === best);
-        if (w) applyVars(w.vars, w.id);
-        setWorld(best);
-        setActive(best);
-      } else {
-        applyVars(NEUTRAL.vars, "neutral");
-        setWorld("neutral");
-        setActive(null);
-      }
-    };
-    const onScroll = () => {
-      if (rafId != null) return;
-      rafId = requestAnimationFrame(() => { rafId = null; update(); });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (rafId != null) cancelAnimationFrame(rafId);
-    };
-  }, [setWorld]);
-
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    setWorld(id); setActive(id);
-    lockRef.current = true;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-    setTimeout(() => { lockRef.current = false; }, 700);
-  };
 
   return (
     <LangCtx.Provider value={{ lang, setLang, t }}>
-      <div className="shell">
-        <TopBar isMobile={isMobile} active={active} onNav={scrollTo} lang={lang} setLang={setLang} t={t} />
-        <Hero world={world} setWorld={setWorld} onJump={scrollTo} isMobile={isMobile} t={t} />
-        <Divider world="ai"  onEnter={() => !isMobile && setWorld("ai")}  t={t} />
-        <AISection  active={world === "ai"}  t={t} />
-        <Divider world="app" onEnter={() => !isMobile && setWorld("app")} t={t} />
-        <AppSection active={world === "app"} t={t} />
-        <Divider world="web" onEnter={() => !isMobile && setWorld("web")} t={t} />
-        <WebSection active={world === "web"} t={t} />
+      <div className="font-sans text-white">
+        <Backdrop />
+        <Hero t={t} lang={lang} />
+        <AISection t={t} />
+        <AppSection t={t} />
+        <WebSection t={t} />
         <Contact t={t} lang={lang} />
-        <style>{`.shell{ position: relative; }`}</style>
       </div>
     </LangCtx.Provider>
   );
 }
 
-function LangToggle({ lang, setLang }) {
+function Mark({ className }) {
   return (
-    <div className="langtoggle" role="group" aria-label="Language">
-      <button
-        className={`langtoggle__b ${lang === "en" ? "on" : ""}`}
-        onClick={() => setLang("en")}
-      >EN</button>
-      <span className="langtoggle__sep">/</span>
-      <button
-        className={`langtoggle__b ${lang === "pl" ? "on" : ""}`}
-        onClick={() => setLang("pl")}
-      >PL</button>
-      <style>{`
-        .langtoggle{
-          display:inline-flex; align-items:center; gap: 4px;
-          padding: 4px 8px;
-          border: 1px solid var(--rule);
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 11px;
-          letter-spacing: .1em;
-        }
-        .langtoggle__b{
-          padding: 4px 6px;
-          color: var(--mute);
-          font-weight: 700;
-        }
-        .langtoggle__b.on{ color: var(--accent);}
-        .langtoggle__sep{ color: var(--mute); opacity: .5;}
-      `}</style>
+    <svg viewBox="0 0 64 64" className={className} fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fillRule="evenodd" />
+      <rect x="30" y="52" width="4" height="8" />
+      <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fillRule="evenodd" />
+    </svg>
+  );
+}
+
+function Navbar({ t, lang }) {
+  const [open, setOpen] = useState(false);
+  const links = [
+    { href: "#ai", label: t.nav_pill.ai },
+    { href: "#app", label: t.nav_pill.app },
+    { href: "#web", label: t.nav_pill.web },
+  ];
+  const other = lang === "pl" ? { href: "/en/", label: "EN", hreflang: "en" } : { href: "/", label: "PL", hreflang: "pl" };
+
+  return (
+    <div className="absolute left-1/2 top-6 z-50 w-[calc(100%-2rem)] max-w-[800px] -translate-x-1/2">
+      <nav className="flex items-center justify-between rounded-full bg-white/95 py-1.5 pl-5 pr-2 shadow-lg shadow-black/20 backdrop-blur-md">
+        <a href="#top" className="flex items-center gap-2 text-black" onClick={() => setOpen(false)}>
+          <Mark className="h-[18px] w-[18px]" />
+          <span className="text-[15px] font-bold tracking-tight">Adrian Antosiak</span>
+        </a>
+
+        <div className="hidden items-center gap-7 md:flex">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="text-[13px] font-medium text-gray-700 transition-colors hover:text-black">
+              {l.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={other.href}
+            hrefLang={other.hreflang}
+            className="hidden text-[13px] font-medium text-gray-700 transition-colors hover:text-black md:block"
+          >
+            {other.label}
+          </a>
+          <a
+            href="#kontakt"
+            className="rounded-full bg-[#111111] px-5 py-2 text-[13px] font-medium text-white transition-colors hover:bg-black"
+          >
+            {t.nav_pill.contact}
+          </a>
+          <button
+            type="button"
+            className="p-2 text-black md:hidden"
+            aria-expanded={open}
+            aria-label={open ? t.menu.close : t.menu.open}
+            onClick={() => setOpen((o) => !o)}
+          >
+            <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+              {open ? (
+                <>
+                  <path d="M5 5 L15 15" />
+                  <path d="M15 5 L5 15" />
+                </>
+              ) : (
+                <>
+                  <path d="M3 6 L17 6" />
+                  <path d="M3 10 L17 10" />
+                  <path d="M3 14 L17 14" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      {open && (
+        <div className="mt-2 flex flex-col rounded-2xl bg-white/95 p-2 shadow-lg shadow-black/20 backdrop-blur-md md:hidden">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="rounded-xl px-4 py-3 text-[15px] font-medium text-gray-800 hover:bg-black/5"
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </a>
+          ))}
+          <a
+            href={other.href}
+            hrefLang={other.hreflang}
+            className="rounded-xl border-t border-black/5 px-4 py-3 text-[15px] font-medium text-gray-800 hover:bg-black/5"
+          >
+            {other.hreflang === "en" ? "English" : "Polski"}
+          </a>
+        </div>
+      )}
     </div>
   );
 }
 
-function TopBar({ isMobile, active, onNav, lang, setLang, t }) {
-  const [open, setOpen] = useState(false);
-  const NAV = NAV_IDS.map((id) => ({ id, num: NAV_NUMS[id], label: t.nav[id] }));
+const AREA_GLYPHS = [
+  /* chat bubble */
+  <path key="a" d="M3 5.5 A2.5 2.5 0 0 1 5.5 3 H14.5 A2.5 2.5 0 0 1 17 5.5 V11 A2.5 2.5 0 0 1 14.5 13.5 H8 L4.5 17 V13.5 H5.5 A2.5 2.5 0 0 1 3 11 Z" />,
+  /* cycle arrows */
+  <path key="b" d="M15.5 8.5 A6 6 0 0 0 5 6.5 M4.5 4 V7 H7.5 M4.5 11.5 A6 6 0 0 0 15 13.5 M15.5 16 V13 H12.5" />,
+  /* linked nodes */
+  <g key="c">
+    <circle cx="5.5" cy="10" r="2.5" />
+    <circle cx="14.5" cy="10" r="2.5" />
+    <path d="M8 10 H12" />
+  </g>,
+  /* shopping bag */
+  <path key="d" d="M4.5 6.5 H15.5 L14.5 16.5 H5.5 Z M7.5 6.5 V5.5 A2.5 2.5 0 0 1 12.5 5.5 V6.5" />,
+];
+
+const AREA_TYPE = [
+  "text-[15px] font-bold",
+  "text-[15px] font-semibold",
+  "text-[16px] font-medium",
+  "text-[15px] font-medium",
+];
+
+function Hero({ t, lang }) {
   return (
-    <>
-      <header className="topbar" data-mobile={isMobile}>
-        <button className="topbar__brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-          <span className="topbar__mark" aria-hidden>
-            <svg viewBox="0 0 64 64" width="22" height="22" fill="currentColor" focusable="false">
-              <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fillRule="evenodd"/>
-              <rect x="30" y="52" width="4" height="8"/>
-              <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fillRule="evenodd"/>
-            </svg>
-          </span>
-          <span className="topbar__name">Adrian Antosiak</span>
-        </button>
-        {!isMobile && (
-          <nav className="topbar__nav">
-            {NAV.map((n) => (
-              <button key={n.id} onClick={() => onNav(n.id)} className="topbar__link">
-                <span className="topbar__num">{n.num}</span>
-                <span className="topbar__label">{n.label}</span>
-              </button>
-            ))}
-          </nav>
-        )}
-        <div className="topbar__right">
-          <LangToggle lang={lang} setLang={setLang} />
-          {isMobile && (
-            <button className="topbar__menu" onClick={() => setOpen((o) => !o)} aria-label="Menu">
-              {open ? (lang === "pl" ? "zamknij" : "close") : (lang === "pl" ? "menu" : "menu")}
-            </button>
-          )}
-        </div>
-      </header>
+    <section id="top" className="relative h-svh w-full overflow-hidden md:h-screen">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" aria-hidden="true" />
 
-      {isMobile && (
-        <nav className={`mobnav ${open ? "mobnav--open" : ""}`}>
-          {NAV.map((n) => (
-            <button key={n.id} onClick={() => { onNav(n.id); setOpen(false); }}
-              className={`mobnav__item ${active === n.id ? "mobnav__item--on" : ""}`}>
-              <span>{n.num}</span>
-              <span>{n.label}</span>
-              <span aria-hidden>→</span>
-            </button>
-          ))}
-        </nav>
-      )}
+      <Navbar t={t} lang={lang} />
 
-      <style>{`
-        .topbar{
-          position: sticky; top: 0; z-index: 50;
-          display:flex; justify-content: space-between; align-items: center;
-          padding: 16px clamp(20px, 3vw, 40px);
-          background: var(--bg); color: var(--fg);
-          border-bottom: 1px solid var(--rule);
-          transition: background 600ms var(--ease), color 260ms var(--ease), border-color 600ms var(--ease);
-          backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-          font-family: 'Inter Tight', system-ui, sans-serif;
-          gap: 16px;
-        }
-        .topbar__brand{ display:flex; align-items:center; gap: 12px;}
-        .topbar__mark{
-          display:inline-flex; align-items:center; justify-content:center;
-          width: 36px; height: 36px;
-          background: var(--chrome); color: var(--chrome-fg);
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 700;
-          transition: background 600ms var(--ease), color 260ms var(--ease);
-        }
-        .topbar__name{ font-size: 15px; font-weight: 600; letter-spacing: -0.01em;}
-        .topbar__nav{ display:flex; gap: 4px; flex-wrap: wrap; justify-content: center; flex: 1;}
-        .topbar__link{
-          display:flex; align-items: baseline; gap: 6px;
-          padding: 8px 12px;
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-          color: var(--mute);
-          border: 1px solid transparent;
-          transition: color .25s ease, border-color .25s ease, background .25s ease;
-        }
-        .topbar__link:hover{
-          color: var(--fg); border-color: var(--rule);
-          background: color-mix(in srgb, var(--accent) 8%, transparent);
-        }
-        .topbar__num{ color: var(--accent); font-weight: 700;}
-        .topbar__right{ display:flex; align-items: center; gap: 10px;}
-        .topbar__menu{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
-          padding: 8px 14px;
-          border: 1px solid var(--rule);
-          text-transform: uppercase; letter-spacing: .15em;
-        }
-        .mobnav{
-          position: fixed; top: 68px; left: 0; right: 0; z-index: 49;
-          background: var(--bg); border-bottom: 1px solid var(--rule);
-          transform: translateY(-110%);
-          transition: transform .4s var(--ease);
-          padding: 8px;
-        }
-        .mobnav--open{ transform: translateY(0); box-shadow: 0 20px 40px rgba(0,0,0,.15);}
-        .mobnav__item{
-          display:grid; grid-template-columns: auto 1fr auto;
-          gap: 14px; align-items:center;
-          width: 100%; text-align: left;
-          padding: 18px 14px;
-          border-bottom: 1px solid var(--rule);
-          font-family: 'Inter Tight', system-ui, sans-serif;
-          font-size: 18px; color: var(--fg);
-        }
-        .mobnav__item:last-child{ border-bottom: 0;}
-        .mobnav__item > span:first-child{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--accent);
-          letter-spacing: .15em;
-        }
-        .mobnav__item--on{ background: var(--accent); color: var(--chrome-fg);}
-        .mobnav__item--on > span:first-child{ color: var(--chrome-fg); opacity: .7;}
-        @media (max-width: 820px){ .topbar__name{ font-size: 14px;}}
-      `}</style>
-    </>
-  );
-}
-
-function Hero({ world, setWorld, onJump, isMobile, t }) {
-  const NAV = NAV_IDS.map((id) => ({ id, num: NAV_NUMS[id], label: t.nav[id] }));
-  return (
-    <section className="hero" onMouseEnter={() => !isMobile && setWorld("neutral")}>
-      <div className="hero__grid">
-        <div className="hero__l">
-          <div className="hero__kicker">
-            <span className="hero__dot"/> {t.kicker}
-          </div>
-          <h1 className="hero__title">
-            Adrian<br/>Antosiak<span className="hero__stop" aria-hidden>.</span>
+      <div className="absolute bottom-8 left-0 flex w-full flex-col items-center px-6">
+        <div className="mb-[100px] flex flex-col items-center text-center">
+          <h1 className="max-w-[720px] text-[38px] font-semibold leading-[1.05] tracking-tight text-white md:text-[56px]">
+            {t.hero.heading}
           </h1>
-          <p className="hero__lead dropcap">
-            {isMobile ? t.hero.lead_tap : t.hero.lead_hover}
+          <p className="mt-4 max-w-[420px] text-[15px] leading-relaxed text-[#D1D1D1]">
+            {t.hero.sub}
           </p>
-          <div className="hero__cta">
-            <a href={`mailto:${t.email_addr}`} className="hero__btn hero__btn--primary">
-              {t.hero.email}
-            </a>
-            <a href="tel:+48503751676" className="hero__btn">{t.hero.phone}</a>
-          </div>
+          <a
+            href="#kontakt"
+            className="mt-7 rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition-colors hover:bg-white/90"
+          >
+            {t.hero.cta}
+          </a>
         </div>
 
-        <div className="hero__r">
-          <div className="hero__portrait" aria-hidden>
-            <svg viewBox="0 0 200 240" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" focusable="false">
-              <path d="M30 240 L42 178 Q62 168 100 166 Q138 168 158 178 L170 240"/>
-              <path d="M84 176 L100 204 L116 176"/>
-              <path d="M58 118 Q48 86 58 52 Q70 22 100 20 Q130 22 142 52 Q152 86 142 118"/>
-              <path d="M62 124 Q58 144 70 162 Q82 178 100 180 Q118 178 130 162 Q142 144 138 124"/>
-              <path d="M70 124 Q84 132 100 132 Q116 132 130 124" opacity="0.55"/>
-              <path d="M76 84 Q84 80 92 84"/>
-              <path d="M108 84 Q116 80 124 84"/>
-              <circle cx="84" cy="96" r="1.8" fill="currentColor" stroke="none"/>
-              <circle cx="116" cy="96" r="1.8" fill="currentColor" stroke="none"/>
-              <path d="M100 100 L96 118 Q98 122 102 122"/>
-              <path d="M86 144 Q94 142 100 143 Q106 142 114 144"/>
-              <circle cx="80" cy="148" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="76" cy="156" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="84" cy="162" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="120" cy="148" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="124" cy="156" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="116" cy="162" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="92" cy="168" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="100" cy="172" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="108" cy="168" r="0.8" fill="currentColor" stroke="none"/>
-              <circle cx="80" cy="60" r="0.7" fill="currentColor" stroke="none"/>
-              <circle cx="86" cy="54" r="0.7" fill="currentColor" stroke="none"/>
-              <circle cx="74" cy="70" r="0.7" fill="currentColor" stroke="none"/>
-              <circle cx="78" cy="50" r="0.7" fill="currentColor" stroke="none"/>
-            </svg>
-          </div>
-          <div className="hero__index">{t.hero.index}</div>
-          <ol className="hero__list">
-            {NAV.map((n) => (
-              <li key={n.id}>
-                <button
-                  className={`hero__row ${world === n.id ? "hero__row--on" : ""}`}
-                  onMouseEnter={() => !isMobile && setWorld(n.id)}
-                  onClick={() => onJump(n.id)}
-                >
-                  <span className="hero__rowNum">{n.num}</span>
-                  <span className="hero__rowLabel">{n.label}</span>
-                  <span className="hero__rowArrow" aria-hidden>{world === n.id ? "●" : "○"}</span>
-                </button>
-              </li>
-            ))}
-          </ol>
-          <div className="hero__hint">
-            {isMobile ? t.hero.hint_tap : t.hero.hint_hover}
-          </div>
+        <div className="flex flex-wrap items-center justify-center gap-10 opacity-70">
+          {t.hero.areas.map((label, i) => (
+            <span key={label} className="flex items-center gap-2 text-white">
+              <svg viewBox="0 0 20 20" className="h-[17px] w-[17px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                {AREA_GLYPHS[i]}
+              </svg>
+              <span className={AREA_TYPE[i]}>{label}</span>
+            </span>
+          ))}
         </div>
       </div>
-
-      <div className="hero__ribbon">
-        <div className="hero__ribbonInner">
-          {t.hero.ribbon.repeat(5)}
-        </div>
-      </div>
-
-      <style>{`
-        .hero{
-          padding: clamp(40px, 6vw, 80px) clamp(20px, 3vw, 40px) 0;
-          border-bottom: 1px solid var(--rule);
-          font-family: 'Inter Tight', system-ui, sans-serif;
-        }
-        .hero__grid{
-          max-width: 1600px; margin: 0 auto;
-          display:grid; grid-template-columns: 1.2fr 1fr; gap: 80px;
-          align-items: end;
-          padding-bottom: 64px;
-        }
-        .hero__kicker{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;
-          text-transform: uppercase; letter-spacing: .2em;
-          color: var(--mute);
-          display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-          margin-bottom: 40px;
-        }
-        .hero__dot{
-          width: 8px; height: 8px; border-radius: 50%;
-          background: var(--accent);
-          box-shadow:
-            0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent),
-            0 0 14px color-mix(in srgb, var(--accent) 45%, transparent);
-        }
-        .hero__stamp{
-          display: inline-block;
-          padding: 3px 8px;
-          border: 1px solid var(--rule);
-          font-size: 10px;
-          letter-spacing: .25em;
-          color: var(--mute);
-          margin-left: 4px;
-        }
-        .hero__stop{
-          color: var(--accent);
-          margin-left: -.05em;
-        }
-        .hero__title{
-          font-family: 'Inter Tight', system-ui, sans-serif;
-          font-size: clamp(64px, 13vw, 220px);
-          line-height: .86; font-weight: 800;
-          letter-spacing: -0.05em;
-          color: var(--fg); margin-bottom: 40px;
-        }
-        .hero__lead{
-          font-size: clamp(16px, 1.4vw, 20px);
-          line-height: 1.5; max-width: 40ch;
-          color: var(--fg); margin-bottom: 32px;
-        }
-        .hero__cta{ display:flex; gap: 12px; flex-wrap: wrap;}
-        .hero__btn{
-          display:inline-flex; align-items:center;
-          padding: 14px 18px;
-          border: 1px solid var(--fg);
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
-          letter-spacing: .05em;
-          transition: all .25s ease;
-        }
-        .hero__btn:hover{ background: var(--fg); color: var(--bg);}
-        .hero__btn--primary{ background: var(--chrome); color: var(--chrome-fg); border-color: var(--chrome);}
-        .hero__btn--primary:hover{ background: var(--accent); border-color: var(--accent); color: var(--chrome-fg);}
-
-        .hero__r{ border-top: 2px solid var(--fg); }
-        .hero__portrait{
-          display: flex; justify-content: flex-end;
-          padding: 14px 0 18px;
-          color: var(--fg);
-          border-bottom: 1px solid var(--rule);
-        }
-        .hero__portrait svg{
-          width: clamp(72px, 9vw, 110px);
-          height: auto;
-          opacity: .85;
-        }
-        .hero__index{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;
-          letter-spacing: .2em; text-transform: uppercase;
-          color: var(--mute); padding: 16px 0;
-        }
-        .hero__list{ list-style: none;}
-        .hero__row{
-          width: 100%; text-align: left;
-          display:grid; grid-template-columns: 42px 1fr 24px;
-          gap: 12px; align-items: center;
-          padding: 20px 12px;
-          border-top: 1px solid var(--rule);
-          font-family: 'Inter Tight', system-ui, sans-serif;
-          font-weight: 600;
-          font-size: clamp(20px, 2vw, 28px);
-          letter-spacing: -0.01em;
-          transition: color .35s ease, background .35s ease;
-          color: var(--fg);
-        }
-        .hero__row:last-child{ border-bottom: 1px solid var(--rule);}
-        .hero__row:hover{ color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent);}
-        .hero__row--on{ color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent);}
-        .hero__rowNum{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px;
-          color: var(--mute); letter-spacing: .15em;
-        }
-        .hero__row--on .hero__rowNum{ color: var(--accent);}
-        .hero__rowArrow{ text-align:right; color: var(--accent);}
-        .hero__hint{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px;
-          color: var(--mute); letter-spacing: .15em;
-          text-transform: uppercase;
-          padding: 16px 0 0;
-        }
-        .hero__ribbon{
-          overflow:hidden; white-space: nowrap;
-          border-top: 1px solid var(--rule);
-          padding: 14px 0;
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;
-          letter-spacing: .3em; text-transform: uppercase;
-          color: var(--mute);
-        }
-        .hero__ribbonInner{ display:inline-block; animation: slide 60s linear infinite;}
-        @keyframes slide { from { transform: translateX(0);} to { transform: translateX(-50%);}}
-        @media (max-width: 900px){
-          .hero__grid{ grid-template-columns: 1fr; gap: 32px; padding-bottom: 32px;}
-        }
-      `}</style>
     </section>
   );
 }
 
 function Contact({ t, lang }) {
   const privacyHref = lang === "en" ? "/en/privacy/" : "/prywatnosc/";
+  const other = lang === "pl" ? { href: "/en/", label: "English", hreflang: "en" } : { href: "/", label: "Polski", hreflang: "pl" };
+
   return (
-    <footer className="contact">
-      <div className="contact__wrap">
-        <div className="contact__kicker">{t.contact.kicker}</div>
-        <h2 className="contact__title">
-          {t.contact.title_l1}<br/>{t.contact.title_l2}<br/><u>{t.contact.title_l3}</u>
-        </h2>
-        <div className="contact__grid">
-          <a href={`mailto:${t.email_addr}`} className="contact__item">
-            <span>{t.contact.email_l}</span><b>{t.email_addr}</b>
-          </a>
-          <a href="tel:+48503751676" className="contact__item">
-            <span>{t.contact.phone_l}</span><b>+48 503 751 676</b>
-          </a>
-          <div className="contact__item">
-            <span>{t.contact.avail_l}</span><b>{t.contact.avail_v}</b>
+    <footer id="kontakt" className="border-t border-white/10">
+      <div className="mx-auto max-w-[1100px] px-6 py-24 md:py-32">
+        <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center text-black md:py-20" data-reveal>
+          <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-black/50">{t.contact.kicker}</div>
+          <h2 className="mt-4 text-[36px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
+            {t.contact.title_l1} {t.contact.title_l2}
+            <br />
+            {t.contact.title_l3}
+          </h2>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={`mailto:${t.email_addr}`}
+              className="rounded-xl bg-[#111111] px-6 py-2.5 text-[13px] font-medium text-white transition-colors hover:bg-black"
+            >
+              {t.email_addr}
+            </a>
+            <a
+              href="tel:+48503751676"
+              className="rounded-xl border border-black/15 px-6 py-2.5 text-[13px] font-medium text-black transition-colors hover:border-black/40"
+            >
+              {t.hero.phone}
+            </a>
+          </div>
+          <div className="mt-7 flex items-center gap-2 text-[13px] text-black/60">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+            {t.contact.avail_v}
           </div>
         </div>
-        <div className="contact__foot">
+
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-[12px] text-[#8A8A8A]">
           <span>© {new Date().getFullYear()} Adrian Antosiak</span>
-          <a className="contact__privacy" href={privacyHref}>{t.contact.privacy_l}</a>
+          <div className="flex items-center gap-6">
+            <a href={privacyHref} className="transition-colors hover:text-white">{t.contact.privacy_l}</a>
+            <a href={other.href} hrefLang={other.hreflang} className="transition-colors hover:text-white">{other.label}</a>
+          </div>
         </div>
       </div>
-      <style>{`
-        .contact{
-          background: var(--bg); color: var(--fg);
-          padding: 120px clamp(20px, 3vw, 40px) 48px;
-          border-top: 2px solid var(--fg);
-          transition: background 600ms var(--ease), color 260ms var(--ease);
-          font-family: 'Inter Tight', system-ui, sans-serif;
-        }
-        .contact__wrap{ max-width: 1400px; margin: 0 auto;}
-        .contact__kicker{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;
-          letter-spacing: .2em; text-transform: uppercase;
-          color: var(--mute); margin-bottom: 32px;
-        }
-        .contact__title{
-          font-family: 'Inter Tight', system-ui, sans-serif;
-          font-size: clamp(60px, 14vw, 220px);
-          font-weight: 800; line-height: .9;
-          letter-spacing: -0.05em;
-          margin-bottom: 72px;
-        }
-        .contact__title u{
-          color: var(--accent);
-          text-decoration: underline;
-          text-decoration-thickness: 6px;
-          text-underline-offset: 14px;
-          font-style: italic; font-weight: 600;
-        }
-        .contact__grid{
-          display:grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-          border-top: 1px solid var(--rule);
-          margin-bottom: 48px;
-        }
-        .contact__item{
-          padding: 24px 20px 24px 0;
-          border-bottom: 1px solid var(--rule);
-          border-right: 1px solid var(--rule);
-          display:flex; flex-direction: column; gap: 8px;
-          transition: color .25s ease;
-        }
-        .contact__item:last-child{ border-right: 0;}
-        .contact__item span{
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px;
-          color: var(--mute);
-          letter-spacing: .15em; text-transform: uppercase;
-        }
-        .contact__item b{ font-size: clamp(15px, 1.2vw, 18px); font-weight: 600;}
-        .contact__item:hover{ color: var(--accent);}
-        .contact__foot{
-          display:flex; justify-content: space-between; align-items: center;
-          gap: 16px; flex-wrap: wrap;
-          font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px;
-          letter-spacing: .15em; text-transform: uppercase;
-          color: var(--mute);
-          padding-top: 24px;
-        }
-        .contact__privacy{ text-decoration: underline; transition: color .2s ease;}
-        .contact__privacy:hover{ color: var(--fg);}
-        @media (max-width: 820px){
-          .contact__grid{ grid-template-columns: 1fr 1fr;}
-          .contact__item:nth-child(2n){ border-right: 0;}
-          .contact__title u{ text-decoration-thickness: 4px; text-underline-offset: 8px;}
-          .contact__foot{ flex-direction: column; gap: 8px;}
-        }
-      `}</style>
     </footer>
   );
 }

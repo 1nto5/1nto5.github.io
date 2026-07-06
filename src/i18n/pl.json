@@ -3,23 +3,29 @@
   "kicker": "AI · Aplikacje · WWW",
   "email_addr": "czesc@adrianantosiak.pl",
   "hero": {
-    "lead_hover": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu.",
-    "lead_tap": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie, którego nie kupi się z półki, wyglądać porządnie w sieci i utrzymać to wszystko przy życiu.",
-    "email": "czesc@adrianantosiak.pl ↗",
+    "heading": "Technologia, która się zwraca",
+    "sub": "Pomagam małym i średnim firmom mądrze wykorzystywać AI, budować oprogramowanie szyte na miarę i porządnie wyglądać w sieci.",
+    "cta": "Napisz do mnie",
     "phone": "+48 503 751 676",
-    "index": "Usługi",
-    "hint_hover": "- kliknij, aby zobaczyć -",
-    "hint_tap": "- dotknij wiersz, żeby wejść głębiej -",
-    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APLIKACJE · WWW   ◆   PRZYJMUJĘ NOWE PROJEKTY   ◆   "
+    "areas": ["Chatboty", "Automatyzacje", "Integracje", "E-commerce"]
   },
   "nav": {
     "ai": "AI dla Twojej firmy",
     "app": "Aplikacje dopasowane do Twoich potrzeb",
     "web": "Strony i sklepy internetowe"
   },
-  "divider_next": "dalej ↓",
+  "nav_pill": {
+    "ai": "AI",
+    "app": "Aplikacje",
+    "web": "Strony WWW",
+    "contact": "Kontakt"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Zamknij menu"
+  },
   "contact": {
-    "kicker": "- Porozmawiajmy -",
+    "kicker": "Porozmawiajmy",
     "title_l1": "Masz",
     "title_l2": "pytanie?",
     "title_l3": "Napisz.",
@@ -47,14 +53,8 @@
     "back_home_l": "← Strona główna"
   },
   "ai": {
-    "online": "online",
-    "breadcrumb": "~/adrian/ai-dla-firmy",
     "title_l1": "AI, które realnie",
     "title_l2": "oszczędza godziny.",
-    "stdout": "stdout",
-    "streaming": "strumieniowanie…",
-    "idle": "bezczynny",
-    "hint": "[ najedź na sekcję, aby uruchomić stream ]",
     "cards": [
       ["CHATBOTY", "Chatboty do obsługi klienta i wewnętrzne, uczone na Twoich dokumentach, mailach i katalogu produktów."],
       ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która działa w tle."],
@@ -63,20 +63,12 @@
     "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa godzinna rozmowa: co pożera Ci czas\n  ├─ wybór 1-2 procesów do automatyzacji\n  ├─ prototyp w 3 dni, nie w miesiąc\n  └─ szkolenie zespołu i przekazanie kluczy"
   },
   "app": {
-    "kicker": "▚ 02 - Aplikacje dopasowane do Twoich potrzeb",
-    "stamp": "OPROGRAMOWANIE SZYTE NA MIARĘ",
     "title_l1": "Aplikacja, której",
     "title_l2": "potrzebuje Twoja firma,",
     "title_l3": "skrojona pod Ciebie.",
     "lead_a": "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
     "lead_and": " - ",
     "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale pracownicze i portale dla klientów. Czysty kod, który Ty lub ktokolwiek inny może później przejąć i rozwijać.",
-    "prod_live": "PRODUKCJA · NA ŻYWO",
-    "roster_head": "ZESPÓŁ · ZMIANA A",
-    "on_site": "na miejscu",
-    "units": "szt.",
-    "tgt": "cel",
-    "roster_foot": "grafiki · onboarding · oceny · urlopy",
     "feat": [
       ["Web", "Panele, portale, narzędzia wewnętrzne"],
       ["Mobile", "iOS + Android"],
@@ -89,7 +81,6 @@
     ]
   },
   "web": {
-    "meta": [["Status", "przyjmuję zlecenia"]],
     "subtitle": "Strony firmowe i sklepy internetowe",
     "title_l1": "Strona, która",
     "title_l2_em": "zwraca się",
@@ -103,16 +94,6 @@
       ["04", "SEO, analityka, wdrożenie"],
       ["05", "Hosting i wsparcie"]
     ],
-    "mock_nav": ["Realizacje", "O nas", "Kontakt"],
-    "mock_eyebrow": "- Twoja firma",
-    "mock_h1_l1": "Strona, która sprzedaje.",
-    "mock_h1_l2": "Gotowa w 3 dni.",
-    "mock_h1_l3": "Zaczynamy?",
-    "mock_cta": "Wyceń projekt →",
-    "lh": "Lighthouse",
-    "lh_v": "perf",
-    "a11y": "a11y",
-    "seo": "seo",
     "rail": [
       ["Landing", "Produkt · kampania · wdrożenie"],
       ["Firmowe", "Strony firmowe i portfolia"],

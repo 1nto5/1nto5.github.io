@@ -5,13 +5,16 @@ Personal site for Adrian Antosiak, independent consultant (AI, apps, web, IT). P
 ## Tech
 
 - Built with **Astro 5** (static site generation) + `@astrojs/react` (React islands) + `@astrojs/sitemap`.
+- Styling: **Tailwind CSS 4** via `@tailwindcss/vite` (registered in `astro.config.mjs` under `vite.plugins`); base styles, `#prerender` fallback and `.doc` (privacy pages) live in `src/styles/global.css`.
 - Package manager: **bun** (lockfile `bun.lock`).
 - Bilingual via Astro i18n: Polish at `/` (default locale), English at `/en/`. Config in `astro.config.mjs`.
 - Translations: `src/i18n/pl.json` + `src/i18n/en.json`. Loader + meta helpers in `src/i18n/index.js`.
 - Layout + SEO head: `src/layouts/Base.astro` (meta, canonical, hreflang, Open Graph, Twitter Card, JSON-LD Person + ProfessionalService + WebSite).
 - Home page content: `src/components/Home.astro` (static HTML rendered from translations).
 - Pages: `src/pages/index.astro` (PL), `src/pages/en/index.astro` (EN).
-- React islands (hydrate on client): `src/react-app/App.jsx` (top-level), `Divider.jsx`, `sections/{AI,App,Web,IT}Section.jsx`, plus `worlds.js` (color-token swapper) and `i18n.js` (context).
+- React islands (hydrate on client): `src/react-app/App.jsx` (top-level: floating pill navbar, full-screen video hero, contact card), `sections/{AI,App,Web}Section.jsx`, `sections/primitives.jsx` (Eyebrow, Card), `i18n.js` (context).
+- Design system: near-black `#050505` background, white/`#D1D1D1`/`#8A8A8A` text, `rounded-2xl` cards on `bg-white/[0.04]` with `border-white/10`, inverse white surfaces for navbar pill / CTA / contact card. Fonts: Inter Tight (display + body), JetBrains Mono (eyebrows, labels, code).
+- Backdrop: `src/react-app/Backdrop.jsx` - a fixed full-viewport canvas behind all content. One particle set morphs between formations as the page scrolls (A.A monogram -> neural net -> UI grid -> globe -> dispersal); the timeline is scrubbed by scroll position, not self-playing (only a faint idle shimmer, disabled under `prefers-reduced-motion`). Section anchors are measured from `#ai/#app/#web/#kontakt` offsets on mount/resize. Content reveals use `[data-reveal]` + IntersectionObserver (CSS in `global.css`).
 - Scripts: `bun run dev` (local), `bun run build` (writes `dist/`), `bun run preview`.
 
 ## Deployment

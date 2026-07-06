@@ -8,9 +8,9 @@ import { dirname, resolve } from "node:path";
 const here = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(here, "..", "public");
 
-const FG = "#0b0b0b";
-const BG = "#f3f1ec";
-const ACCENT = "#ff5a1f";
+const FG = "#ffffff";
+const BG = "#050505";
+const MUTE = "#d1d1d1";
 
 // Geometric A.A monogram - two angular A's flanking a square period.
 const MARK_PATHS = `
@@ -21,43 +21,41 @@ const MARK_PATHS = `
 
 const faviconSvg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="${FG}"/>
-  <g fill="${BG}">${MARK_PATHS}</g>
+  <rect width="64" height="64" fill="${BG}"/>
+  <g fill="${FG}">${MARK_PATHS}</g>
 </svg>`;
 
-// 1200x630 share card - name + tagline + location on cream background.
+// 1200x630 share card - name + tagline on near-black background.
 const ogSvg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${BG}"/>
-  <rect x="0" y="0" width="1200" height="12" fill="${FG}"/>
-  <rect x="0" y="618" width="1200" height="12" fill="${FG}"/>
   <text x="72" y="70"
         font-family="'JetBrains Mono', ui-monospace, monospace"
         font-size="22"
         letter-spacing="4"
-        fill="${FG}">ADRIAN ANTOSIAK</text>
+        fill="${MUTE}">ADRIAN ANTOSIAK</text>
   <text x="72" y="290"
         font-family="'Inter Tight', system-ui, sans-serif"
         font-size="140"
-        font-weight="800"
+        font-weight="600"
         letter-spacing="-6"
         fill="${FG}">Adrian</text>
   <text x="72" y="430"
         font-family="'Inter Tight', system-ui, sans-serif"
         font-size="140"
-        font-weight="800"
+        font-weight="600"
         letter-spacing="-6"
         fill="${FG}">Antosiak.</text>
   <text x="72" y="508"
         font-family="'Inter Tight', system-ui, sans-serif"
         font-size="36"
         font-weight="500"
-        fill="${FG}">AI  -  aplikacje  -  strony</text>
+        fill="${MUTE}">AI  -  aplikacje  -  strony</text>
   <text x="72" y="570"
         font-family="'JetBrains Mono', ui-monospace, monospace"
         font-size="22"
         letter-spacing="2"
-        fill="${FG}" opacity="0.55">adrianantosiak.pl</text>
+        fill="${MUTE}" opacity="0.7">adrianantosiak.pl</text>
   <g transform="translate(1040 36) scale(1.4)" fill="${FG}">${MARK_PATHS}</g>
 </svg>`;
 

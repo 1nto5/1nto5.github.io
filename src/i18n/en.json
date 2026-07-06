@@ -3,23 +3,29 @@
   "kicker": "AI · Apps · Web",
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
-    "lead_hover": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running.",
-    "lead_tap": "I help small and mid-sized companies use AI properly, build the software they can't buy off the shelf, get them online properly, and keep the whole thing running.",
-    "email": "hi@adrianantosiak.pl ↗",
+    "heading": "Technology that pays for itself",
+    "sub": "I help small and mid-sized companies use AI properly, build software they can't buy off the shelf, and look sharp online.",
+    "cta": "Get in touch",
     "phone": "+48 503 751 676",
-    "index": "Services",
-    "hint_hover": "- click to see -",
-    "hint_tap": "- tap a row to jump in -",
-    "ribbon": "   ADRIAN ANTOSIAK   ◆   AI · APPS · WEB   ◆   TAKING ON NEW CLIENTS   ◆   "
+    "areas": ["Chatbots", "Automation", "Integrations", "E-commerce"]
   },
   "nav": {
     "ai": "AI for your business",
     "app": "Custom applications",
     "web": "Websites & online stores"
   },
-  "divider_next": "next ↓",
+  "nav_pill": {
+    "ai": "AI",
+    "app": "Apps",
+    "web": "Websites",
+    "contact": "Contact"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Close menu"
+  },
   "contact": {
-    "kicker": "- Let's talk -",
+    "kicker": "Let's talk",
     "title_l1": "Got a",
     "title_l2": "question?",
     "title_l3": "Email me.",
@@ -47,14 +53,8 @@
     "back_home_l": "← Home"
   },
   "ai": {
-    "online": "online",
-    "breadcrumb": "~/adrian/ai-for-business",
     "title_l1": "AI that actually",
     "title_l2": "saves you hours.",
-    "stdout": "stdout",
-    "streaming": "streaming…",
-    "idle": "idle",
-    "hint": "[ hover this section to stream ]",
     "cards": [
       ["CHATBOTS", "Customer-support and internal bots trained on your docs, emails and product catalogue."],
       ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - the boring stuff, done in the background."],
@@ -63,20 +63,12 @@
     "code": "> adrian.ai.plan({ company })\n  ├─ 1h free call to map what's eating time\n  ├─ pick 1-2 processes worth automating\n  ├─ prototype in 3 days, not a month\n  └─ train your team, hand over the keys"
   },
   "app": {
-    "kicker": "▚ 02 - Custom applications",
-    "stamp": "SOFTWARE BUILT TO FIT",
     "title_l1": "The app your",
     "title_l2": "business needs,",
     "title_l3": "built for you.",
     "lead_a": "When Excel stops being enough and the SaaS tool costs more than it's worth, I build the web or mobile app you actually need",
     "lead_and": " - ",
     "lead_b": "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. Clean code you or anyone else can pick up later.",
-    "prod_live": "PRODUCTION · LIVE",
-    "roster_head": "TEAM · SHIFT A",
-    "on_site": "on site",
-    "units": "units",
-    "tgt": "tgt",
-    "roster_foot": "scheduling · onboarding · reviews · time-off",
     "feat": [
       ["Web apps", "Dashboards, portals, internal tools"],
       ["Mobile", "iOS + Android"],
@@ -89,7 +81,6 @@
     ]
   },
   "web": {
-    "meta": [["Status", "taking briefs"]],
     "subtitle": "Business websites and online stores",
     "title_l1": "A website that",
     "title_l2_em": "pays for itself",
@@ -103,16 +94,6 @@
       ["04", "SEO, analytics, launch"],
       ["05", "Hosting & support"]
     ],
-    "mock_nav": ["Work", "About", "Contact"],
-    "mock_eyebrow": "- Your company",
-    "mock_h1_l1": "A site that sells.",
-    "mock_h1_l2": "Live in 3 days.",
-    "mock_h1_l3": "Ready to start?",
-    "mock_cta": "Get a quote →",
-    "lh": "Lighthouse",
-    "lh_v": "perf",
-    "a11y": "a11y",
-    "seo": "seo",
     "rail": [
       ["Landing", "Product · campaign · launch"],
       ["Corporate", "Company sites · portfolios"],
