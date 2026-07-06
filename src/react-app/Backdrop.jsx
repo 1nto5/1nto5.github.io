@@ -60,11 +60,12 @@ function buildFormations(w, h) {
   const cx = w / 2;
 
   // Hero: the monogram, centered in the space above the bottom-anchored copy.
-  const size = Math.min(w, h) * 0.42;
+  // Sized against both axes so it stays fully visible on narrow screens.
+  const size = Math.min(w * 0.8, h * 0.46);
   const raw = samplePolylines(MARK_POLYS, N);
   const mark = raw.map(([x, y]) => [
     cx + ((x - 32) / 64) * size,
-    h * 0.34 + ((y - 32) / 64) * size,
+    h * 0.33 + ((y - 32) / 64) * size,
   ]);
 
   // AI: layered neural net, left to right.
@@ -159,7 +160,10 @@ export default function Backdrop() {
 
     const posAt = (i, phase, time, rot) => {
       const a = Math.min(3, Math.floor(phase));
-      const t = smoothstep(phase - a);
+      // Per-node stagger: each particle departs on its own cue, so morphs
+      // read as a swarm instead of a rigid tween.
+      const lag = rand(i, 5) * 0.35;
+      const t = smoothstep(Math.max(0, Math.min(1, (phase - a - lag) / (1 - lag))));
       const forms = [
         () => F.mark[i],
         () => F.net[i],
@@ -185,8 +189,11 @@ export default function Backdrop() {
       const scrollY = window.scrollY;
       const phase = phaseAt(scrollY);
       const rot = scrollY * 0.0009; // globe spin is scroll-driven too
-      // Fade the net out as the dispersal completes.
-      const fade = 1 - 0.65 * smoothstep(phase - 3);
+      // The hero owns the stage; once content sections arrive the whole net
+      // recedes so text stays readable, and it fades further at dispersal.
+      const fade =
+        (1 - 0.5 * smoothstep(Math.min(phase, 1))) *
+        (1 - 0.55 * smoothstep(phase - 3));
 
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = "#050505";
@@ -196,8 +203,10 @@ export default function Backdrop() {
       for (let i = 0; i < N; i++) pts[i] = posAt(i, phase, time, rot);
 
       // Edges: one proximity rule everywhere - outline, layers, grid and
-      // globe wireframe all emerge from it.
-      const REACH = Math.min(w, h) * 0.085;
+      // globe wireframe all emerge from it. Data pulses ride a subset of
+      // edges; their travel is scroll-driven with a slow idle drift.
+      const REACH = Math.max(44, Math.min(w, h) * 0.085);
+      const pulseClock = scrollY * 0.0012 + (reduced ? 0 : time * 0.00004);
       ctx.lineWidth = 1;
       for (let i = 0; i < N; i++) {
         for (let j = i + 1; j < N; j++) {
@@ -206,17 +215,40 @@ export default function Backdrop() {
           const d2 = dx * dx + dy * dy;
           if (d2 > REACH * REACH) continue;
           const d = Math.sqrt(d2);
-          ctx.strokeStyle = `rgba(255,255,255,${(0.16 * (1 - d / REACH) * fade).toFixed(3)})`;
+          const k = 1 - d / REACH;
+          ctx.strokeStyle = `rgba(255,255,255,${(0.11 * k * fade).toFixed(3)})`;
           ctx.beginPath();
           ctx.moveTo(pts[i][0], pts[i][1]);
           ctx.lineTo(pts[j][0], pts[j][1]);
           ctx.stroke();
+
+          if ((i * 31 + j * 17) % 9 === 0) {
+            const p = (rand(i * 91 + j, 6) + pulseClock) % 1;
+            const px = pts[i][0] + (pts[j][0] - pts[i][0]) * p;
+            const py = pts[i][1] + (pts[j][1] - pts[i][1]) * p;
+            ctx.fillStyle = `rgba(255,255,255,${(0.1 * k * fade).toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(px, py, 3.2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = `rgba(255,255,255,${(0.5 * k * fade).toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(px, py, 1.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
       }
 
       for (let i = 0; i < N; i++) {
-        const r = 1.1 + rand(i, 3) * 1.3;
-        ctx.fillStyle = `rgba(255,255,255,${(0.55 + rand(i, 4) * 0.3) * fade})`;
+        const big = rand(i, 3);
+        const r = 0.8 + big * 1.1;
+        if (big > 0.82) {
+          // A soft halo on the handful of hub nodes.
+          ctx.fillStyle = `rgba(255,255,255,${(0.07 * fade).toFixed(3)})`;
+          ctx.beginPath();
+          ctx.arc(pts[i][0], pts[i][1], r * 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.fillStyle = `rgba(255,255,255,${((0.38 + rand(i, 4) * 0.22) * fade).toFixed(3)})`;
         ctx.beginPath();
         ctx.arc(pts[i][0], pts[i][1], r, 0, Math.PI * 2);
         ctx.fill();

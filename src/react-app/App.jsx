@@ -177,10 +177,7 @@ function Hero({ t, lang }) {
 
       <div className="absolute bottom-8 left-0 flex w-full flex-col items-center px-6">
         <div className="mb-[100px] flex flex-col items-center text-center">
-          <h1 className="max-w-[720px] text-[38px] font-semibold leading-[1.05] tracking-tight text-white md:text-[56px]">
-            {t.hero.heading}
-          </h1>
-          <p className="mt-4 max-w-[420px] text-[15px] leading-relaxed text-[#D1D1D1]">
+          <p className="max-w-[420px] text-[15px] leading-relaxed text-[#D1D1D1]">
             {t.hero.sub}
           </p>
           <a
