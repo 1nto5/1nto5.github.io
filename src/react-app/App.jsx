@@ -159,19 +159,22 @@ function Hero({ t, lang }) {
       <Navbar t={t} lang={lang} />
 
       <div className="absolute bottom-8 left-0 flex w-full flex-col items-center px-6">
-        <div className="mb-[100px] flex flex-col items-center text-center">
-          <p className="max-w-[420px] text-[15px] leading-relaxed text-[#D1D1D1]">
+        <div className="mb-12 flex flex-col items-center text-center md:mb-[100px]">
+          <h1 className="max-w-[720px] text-balance text-[30px] font-semibold leading-[1.08] tracking-tight text-white md:text-[52px]">
+            {t.hero.heading}
+          </h1>
+          <p className="mt-4 max-w-[420px] text-[15px] leading-relaxed text-[#D1D1D1]">
             {t.hero.sub}
           </p>
           <a
             href="#kontakt"
-            className="mt-7 rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition-colors hover:bg-white/90"
+            className="mt-6 rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition-colors hover:bg-white/90 md:mt-7"
           >
             {t.hero.cta}
           </a>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-10 opacity-70">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-70 md:gap-10">
           {t.hero.areas.map((label, i) => (
             <span key={label} className="flex items-center gap-2 text-white">
               <svg viewBox="0 0 20 20" className="h-[17px] w-[17px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

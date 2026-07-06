@@ -93,11 +93,23 @@ function buildFormations(w, h) {
   const cx = w / 2;
 
   // Hero: the monogram, centered in the space above the bottom-anchored copy.
-  // Sized against both axes so it stays fully visible on narrow screens.
-  const markSize = Math.min(w * 0.8, h * 0.46);
+  // On narrow screens it fits the band between the navbar (~96px) and the
+  // copy block (~350px tall), so heading and mark never crowd each other.
+  const narrow = w < 768;
+  let markSize;
+  let markCy;
+  if (narrow) {
+    const bandTop = 96;
+    const band = Math.max(140, h - 350 - bandTop);
+    markSize = Math.min(w * 0.72, band * 0.78);
+    markCy = bandTop + band / 2;
+  } else {
+    markSize = Math.min(w * 0.8, h * 0.46);
+    markCy = h * 0.33;
+  }
   const mark = samplePolylines(MARK_POLYS, N).map(([x, y]) => [
     cx + ((x - 32) / 64) * markSize,
-    h * 0.33 + ((y - 32) / 64) * markSize,
+    markCy + ((y - 32) / 64) * markSize,
   ]);
 
   // Middle: an even ambient scatter across the whole viewport.
