@@ -13,10 +13,7 @@ const otherLabel = otherLocale === "en" ? "English" : "Polski";
   <p class="lead">{t.hero.sub}</p>
 
   <section>
-    <h2>
-      <small>01</small>
-      {t.nav.ai}
-    </h2>
+    <h2>{t.nav.ai}</h2>
     <p>{t.ai.title_l1} {t.ai.title_l2}</p>
     <ul>
       {t.ai.cards.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
@@ -24,10 +21,7 @@ const otherLabel = otherLocale === "en" ? "English" : "Polski";
   </section>
 
   <section>
-    <h2>
-      <small>02</small>
-      {t.nav.app}
-    </h2>
+    <h2>{t.nav.app}</h2>
     <p>{t.app.lead_a}{t.app.lead_and}{t.app.lead_b}</p>
     <ul>
       {t.app.feat.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
@@ -36,7 +30,7 @@ const otherLabel = otherLocale === "en" ? "English" : "Polski";
 
   <section>
     <h2>
-      <small>03 - {t.web.subtitle}</small>
+      <small>{t.web.subtitle}</small>
       {t.nav.web}
     </h2>
     <p>{t.web.p1}</p>

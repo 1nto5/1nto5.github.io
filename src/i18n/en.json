@@ -1,6 +1,6 @@
 {
   "langName": "English",
-  "kicker": "AI · Apps · Web",
+  "kicker": "AI, Apps, Web",
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
     "sub": "I put AI to work, build custom apps around your process, and ship websites that sell.",
@@ -24,7 +24,6 @@
     "close": "Close menu"
   },
   "contact": {
-    "kicker": "Let's talk",
     "title_l1": "Got a",
     "title_l2": "question?",
     "title_l3": "Email me.",
@@ -42,13 +41,13 @@
       ["What data is collected", "Visiting the site on its own does not store personal data on my side. The host, GitHub Pages, may keep technical server logs (IP address, user-agent, request time) under its own policy - I have no access to them. If you email kontakt@adrianantosiak.pl or call, I retain your name, email or phone number, and the content of your inquiry."],
       ["Legal basis", "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to inquiries)."],
       ["Retention", "Emails are kept in my inbox for as long as needed to handle the inquiry and any reasonable follow-up, after which they are deleted or archived."],
-      ["Recipients", "The site is hosted on GitHub Pages (GitHub, Inc., USA). Email is handled by iCloud+ Custom Email Domain (Apple Inc., USA) - messages sent to @adrianantosiak.pl are delivered to my iCloud inbox. Web fonts (Inter Tight, JetBrains Mono) are loaded from fonts.googleapis.com, so Google Inc. receives your IP address when a font file is fetched. No data is shared with any other recipients."],
+      ["Recipients", "The site is hosted on GitHub Pages (GitHub, Inc., USA). Email is handled by iCloud+ Custom Email Domain (Apple Inc., USA) - messages sent to @adrianantosiak.pl are delivered to my iCloud inbox. Web fonts are self-hosted alongside the site, so fetching them sends no data to any external provider. No data is shared with any other recipients."],
       ["Cookies and tracking", "The site does not set any cookies or write to browser localStorage. I do not use Google Analytics, Meta Pixel, Hotjar, Clarity, or similar tools."],
       ["Your rights", "You have the right to: access your data, rectify it, erase it, restrict processing, object, data portability, and lodge a complaint with Poland's supervisory authority, the President of the Personal Data Protection Office (uodo.gov.pl). To exercise these rights, email kontakt@adrianantosiak.pl."],
       ["Contact", "For any questions related to personal data, email kontakt@adrianantosiak.pl."]
     ],
     "updated_l": "Last updated",
-    "updated_v": "2026-04-24",
+    "updated_v": "2026-07-07",
     "back_home_l": "← Home"
   },
   "ai": {
@@ -94,10 +93,10 @@
       ["05", "Hosting & support"]
     ],
     "rail": [
-      ["Landing", "Product · campaign · launch"],
-      ["Corporate", "Company sites · portfolios"],
-      ["E-commerce", "Catalog · cart · checkout"],
-      ["Hosting", "Deploy · monitor · domain"]
+      ["Landing", "Product, campaign, launch"],
+      ["Corporate", "Company sites, portfolios"],
+      ["E-commerce", "Catalog, cart, checkout"],
+      ["Hosting", "Deploy, monitor, domain"]
     ]
   }
 }

@@ -1,6 +1,6 @@
-export function Eyebrow({ children }) {
+export function Eyebrow({ color = "text-[#8A8A8A]", children }) {
   return (
-    <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#8A8A8A]">
+    <div className={`font-mono text-[11px] uppercase tracking-[0.2em] ${color}`}>
       {children}
     </div>
   );

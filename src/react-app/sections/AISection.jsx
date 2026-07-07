@@ -285,7 +285,7 @@ export default function AISection({ t }) {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pb-6 pt-[96px] md:pb-10 md:pt-[110px]">
           <div ref={headRef} style={{ opacity: 0 }}>
-            <Eyebrow><span className="text-[#7DD3FC]">01</span> · {t.nav.ai}</Eyebrow>
+            <Eyebrow color="text-[#7DD3FC]">{t.nav.ai}</Eyebrow>
             <h2 className="mt-3 max-w-[640px] text-[32px] font-semibold leading-[1.08] tracking-tight md:mt-4 md:text-[44px]">
               {tt.title_l1} {tt.title_l2}
             </h2>

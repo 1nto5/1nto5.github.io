@@ -365,7 +365,7 @@ export default function WebSection({ t }) {
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col justify-center px-6 pb-6 pt-[90px] md:pb-10 md:pt-24">
           <div className="max-w-[560px]">
             <div ref={headerRef} style={{ opacity: 0, transform: "translate(0px,18px)" }}>
-              <Eyebrow><span className="text-[#C4B5FD]">03</span> · {t.nav.web}</Eyebrow>
+              <Eyebrow color="text-[#C4B5FD]">{t.nav.web}</Eyebrow>
               <h2 className="mt-4 text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px]">
                 {tt.title_l1} <em className="italic">{tt.title_l2_em}</em> {tt.title_l3}
               </h2>

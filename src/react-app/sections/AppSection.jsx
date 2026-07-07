@@ -405,7 +405,7 @@ export default function AppSection({ t }) {
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pt-[96px] md:pt-[104px]">
           <div ref={headRef} style={{ opacity: 0 }}>
-            <Eyebrow><span className="text-[#FCD34D]">02</span> · {t.nav.app}</Eyebrow>
+            <Eyebrow color="text-[#FCD34D]">{t.nav.app}</Eyebrow>
             <h2 className="mt-3 max-w-[620px] text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px]">
               {tt.title_l1} {tt.title_l2} {tt.title_l3}
             </h2>

@@ -229,8 +229,7 @@ function Contact({ t, lang }) {
     <footer id="kontakt" className="border-t border-white/10">
       <div className="mx-auto max-w-[1100px] px-6 py-24 md:py-32">
         <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center text-black md:py-20">
-          <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-black/50">{t.contact.kicker}</div>
-          <h2 className="mt-4 text-[36px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
+          <h2 className="text-[36px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
             {t.contact.title_l1} {t.contact.title_l2}
             <br />
             {t.contact.title_l3}
