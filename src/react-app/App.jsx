@@ -17,10 +17,11 @@ export default function App({ locale = "pl" }) {
   };
 
   useEffect(() => {
-    // Entering the page with a #section hash should also show the
-    // developed scene, not its blank start.
+    // Anchors don't exist before hydration, so the browser's native hash
+    // scroll never fires - jump manually for every section. Pinned scenes
+    // land at their developed end, the rest at their top.
     const id = window.location.hash.slice(1);
-    if (PINNED_IDS.includes(id)) {
+    if (id) {
       requestAnimationFrame(() => jumpToSection(id));
     }
   }, []);
