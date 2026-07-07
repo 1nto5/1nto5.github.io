@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Eyebrow } from "./primitives.jsx";
+import { Eyebrow, Spot, trackSpot } from "./primitives.jsx";
 
 // Neuron counts per column, left to right. Last column is the output neuron.
 const LAYERS = [3, 5, 6, 5, 1];
@@ -286,7 +286,7 @@ export default function AISection({ t }) {
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pb-6 pt-[96px] md:pb-10 md:pt-[110px]">
           <div ref={headRef} style={{ opacity: 0 }}>
             <Eyebrow color="text-[#7DD3FC]">{t.nav.ai}</Eyebrow>
-            <h2 className="mt-3 max-w-[640px] text-[32px] font-semibold leading-[1.08] tracking-tight md:mt-4 md:text-[44px]">
+            <h2 className="mt-3 max-w-[640px] text-[32px] font-semibold leading-[1.08] tracking-tight md:mt-4 md:text-[44px] lg:text-[50px]">
               {tt.title_l1} {tt.title_l2}
             </h2>
           </div>
@@ -299,12 +299,16 @@ export default function AISection({ t }) {
                   cardEls.current[i] = el;
                 }}
                 style={{ opacity: 0 }}
-                className="rounded-2xl border border-white/10 bg-[#0C0C0C]/95 p-4 md:p-6"
+                onMouseMove={trackSpot}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0C0C0C]/95 p-4 transition-colors duration-300 hover:border-[#7DD3FC]/30 md:p-6"
               >
-                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7DD3FC]">{k}</div>
-                <p className="mt-2 text-[13px] leading-snug text-[#D1D1D1] md:mt-3 md:text-[15px] md:leading-relaxed">
-                  {v}
-                </p>
+                <Spot rgb="125,211,252" />
+                <div className="relative">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7DD3FC]">{k}</div>
+                  <p className="mt-2 text-[13px] leading-snug text-[#D1D1D1] md:mt-3 md:text-[15px] md:leading-relaxed">
+                    {v}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Eyebrow } from "./primitives.jsx";
+import { Eyebrow, Spot, trackSpot } from "./primitives.jsx";
 
 const TAU = Math.PI * 2;
 // Section accent: violet - the performance gauge and step ticks.
@@ -366,7 +366,7 @@ export default function WebSection({ t }) {
           <div className="max-w-[560px]">
             <div ref={headerRef} style={{ opacity: 0, transform: "translate(0px,18px)" }}>
               <Eyebrow color="text-[#C4B5FD]">{t.nav.web}</Eyebrow>
-              <h2 className="mt-4 text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px]">
+              <h2 className="mt-4 text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px] lg:text-[50px]">
                 {tt.title_l1} <em className="italic">{tt.title_l2_em}</em> {tt.title_l3}
               </h2>
             </div>
@@ -415,11 +415,15 @@ export default function WebSection({ t }) {
               <div
                 key={k}
                 ref={(el) => (railRefs.current[i] = el)}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 md:p-4"
+                onMouseMove={trackSpot}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-3 transition-colors duration-300 hover:border-[#C4B5FD]/30 md:p-4"
                 style={{ opacity: 0 }}
               >
-                <h3 className="text-[13px] font-semibold text-white md:text-[14px]">{k}</h3>
-                <p className="mt-1 text-[11px] leading-snug text-[#8A8A8A] md:text-[12px]">{v}</p>
+                <Spot rgb="196,181,253" />
+                <div className="relative">
+                  <h3 className="text-[13px] font-semibold text-white md:text-[14px]">{k}</h3>
+                  <p className="mt-1 text-[11px] leading-snug text-[#8A8A8A] md:text-[12px]">{v}</p>
+                </div>
               </div>
             ))}
           </div>

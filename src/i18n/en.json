@@ -74,7 +74,7 @@
     ],
     "kpis": [
       ["4-12 weeks", "typical build time"],
-      ["↓ 40%", "fewer manual reports"],
+      ["100%", "of the code is yours"],
       ["1", "place for all your data"]
     ]
   },

@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+// Single bilingual 404 - GitHub Pages serves /404.html for every missing
+// path, so there is no per-locale variant.
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050505" />
+    <title>404 - Adrian Antosiak</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preload" href="/fonts/inter-tight-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <main class="flex min-h-[100dvh] flex-col items-center justify-center px-6 text-center">
+      <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-[#8A8A8A]">404</p>
+      <h1 class="mt-4 text-[40px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
+        Nie ma takiej strony.
+      </h1>
+      <p class="mt-4 max-w-[420px] text-[15px] leading-relaxed text-[#D1D1D1]">
+        Adres jest nieaktualny albo wkradła się literówka. / This page does not exist.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/"
+          class="rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition duration-200 hover:-translate-y-0.5 hover:bg-white/90 active:translate-y-0 active:scale-[0.98]"
+        >
+          Strona główna
+        </a>
+        <a
+          href="/en/"
+          hreflang="en"
+          class="rounded-xl border border-white/20 px-6 py-2.5 text-[13px] font-medium text-white transition duration-200 hover:-translate-y-0.5 hover:border-white/50 active:translate-y-0 active:scale-[0.98]"
+        >
+          Home (EN)
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

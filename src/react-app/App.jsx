@@ -65,11 +65,31 @@ function Mark({ className }) {
 
 function Navbar({ t, lang }) {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(null);
   const links = [
     { id: "ai", href: "#ai", label: t.nav_pill.ai },
     { id: "app", href: "#app", label: t.nav_pill.app },
     { id: "web", href: "#web", label: t.nav_pill.web },
   ];
+
+  useEffect(() => {
+    // Scroll-spy: a link is active while its section crosses the viewport
+    // center line. IO fires only on crossings - no per-frame work.
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const en of entries) {
+          if (en.isIntersecting) setActive(en.target.id);
+          else setActive((cur) => (cur === en.target.id ? null : cur));
+        }
+      },
+      { rootMargin: "-50% 0px -50% 0px" }
+    );
+    PINNED_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
   const onNav = (e, id) => {
     e.preventDefault();
     setOpen(false);
@@ -78,7 +98,7 @@ function Navbar({ t, lang }) {
   const other = lang === "pl" ? { href: "/en/", label: "EN", hreflang: "en" } : { href: "/", label: "PL", hreflang: "pl" };
 
   return (
-    <div className="absolute left-1/2 top-6 z-50 w-[calc(100%-2rem)] max-w-[800px] -translate-x-1/2">
+    <div className="fixed left-1/2 top-6 z-50 w-[calc(100%-2rem)] max-w-[800px] -translate-x-1/2">
       <nav className="flex items-center justify-between rounded-full bg-white/95 py-1.5 pl-5 pr-2 shadow-lg shadow-black/20 backdrop-blur-md">
         <a href="#top" className="flex items-center gap-2 text-black" onClick={() => setOpen(false)}>
           <Mark className="h-[18px] w-[18px]" />
@@ -91,7 +111,12 @@ function Navbar({ t, lang }) {
               key={l.href}
               href={l.href}
               onClick={(e) => onNav(e, l.id)}
-              className="text-[13px] font-medium text-gray-700 transition-colors hover:text-black"
+              aria-current={active === l.id ? "true" : undefined}
+              className={`text-[13px] font-medium transition-colors hover:text-black ${
+                active === l.id
+                  ? "text-black underline decoration-black/30 decoration-2 underline-offset-[6px]"
+                  : "text-gray-700"
+              }`}
             >
               {l.label}
             </a>
@@ -108,7 +133,7 @@ function Navbar({ t, lang }) {
           </a>
           <a
             href="#kontakt"
-            className="rounded-full bg-[#111111] px-5 py-2 text-[13px] font-medium text-white transition-colors hover:bg-black"
+            className="rounded-full bg-[#111111] px-5 py-2 text-[13px] font-medium text-white transition duration-200 hover:bg-black active:scale-[0.97]"
           >
             {t.nav_pill.contact}
           </a>
@@ -201,7 +226,7 @@ function Hero({ t, lang }) {
           </p>
           <a
             href="#kontakt"
-            className="mt-6 rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition-colors hover:bg-white/90 md:mt-7"
+            className="mt-6 rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition duration-200 hover:-translate-y-0.5 hover:bg-white/90 active:translate-y-0 active:scale-[0.98] md:mt-7"
           >
             {t.hero.cta}
           </a>
@@ -238,13 +263,13 @@ function Contact({ t, lang }) {
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
               href={`mailto:${t.email_addr}`}
-              className="rounded-xl bg-[#111111] px-6 py-2.5 text-[13px] font-medium text-white transition-colors hover:bg-black"
+              className="rounded-xl bg-[#111111] px-6 py-2.5 text-[13px] font-medium text-white transition duration-200 hover:-translate-y-0.5 hover:bg-black active:translate-y-0 active:scale-[0.98]"
             >
               {t.email_addr}
             </a>
             <a
               href="tel:+48503751676"
-              className="rounded-xl border border-black/15 px-6 py-2.5 text-[13px] font-medium text-black transition-colors hover:border-black/40"
+              className="rounded-xl border border-black/15 px-6 py-2.5 text-[13px] font-medium text-black transition duration-200 hover:-translate-y-0.5 hover:border-black/40 active:translate-y-0 active:scale-[0.98]"
             >
               {t.hero.phone}
             </a>

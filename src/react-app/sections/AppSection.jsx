@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Eyebrow } from "./primitives.jsx";
+import { Eyebrow, Spot, trackSpot } from "./primitives.jsx";
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const rng = (p, a, b) => clamp01((p - a) / (b - a));
@@ -406,7 +406,7 @@ export default function AppSection({ t }) {
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pt-[96px] md:pt-[104px]">
           <div ref={headRef} style={{ opacity: 0 }}>
             <Eyebrow color="text-[#FCD34D]">{t.nav.app}</Eyebrow>
-            <h2 className="mt-3 max-w-[620px] text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px]">
+            <h2 className="mt-3 max-w-[620px] text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px] lg:text-[50px]">
               {tt.title_l1} {tt.title_l2} {tt.title_l3}
             </h2>
           </div>
@@ -427,10 +427,14 @@ export default function AppSection({ t }) {
                   key={k}
                   ref={(el) => (cardRefs.current[i] = el)}
                   style={{ opacity: 0 }}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 md:p-6"
+                  onMouseMove={trackSpot}
+                  className="group pointer-events-auto relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition-colors duration-300 hover:border-[#FCD34D]/30 md:p-6"
                 >
-                  <h3 className="text-[15px] font-semibold text-white md:text-[17px]">{k}</h3>
-                  <p className="mt-1 text-[13px] leading-relaxed text-[#D1D1D1] md:mt-2 md:text-[15px]">{v}</p>
+                  <Spot rgb="252,211,77" />
+                  <div className="relative">
+                    <h3 className="text-[15px] font-semibold text-white md:text-[17px]">{k}</h3>
+                    <p className="mt-1 text-[13px] leading-relaxed text-[#D1D1D1] md:mt-2 md:text-[15px]">{v}</p>
+                  </div>
                 </div>
               ))}
             </div>
