@@ -5,8 +5,10 @@ import { Eyebrow, Spot, trackSpot } from "./primitives.jsx";
 const LAYERS = [3, 5, 6, 5, 1];
 const DPR_CAP = 1.5;
 
-// Wave sweep: p 0.25-0.70 maps to wavefront x -0.12..1.12 in layer space.
-const WAVE_P0 = 0.25;
+// Wave sweep: p 0.20-0.65 maps to wavefront x -0.12..1.12 in layer space.
+// Starts right after the network finishes assembling (u = p / 0.2), so the
+// pulse never sweeps over half-revealed edges.
+const WAVE_P0 = 0.2;
 const WAVE_SPAN = 0.45;
 const WX0 = -0.12;
 const WX_RANGE = 1.24;
@@ -156,13 +158,13 @@ export default function AISection({ t }) {
         fade(cardEls.current[i], r, (1 - r) * 18);
       }
 
-      const cIn = ease(clamp01((p - 0.68) / 0.06));
+      const cIn = ease(clamp01((p - 0.62) / 0.06));
       fade(codeRef.current, cIn, (1 - cIn) * 16);
       let lastLineR = 0;
       for (let i = 0; i < lines.length; i++) {
         const el = lineEls.current[i];
         if (!el) continue;
-        const r = clamp01((p - (0.72 + i * lineStep)) / 0.05);
+        const r = clamp01((p - (0.66 + i * lineStep)) / 0.05);
         el.style.opacity = 0.25 + 0.75 * r;
         el.style.clipPath = `inset(0 ${(1 - r) * 100}% 0 0)`;
         if (i === lines.length - 1) lastLineR = r;
@@ -186,11 +188,13 @@ export default function AISection({ t }) {
         py[i] = (ny0 + nodes[i].y * nyr) * h + (reduced ? 0 : Math.sin(time * 0.7 + i * 1.7) * 1.5);
       }
 
-      const u = Math.max(clamp01(p / 0.2), enter);
+      // Network assembly is driven by pinned progress alone - `enter` would
+      // finish before the section even pins, skipping the staggered reveal.
+      const u = clamp01(p / 0.2);
       const q = clamp01((p - WAVE_P0) / WAVE_SPAN);
       const wx = WX0 + WX_RANGE * q;
       const waveOn = p > WAVE_P0 && p < WAVE_P0 + WAVE_SPAN + 0.02;
-      const waveGate = clamp01((p - 0.22) / 0.03);
+      const waveGate = clamp01((p - (WAVE_P0 - 0.03)) / 0.03);
 
       // Edges draw themselves in along their length, then carry the wave glow.
       ctx.strokeStyle = "#fff";
@@ -235,7 +239,7 @@ export default function AISection({ t }) {
       }
 
       // Neurons - flare as the wavefront passes their column.
-      const outGlow = clamp01((p - 0.68) / 0.1);
+      const outGlow = clamp01((p - 0.62) / 0.1);
       const pulse = reduced ? 1 : 0.9 + 0.1 * Math.sin(time * 2.2);
       for (let i = 0; i < nodes.length; i++) {
         const nodeIn = clamp01((u - nodes[i].x * 0.5) / 0.5);
@@ -279,7 +283,7 @@ export default function AISection({ t }) {
   }, [lines.length]);
 
   return (
-    <section id="ai" ref={sectionRef} className="relative h-[220vh] border-t border-white/10">
+    <section id="ai" ref={sectionRef} className="relative h-[180vh] border-t border-white/10 md:h-[220vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
 
@@ -318,7 +322,7 @@ export default function AISection({ t }) {
             style={{ opacity: 0 }}
             className="mt-3 rounded-2xl border border-white/10 bg-[#0C0C0C]/95 p-4 md:mt-4 md:p-6"
           >
-            <pre className="overflow-x-auto font-mono text-[12px] leading-6 text-[#D1D1D1] md:text-[13px] md:leading-7">
+            <pre className="font-mono text-[12px] leading-6 text-[#D1D1D1] md:overflow-x-auto md:text-[13px] md:leading-7">
               {lines.map((ln, i) => (
                 <div
                   key={i}
@@ -326,7 +330,7 @@ export default function AISection({ t }) {
                     lineEls.current[i] = el;
                   }}
                   style={{ opacity: 0 }}
-                  className="whitespace-pre"
+                  className="-indent-[5ch] whitespace-pre-wrap break-words pl-[5ch] md:indent-0 md:whitespace-pre md:pl-0"
                 >
                   {ln}
                   {i === lines.length - 1 && (

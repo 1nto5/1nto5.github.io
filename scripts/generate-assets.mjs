@@ -26,7 +26,8 @@ const faviconSvg = `<?xml version="1.0" encoding="UTF-8"?>
 </svg>`;
 
 // 1200x630 share card - name + tagline on near-black background.
-const ogSvg = `<?xml version="1.0" encoding="UTF-8"?>
+// One variant per locale, so the EN page never shares a Polish preview.
+const ogSvg = (tagline) => `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${BG}"/>
   <text x="72" y="70"
@@ -50,7 +51,7 @@ const ogSvg = `<?xml version="1.0" encoding="UTF-8"?>
         font-family="'Inter Tight', system-ui, sans-serif"
         font-size="36"
         font-weight="500"
-        fill="${MUTE}">AI  -  aplikacje  -  strony</text>
+        fill="${MUTE}">${tagline}</text>
   <text x="72" y="570"
         font-family="'JetBrains Mono', ui-monospace, monospace"
         font-size="22"
@@ -91,11 +92,17 @@ await sharp(Buffer.from(faviconSvg))
   .toFile(resolve(OUT, "apple-touch-icon.png"));
 console.log("wrote apple-touch-icon.png");
 
-// og.png 1200x630
-await sharp(Buffer.from(ogSvg))
+// og.png / og-en.png 1200x630
+await sharp(Buffer.from(ogSvg("AI  -  aplikacje  -  strony")))
   .resize(1200, 630)
   .png()
   .toFile(resolve(OUT, "og.png"));
 console.log("wrote og.png");
+
+await sharp(Buffer.from(ogSvg("AI  -  apps  -  websites")))
+  .resize(1200, 630)
+  .png()
+  .toFile(resolve(OUT, "og-en.png"));
+console.log("wrote og-en.png");
 
 console.log("done");

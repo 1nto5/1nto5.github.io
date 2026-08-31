@@ -1,12 +1,13 @@
 ---
 import "../styles/global.css";
-import { getMeta } from "../i18n/index.js";
+import { getMeta, getTranslations } from "../i18n/index.js";
 
 const { locale = "pl", page = "home" } = Astro.props;
 const meta = getMeta(locale, page);
+const t = getTranslations(locale);
 const SITE = "https://adrianantosiak.pl";
 const canonical = SITE + meta.path;
-const ogImage = SITE + "/og.png";
+const ogImage = SITE + (locale === "en" ? "/og-en.png" : "/og.png");
 const altPl = SITE + meta.altPaths.pl;
 const altEn = SITE + meta.altPaths.en;
 
@@ -15,6 +16,10 @@ const personJsonLd = {
   "@type": "Person",
   name: "Adrian Antosiak",
   url: SITE + "/",
+  makesOffer: [t.nav.ai, t.nav.app, t.nav.web].map((name) => ({
+    "@type": "Offer",
+    itemOffered: { "@type": "Service", name, provider: { "@type": "Person", name: "Adrian Antosiak" } },
+  })),
   knowsAbout: [
     "Artificial Intelligence",
     "Large Language Models",

@@ -5,7 +5,7 @@ const TAU = Math.PI * 2;
 // Section accent: violet - the performance gauge and step ticks.
 const ACCENT_RGB = "196,181,253";
 // step activation thresholds along scroll progress p
-const TS = [0.5, 0.58, 0.66, 0.74, 0.82];
+const TS = [0.42, 0.51, 0.6, 0.69, 0.78];
 const DASH = [0, 0];
 const NO_DASH = [];
 
@@ -26,7 +26,6 @@ export default function WebSection({ t }) {
   const stepRefs = useRef([]);
   const dotRefs = useRef([]);
   const railRefs = useRef([]);
-  const numRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -38,7 +37,6 @@ export default function WebSection({ t }) {
     let w = 0;
     let h = 0;
     let raf = 0;
-    let lastNum = -1;
     let lastKey = -1;
     let idleTick = false;
     // Eased progress - see AISection: scenes glide instead of teleporting.
@@ -48,12 +46,14 @@ export default function WebSection({ t }) {
 
     function layout() {
       const md = w >= 768;
-      const bw = md ? Math.min(w * 0.4, 540) : Math.min(w * 0.9, 430);
+      // Mobile: the mockup is a dim backdrop behind real text - keep it
+      // small and high so the gauge never crosses the step list.
+      const bw = md ? Math.min(w * 0.4, 540) : Math.min(w * 0.62, 300);
       const bh = bw * 0.72;
       const cx = md ? w * 0.72 : w * 0.5;
-      const cy = md ? h * 0.42 : h * 0.46;
+      const cy = md ? h * 0.42 : h * 0.4;
       L.md = md;
-      L.dim = md ? 1 : 0.32;
+      L.dim = md ? 1 : 0.15;
       L.bx = cx - bw / 2;
       L.by = cy - bh / 2;
       L.bw = bw;
@@ -125,7 +125,9 @@ export default function WebSection({ t }) {
 
     function draw(p, now) {
       ctx.clearRect(0, 0, w, h);
-      const fF = stage(p, 0.15, 0.3);
+      // Early start: the frame begins tracing right after the pin locks,
+      // so the scene never dwells on an empty stage.
+      const fF = stage(p, 0.04, 0.16);
       if (fF <= 0) return;
       const D = L.dim;
 
@@ -133,13 +135,13 @@ export default function WebSection({ t }) {
       traceRR(L.bx, L.by, L.bw, L.bh, 10, fF, 0.45 * D);
 
       // title bar divider
-      const fD = stage(p, 0.27, 0.33);
+      const fD = stage(p, 0.16, 0.22);
       if (fD > 0) line(L.bx, L.by + L.tbh, L.bx + L.bw * fD, L.by + L.tbh, 0.28 * D);
 
       // three window dots pop
       const dy = L.by + L.tbh / 2;
       for (let i = 0; i < 3; i++) {
-        const q = stage(p, 0.29 + i * 0.02, 0.34 + i * 0.02);
+        const q = stage(p, 0.18 + i * 0.02, 0.23 + i * 0.02);
         if (q <= 0) continue;
         const dx = L.bx + 18 + i * 13;
         ctx.beginPath();
@@ -157,16 +159,16 @@ export default function WebSection({ t }) {
       }
 
       // URL bar traces, then an address line "types" in
-      const fU = stage(p, 0.33, 0.41);
+      const fU = stage(p, 0.22, 0.3);
       if (fU > 0) traceRR(L.ux, L.uy, L.uw, L.uh, L.uh / 2, fU, 0.32 * D);
-      const fUt = stage(p, 0.4, 0.47);
+      const fUt = stage(p, 0.29, 0.36);
       if (fUt > 0) {
         const uy = L.uy + L.uh / 2;
         line(L.ux + 12, uy, L.ux + 12 + L.uw * 0.42 * fUt, uy, 0.3 * D);
       }
 
       // construction guides for the page wireframe
-      const fG = stage(p, 0.41, 0.5);
+      const fG = stage(p, 0.31, 0.4);
       if (fG > 0) {
         const ga = 0.09 * fG * (1 - 0.6 * stage(p, 0.86, 0.96)) * D;
         const gl = (L.cb - L.ct) * fG;
@@ -280,7 +282,7 @@ export default function WebSection({ t }) {
       setEl(p2Ref.current, e2, 12 * (1 - e2));
 
       for (let i = 0; i < 5; i++) {
-        const en = stage(p, 0.34 + i * 0.02, 0.42 + i * 0.02);
+        const en = stage(p, 0.3 + i * 0.02, 0.38 + i * 0.02);
         const q = stage(p, TS[i], TS[i] + 0.05);
         setEl(stepRefs.current[i], en * (0.4 + 0.6 * q), 0, 14 * (1 - en));
         const dot = dotRefs.current[i];
@@ -292,18 +294,6 @@ export default function WebSection({ t }) {
         setEl(railRefs.current[i], r, 16 * (1 - r));
       }
 
-      const el = numRef.current;
-      if (el) {
-        const ga = stage(p, 0.82, 0.88);
-        el.style.opacity = ga;
-        el.style.transform =
-          "translate(" + L.gx + "px," + L.gy + "px) translate(-50%,-50%)";
-        const n = Math.round(98 * stage(p, 0.86, 0.97));
-        if (n !== lastNum) {
-          lastNum = n;
-          el.textContent = String(n);
-        }
-      }
     }
 
     function tick(now) {
@@ -351,16 +341,9 @@ export default function WebSection({ t }) {
   }, []);
 
   return (
-    <section ref={sectionRef} id="web" className="relative h-[220vh] border-t border-white/10">
+    <section ref={sectionRef} id="web" className="relative h-[180vh] border-t border-white/10 md:h-[220vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
-
-        <span
-          ref={numRef}
-          className="absolute left-0 top-0 z-10 hidden font-mono text-[22px] font-semibold text-[#C4B5FD] md:block"
-          style={{ opacity: 0 }}
-          aria-hidden="true"
-        />
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col justify-center px-6 pb-6 pt-[90px] md:pb-10 md:pt-24">
           <div className="max-w-[560px]">

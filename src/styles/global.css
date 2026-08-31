@@ -81,6 +81,13 @@ body {
   outline-offset: 2px;
 }
 
+/* Controls sitting on light surfaces (navbar pill, contact card, hero CTA)
+   need a dark ring - the global white one vanishes there. Unlayered on
+   purpose: it must win against the base rule above. */
+.focus-dark:focus-visible {
+  outline-color: #111111;
+}
+
 /* Non-JS / pre-hydration fallback content. Hidden once React mounts. */
 #prerender {
   max-width: 72ch;
@@ -89,6 +96,13 @@ body {
 }
 
 .js-on #prerender {
+  display: none;
+}
+
+/* With client:load the app markup is server-rendered too - without JS both
+   would show at once, so the island stays hidden until js-on lands.
+   Unlayered so it beats Tailwind's layered utilities. */
+html:not(.js-on) astro-island {
   display: none;
 }
 

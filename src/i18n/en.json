@@ -3,10 +3,11 @@
   "kicker": "AI, Apps, Web",
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
-    "sub": "I put AI to work, build custom apps around your process, and ship websites that sell.",
+    "headline": "Less busywork. More customers.",
+    "sub": "I put AI to work to save you time, build apps that stay yours, and ship websites that sell.",
     "cta": "Get in touch",
     "phone": "+48 503 751 676",
-    "areas": ["Chatbots", "Automation", "Integrations", "E-commerce"]
+    "areas": ["Chatbots", "Automation", "Custom apps", "E-commerce"]
   },
   "nav": {
     "ai": "AI for your business",
@@ -31,6 +32,8 @@
     "phone_l": "Phone",
     "avail_l": "Status",
     "avail_v": "Taking on new clients",
+    "copy_l": "Copy email address",
+    "copied_l": "Copied",
     "privacy_l": "Privacy policy"
   },
   "privacy": {
@@ -56,9 +59,9 @@
     "cards": [
       ["CHATBOTS", "Chatbots for customers and your team, trained on your docs, emails and product catalog."],
       ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - the boring stuff, done in the background."],
-      ["DOCUMENTS", "OCR, contract review, translation, summaries of meetings and calls."]
+      ["DOCUMENTS", "OCR, contract review, translation, summaries of meetings and calls - no more digging through paperwork after hours."]
     ],
-    "code": "> adrian.ai.plan({ company })\n  ├─ 1h free call to map what's eating time\n  ├─ pick 1-2 processes worth automating\n  ├─ prototype in 3 days, not a month\n  └─ train your team, hand over the keys"
+    "code": "> adrian.ai.plan({ company })\n  ├─ free call to map what's eating your time\n  ├─ pick the processes worth automating\n  ├─ quick prototype instead of a long analysis\n  └─ train your team, hand over the keys"
   },
   "app": {
     "title_l1": "The app you",
@@ -72,19 +75,20 @@
       ["Mobile", "iOS + Android"],
       ["APIs", "Integrate your ERP, CRM, accounting"]
     ],
-    "kpis": [
-      ["4-12 weeks", "typical build time"],
-      ["100%", "of the code is yours"],
-      ["1", "place for all your data"]
+    "steps": [
+      ["01", "Call about needs and scope"],
+      ["02", "Quote and milestone plan"],
+      ["03", "Build and test as we go"],
+      ["04", "Code and docs handover"]
     ]
   },
   "web": {
     "subtitle": "Business websites and online stores",
     "title_l1": "A website that",
-    "title_l2_em": "pays for itself",
-    "title_l3": "in six months.",
+    "title_l2_em": "earns",
+    "title_l3": "its keep.",
     "p1": "Company sites, landing pages, portfolios and small online stores for businesses that want something better than a template but don't need a 50-page agency proposal.",
-    "p2": "Every site ships with proper SEO, fast load times, and clear visitor stats. Plus a CMS you can update yourself - without calling me.",
+    "p2": "Fast load times and proper SEO bring in traffic from Google, and clear stats show the effect. Plus a CMS you can update yourself - without calling me.",
     "steps": [
       ["01", "Kickoff call & sitemap"],
       ["02", "Design & copy review"],

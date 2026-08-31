@@ -110,12 +110,13 @@ function buildFormations(w, h) {
   let markCy;
   if (narrow) {
     const bandTop = 96;
-    const band = Math.max(140, h - 300 - bandTop);
-    markSize = Math.min(w * 0.72, band * 0.78);
+    // Copy block grew a display headline - reserve ~380px for it.
+    const band = Math.max(120, h - 380 - bandTop);
+    markSize = Math.min(w * 0.68, band * 0.78);
     markCy = bandTop + band / 2;
   } else {
-    markSize = Math.min(w * 0.8, h * 0.46);
-    markCy = h * 0.33;
+    markSize = Math.min(w * 0.8, h * 0.42);
+    markCy = h * 0.31;
   }
   const mark = samplePolylines(MARK_POLYS, N).map(([x, y]) => [
     cx + ((x - 32) / 64) * markSize,
@@ -131,11 +132,12 @@ function buildFormations(w, h) {
     star.push([rand(i, 7) * w, rand(i, 8) * h]);
   }
 
-  // Contact: the "@" glyph, centered so it glows behind/around the card.
+  // Contact: the "@" glyph, anchored above center so more of its arc
+  // clears the top edge of the contact card instead of hiding behind it.
   const atSize = Math.min(w * 0.85, h * 0.6);
   const at = samplePolylines(AT_POLYS, N).map(([x, y]) => [
     cx + ((x - 32) / 64) * atSize,
-    h * 0.5 + ((y - 32) / 64) * atSize,
+    h * 0.42 + ((y - 32) / 64) * atSize,
   ]);
   const atReach = Math.max(10, (polylineLength(AT_POLYS) / N / 64) * atSize * 1.75);
 

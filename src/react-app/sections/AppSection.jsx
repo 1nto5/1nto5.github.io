@@ -19,25 +19,14 @@ export default function AppSection({ t }) {
   const canvasRef = useRef(null);
   const headRef = useRef(null);
   const leadRef = useRef(null);
-  const kpiBlockRef = useRef(null);
   const cardRefs = useRef([]);
-  const kpiRefs = useRef([]);
-  const numRef = useRef(null);
+  const stepRefs = useRef([]);
 
   useEffect(() => {
     const section = sectionRef.current;
     const canvas = canvasRef.current;
     if (!section || !canvas) return;
     const ctx = canvas.getContext("2d");
-
-    // "40" KPI: split the i18n string around its number so the scrubbed
-    // textContent always matches the translated format.
-    const kpiBig = tt.kpis[1][0];
-    const numMatch = /\d+/.exec(kpiBig);
-    const numTarget = numMatch ? +numMatch[0] : 0;
-    const numPrefix = numMatch ? kpiBig.slice(0, numMatch.index) : kpiBig;
-    const numSuffix = numMatch ? kpiBig.slice(numMatch.index + numMatch[0].length) : "";
-    let lastNum = -1;
 
     let raf = 0;
     let cw = 0;
@@ -116,35 +105,26 @@ export default function AppSection({ t }) {
 
       const leadIn = Math.max(ease(enter), ease(rng(p, 0.05, 0.15)));
       if (leadHides) {
-        const out = ease(rng(p, 0.46, 0.54));
+        // Lead hands over to the step list in place - fade out only once
+        // the first card is already arriving, never an empty beat.
+        const out = ease(rng(p, 0.56, 0.66));
         setEl(leadRef.current, leadIn * (1 - out), (1 - leadIn) * 20 - out * 16);
       } else {
         setEl(leadRef.current, leadIn * (1 - 0.6 * ease(rng(p, 0.55, 0.72))), (1 - leadIn) * 20);
       }
 
+      // Engagement steps: below the lead on wide screens, in its place
+      // (stacked grid cell) once the lead has faded on small ones.
+      for (let i = 0; i < 4; i++) {
+        const e = leadHides
+          ? ease(rng(p, 0.62 + i * 0.03, 0.7 + i * 0.03))
+          : ease(rng(p, 0.26 + i * 0.05, 0.34 + i * 0.05));
+        setEl(stepRefs.current[i], e, (1 - e) * 12);
+      }
+
       for (let i = 0; i < 3; i++) {
         const e = ease(rng(p, 0.55 + i * 0.06, 0.64 + i * 0.06));
         setEl(cardRefs.current[i], e, (1 - e) * 16);
-      }
-
-      setEl(kpiBlockRef.current, ease(rng(p, 0.78, 0.85)), 0);
-      // Range KPI: simple reveal.
-      const k0 = ease(rng(p, 0.8, 0.88));
-      setEl(kpiRefs.current[0], k0, (1 - k0) * 12);
-      // Counting KPI: number scrubs 0 -> target with p.
-      const k1 = ease(rng(p, 0.83, 0.9));
-      setEl(kpiRefs.current[1], k1, (1 - k1) * 12);
-      const n = Math.round(numTarget * rng(p, 0.83, 0.97));
-      if (n !== lastNum && numRef.current) {
-        numRef.current.textContent = numPrefix + n + numSuffix;
-        lastNum = n;
-      }
-      // "1" KPI: snaps in.
-      const on = p >= 0.93;
-      const k2 = kpiRefs.current[2];
-      if (k2) {
-        k2.style.opacity = on ? 1 : 0;
-        k2.style.transform = on ? "none" : "scale(0.9)";
       }
     };
 
@@ -187,7 +167,7 @@ export default function AppSection({ t }) {
 
     const draw = (p, now) => {
       ctx.clearRect(0, 0, cw, chh);
-      if (!G || p < 0.12) return;
+      if (!G || p < 0.04) return;
       const { R, topY, sideX, mx, mb, chart, rowY0, nRows, phone, navN } = G;
 
       let A = behind ? 0.42 : 1;
@@ -207,13 +187,14 @@ export default function AppSection({ t }) {
       const e1 = ease(rng(p, 0.61, 0.7));
       const e2 = ease(rng(p, 0.67, 0.76));
 
-      // App frame traces in.
-      if (traceOn(0.4 * A, 2 * (R.w + R.h), ease(rng(p, 0.15, 0.3)))) {
+      // App frame traces in - early, so the scene shows motion right after
+      // the pin locks instead of a long empty box.
+      if (traceOn(0.4 * A, 2 * (R.w + R.h), ease(rng(p, 0.06, 0.18)))) {
         rr(R.x, R.y, R.w, R.h, 10);
         traceOff();
       }
       // Topbar separator.
-      if (traceOn(0.3 * A, R.w, ease(rng(p, 0.22, 0.3)))) {
+      if (traceOn(0.3 * A, R.w, ease(rng(p, 0.13, 0.21)))) {
         ctx.moveTo(R.x, topY);
         ctx.lineTo(R.x + R.w, topY);
         traceOff();
@@ -221,22 +202,22 @@ export default function AppSection({ t }) {
       // Window control dots.
       const midY = (R.y + topY) / 2;
       for (let i = 0; i < 3; i++) {
-        dot(R.x + 14 + i * 9, midY, 1.6, 0.6 * ease(rng(p, 0.24 + i * 0.02, 0.29 + i * 0.02)) * A);
+        dot(R.x + 14 + i * 9, midY, 1.6, 0.6 * ease(rng(p, 0.15 + i * 0.02, 0.2 + i * 0.02)) * A);
       }
       // Search pill.
-      if (R.w > 300 && traceOn(0.25 * A, 132, ease(rng(p, 0.26, 0.34)))) {
+      if (R.w > 300 && traceOn(0.25 * A, 132, ease(rng(p, 0.17, 0.25)))) {
         rr(R.x + R.w - 70, midY - 6, 54, 12, 6);
         traceOff();
       }
       // Sidebar separator.
-      if (traceOn(0.3 * A, R.y + R.h - topY, ease(rng(p, 0.26, 0.34)))) {
+      if (traceOn(0.3 * A, R.y + R.h - topY, ease(rng(p, 0.17, 0.25)))) {
         ctx.moveTo(sideX, topY);
         ctx.lineTo(sideX, R.y + R.h);
         traceOff();
       }
       // Sidebar nav items, first one active.
       for (let i = 0; i < navN; i++) {
-        const a = ease(rng(p, 0.3 + i * 0.03, 0.36 + i * 0.03));
+        const a = ease(rng(p, 0.21 + i * 0.03, 0.27 + i * 0.03));
         if (a <= 0) break;
         const y = topY + 18 + i * 18;
         const frac = i === 0 ? 1 : 0.72 - 0.07 * i;
@@ -248,12 +229,12 @@ export default function AppSection({ t }) {
         if (i === 0) dot(R.x + 14, y, 1.4, 0.7 * a * A);
       }
       // Chart panel: brightens as the "Web" card lights up.
-      if (traceOn((0.3 + 0.2 * e0) * A, 2 * (chart.w + chart.h), ease(rng(p, 0.32, 0.42)))) {
+      if (traceOn((0.3 + 0.2 * e0) * A, 2 * (chart.w + chart.h), ease(rng(p, 0.23, 0.33)))) {
         rr(chart.x, chart.y, chart.w, chart.h, 8);
         traceOff();
       }
       const baseY = chart.y + chart.h - 9;
-      if (traceOn(0.3 * A, chart.w - 20, ease(rng(p, 0.36, 0.42)))) {
+      if (traceOn(0.3 * A, chart.w - 20, ease(rng(p, 0.27, 0.33)))) {
         ctx.moveTo(chart.x + 10, baseY);
         ctx.lineTo(chart.x + chart.w - 10, baseY);
         traceOff();
@@ -262,7 +243,7 @@ export default function AppSection({ t }) {
       const step = (chart.w - 20) / BAR_H.length;
       ctx.lineWidth = 1.5;
       for (let i = 0; i < BAR_H.length; i++) {
-        const gr = ease(rng(p, 0.38 + i * 0.022, 0.5 + i * 0.022));
+        const gr = ease(rng(p, 0.29 + i * 0.022, 0.41 + i * 0.022));
         if (gr <= 0) break;
         const bx = chart.x + 10 + step * (i + 0.5);
         const bh = BAR_H[i] * (chart.h - 26) * gr;
@@ -277,7 +258,7 @@ export default function AppSection({ t }) {
       // Table rows slide in, status dot per row.
       const rowW = chart.w * 0.82;
       for (let i = 0; i < nRows; i++) {
-        const er = ease(rng(p, 0.44 + i * 0.032, 0.52 + i * 0.032));
+        const er = ease(rng(p, 0.35 + i * 0.032, 0.43 + i * 0.032));
         if (er <= 0) break;
         const y = rowY0 + i * 16;
         const ox = (1 - er) * -16;
@@ -298,7 +279,7 @@ export default function AppSection({ t }) {
         ctx.strokeStyle = "#fff";
       }
       // Scanline sweep.
-      const st = rng(p, 0.45, 0.6);
+      const st = rng(p, 0.36, 0.51);
       if (st > 0 && st < 1) {
         ctx.strokeStyle = ACCENT;
         ctx.globalAlpha = 0.22 * (4 * st * (1 - st)) * A;
@@ -400,7 +381,7 @@ export default function AppSection({ t }) {
   }, []);
 
   return (
-    <section id="app" ref={sectionRef} className="relative h-[220vh] border-t border-white/10">
+    <section id="app" ref={sectionRef} className="relative h-[180vh] border-t border-white/10 md:h-[220vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pt-[96px] md:pt-[104px]">
@@ -410,15 +391,33 @@ export default function AppSection({ t }) {
               {tt.title_l1} {tt.title_l2} {tt.title_l3}
             </h2>
           </div>
-          <p
-            ref={leadRef}
-            style={{ opacity: 0 }}
-            className="mt-4 max-w-[560px] text-[15px] leading-relaxed text-[#D1D1D1] md:mt-6"
-          >
-            {tt.lead_a}
-            {tt.lead_and}
-            {tt.lead_b}
-          </p>
+          {/* Stacked grid (steps replace the fading lead) exactly when the JS
+              compact mode is on: below md OR under 760px of height - the CSS
+              condition must mirror `leadHides` or the swap leaves a hole. */}
+          <div className="mt-4 grid max-w-[560px] md:mt-6 [@media(min-width:768px)_and_(min-height:760px)]:block">
+            <p
+              ref={leadRef}
+              style={{ opacity: 0 }}
+              className="col-start-1 row-start-1 text-[15px] leading-relaxed text-[#D1D1D1]"
+            >
+              {tt.lead_a}
+              {tt.lead_and}
+              {tt.lead_b}
+            </p>
+            <ol className="col-start-1 row-start-1 self-start divide-y divide-white/10 border-y border-white/10 md:max-w-[420px] [@media(min-width:768px)_and_(min-height:760px)]:mt-6">
+              {tt.steps.map(([n, l], i) => (
+                <li
+                  key={n}
+                  ref={(el) => (stepRefs.current[i] = el)}
+                  className="flex items-center gap-4 py-2 md:py-2.5"
+                  style={{ opacity: 0 }}
+                >
+                  <span className="font-mono text-[11px] tracking-[0.15em] text-[#8A8A8A]">{n}</span>
+                  <span className="flex-1 text-[14px] text-white md:text-[15px]">{l}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
 
           <div className="pointer-events-none absolute inset-x-6 bottom-5 md:bottom-10">
             <div className="grid gap-2.5 md:grid-cols-3 md:gap-4">
@@ -434,22 +433,6 @@ export default function AppSection({ t }) {
                   <div className="relative">
                     <h3 className="text-[15px] font-semibold text-white md:text-[17px]">{k}</h3>
                     <p className="mt-1 text-[13px] leading-relaxed text-[#D1D1D1] md:mt-2 md:text-[15px]">{v}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div
-              ref={kpiBlockRef}
-              style={{ opacity: 0 }}
-              className="mt-4 grid grid-cols-3 gap-3 border-t border-white/10 pt-4 md:mt-6 md:gap-8 md:pt-6"
-            >
-              {tt.kpis.map(([b, s], i) => (
-                <div key={s} ref={(el) => (kpiRefs.current[i] = el)} style={{ opacity: 0 }}>
-                  <div className="text-[20px] font-semibold tracking-tight text-[#FCD34D] md:text-[34px]">
-                    {i === 1 ? <span ref={numRef}>{b}</span> : b}
-                  </div>
-                  <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.15em] text-[#8A8A8A] md:text-[11px]">
-                    {s}
                   </div>
                 </div>
               ))}

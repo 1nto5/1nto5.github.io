@@ -3,10 +3,11 @@
   "kicker": "AI, Aplikacje, WWW",
   "email_addr": "czesc@adrianantosiak.pl",
   "hero": {
-    "sub": "Wdrażam AI, buduję aplikacje dopasowane do Twoich potrzeb i strony, które sprzedają.",
+    "headline": "Mniej ręcznej roboty. Więcej klientów.",
+    "sub": "Wdrażam AI, które oszczędza Ci czas, buduję aplikacje, które zostają Twoje, i strony, które sprzedają.",
     "cta": "Napisz do mnie",
     "phone": "+48 503 751 676",
-    "areas": ["Chatboty", "Automatyzacje", "Integracje", "E-commerce"]
+    "areas": ["Chatboty", "Automatyzacje", "Aplikacje", "E-commerce"]
   },
   "nav": {
     "ai": "AI dla Twojej firmy",
@@ -31,6 +32,8 @@
     "phone_l": "Telefon",
     "avail_l": "Status",
     "avail_v": "Przyjmuję nowych klientów",
+    "copy_l": "Skopiuj adres e-mail",
+    "copied_l": "Skopiowano",
     "privacy_l": "Polityka prywatności"
   },
   "privacy": {
@@ -56,9 +59,9 @@
     "cards": [
       ["CHATBOTY", "Chatboty dla klientów i zespołu, uczone na Twoich dokumentach, mailach i katalogu produktów."],
       ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która robi się sama."],
-      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań i rozmów."]
+      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań i rozmów - bez przekopywania się przez dokumenty po godzinach."]
     ],
-    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa godzinna rozmowa: co pożera Ci czas\n  ├─ wybór 1-2 procesów do automatyzacji\n  ├─ prototyp w 3 dni, nie w miesiąc\n  └─ szkolenie zespołu i przekazanie kluczy"
+    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa rozmowa: co pożera Ci czas\n  ├─ wybór procesów do automatyzacji\n  ├─ szybki prototyp zamiast długich analiz\n  └─ szkolenie zespołu i przekazanie kluczy"
   },
   "app": {
     "title_l1": "Aplikacja, której",
@@ -72,19 +75,20 @@
       ["Mobile", "iOS + Android"],
       ["API", "Integracje z ERP, CRM, księgowością"]
     ],
-    "kpis": [
-      ["4-12 tyg", "typowy czas wdrożenia"],
-      ["100%", "kodu należy do Ciebie"],
-      ["1", "miejsce na wszystkie dane"]
+    "steps": [
+      ["01", "Rozmowa o potrzebach i zakresie"],
+      ["02", "Wycena i plan etapów"],
+      ["03", "Budowa i testy na bieżąco"],
+      ["04", "Przekazanie kodu i dokumentacji"]
     ]
   },
   "web": {
     "subtitle": "Strony firmowe i sklepy internetowe",
     "title_l1": "Strona, która",
-    "title_l2_em": "zwraca się",
-    "title_l3": "w pół roku.",
+    "title_l2_em": "zarabia",
+    "title_l3": "na siebie.",
     "p1": "Strony firmowe, landingi, portfolia i mniejsze sklepy dla firm, które chcą czegoś lepszego niż szablon, ale nie potrzebują 50-stronicowej oferty od agencji.",
-    "p2": "Każda strona dostaje porządne SEO, szybkie ładowanie i przejrzyste statystyki odwiedzin. Do tego CMS, w którym treści zmienisz bez dzwonienia do mnie.",
+    "p2": "Szybkie ładowanie i porządne SEO ściągają ruch z Google, a przejrzyste statystyki pokazują efekt. Do tego CMS, w którym treści zmienisz bez dzwonienia do mnie.",
     "steps": [
       ["01", "Spotkanie startowe i mapa strony"],
       ["02", "Projekt i przegląd tekstów"],

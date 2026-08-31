@@ -18,6 +18,13 @@ import "../styles/global.css";
   </head>
   <body>
     <main class="flex min-h-[100dvh] flex-col items-center justify-center px-6 text-center">
+      <a href="/" aria-label="Adrian Antosiak" class="mb-6 text-white/40 transition-colors duration-200 hover:text-white">
+        <svg viewBox="0 0 64 64" class="h-8 w-8" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fill-rule="evenodd"></path>
+          <rect x="30" y="52" width="4" height="8"></rect>
+          <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fill-rule="evenodd"></path>
+        </svg>
+      </a>
       <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-[#8A8A8A]">404</p>
       <h1 class="mt-4 text-[40px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
         Nie ma takiej strony.
@@ -28,16 +35,22 @@ import "../styles/global.css";
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
         <a
           href="/"
-          class="rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition duration-200 hover:-translate-y-0.5 hover:bg-white/90 active:translate-y-0 active:scale-[0.98]"
+          class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 py-2.5 text-[13px] font-medium text-black transition duration-200 hover:-translate-y-0.5 hover:bg-white/90 active:translate-y-0 active:scale-[0.98]"
         >
           Strona główna
         </a>
         <a
           href="/en/"
           hreflang="en"
-          class="rounded-xl border border-white/20 px-6 py-2.5 text-[13px] font-medium text-white transition duration-200 hover:-translate-y-0.5 hover:border-white/50 active:translate-y-0 active:scale-[0.98]"
+          class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/20 px-6 py-2.5 text-[13px] font-medium text-white transition duration-200 hover:-translate-y-0.5 hover:border-white/50 active:translate-y-0 active:scale-[0.98]"
         >
           Home (EN)
+        </a>
+        <a
+          href="mailto:czesc@adrianantosiak.pl"
+          class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/20 px-6 py-2.5 text-[13px] font-medium text-white transition duration-200 hover:-translate-y-0.5 hover:border-white/50 active:translate-y-0 active:scale-[0.98]"
+        >
+          czesc@adrianantosiak.pl
         </a>
       </div>
     </main>
