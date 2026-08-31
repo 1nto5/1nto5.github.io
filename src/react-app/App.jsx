@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { DICT, LangCtx } from "./i18n.js";
+import { currentThemeName, onThemeChange, toggleTheme } from "./theme.js";
 import Backdrop from "./Backdrop.jsx";
 import AISection from "./sections/AISection.jsx";
 import AppSection from "./sections/AppSection.jsx";
@@ -28,7 +29,7 @@ export default function App({ locale = "pl" }) {
 
   return (
     <LangCtx.Provider value={{ lang, setLang, t }}>
-      <div className="font-sans text-white">
+      <div className="font-sans text-ink">
         <Backdrop />
         <Hero t={t} lang={lang} />
         <AISection t={t} />
@@ -80,9 +81,54 @@ function Mark({ className }) {
   );
 }
 
+function ThemeIcon({ theme, className }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {theme === "dark" ? (
+        /* moon - clicking switches to light */
+        <path d="M15.5 12.2 A6.2 6.2 0 1 1 7.8 4.5 A5 5 0 0 0 15.5 12.2 Z" />
+      ) : (
+        /* sun - clicking switches to dark */
+        <>
+          <circle cx="10" cy="10" r="3.6" />
+          <path d="M10 2.8 V4.4 M10 15.6 V17.2 M2.8 10 H4.4 M15.6 10 H17.2 M4.9 4.9 L6 6 M14 14 L15.1 15.1 M15.1 4.9 L14 6 M6 14 L4.9 15.1" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+// Layout effects warn (and no-op) during Astro's build-time SSR render -
+// fall back to useEffect there; in the browser the layout timing matters.
+const useClientLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+// Shared theme-toggle state: reads the attribute set pre-paint by the head
+// script, then follows toggles from anywhere. Layout effect so the SSR
+// "dark" default is corrected before first paint - no wrong-icon flash
+// for visitors resolved to the light theme.
+function useTheme() {
+  const [theme, setTh] = useState("dark");
+  useClientLayoutEffect(() => {
+    setTh(currentThemeName());
+    return onThemeChange(() => setTh(currentThemeName()));
+  }, []);
+  return theme;
+}
+
 function Navbar({ t, lang }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(null);
+  const theme = useTheme();
+  const themeLabel = theme === "dark" ? t.theme.to_light : t.theme.to_dark;
   const links = [
     { id: "ai", href: "#ai", label: t.nav_pill.ai },
     { id: "app", href: "#app", label: t.nav_pill.app },
@@ -116,8 +162,8 @@ function Navbar({ t, lang }) {
 
   return (
     <div className="fixed left-1/2 top-6 z-50 w-[calc(100%-2rem)] max-w-[800px] -translate-x-1/2">
-      <nav className="flex items-center justify-between rounded-full bg-white/95 py-1.5 pl-5 pr-2 shadow-lg shadow-black/20 backdrop-blur-md">
-        <a href="#top" className="flex items-center gap-2 text-black" onClick={() => setOpen(false)}>
+      <nav className="flex items-center justify-between rounded-full bg-pill py-1.5 pl-5 pr-2 shadow-lg shadow-black/20 backdrop-blur-md">
+        <a href="#top" className="focus-pill flex items-center gap-2 text-pill-ink" onClick={() => setOpen(false)}>
           <Mark className="h-[18px] w-[18px]" />
           <span className="text-[15px] font-bold tracking-tight">Adrian Antosiak</span>
         </a>
@@ -129,10 +175,10 @@ function Navbar({ t, lang }) {
               href={l.href}
               onClick={(e) => onNav(e, l.id)}
               aria-current={active === l.id ? "true" : undefined}
-              className={`focus-dark text-[13px] font-medium transition-colors hover:text-black ${
+              className={`focus-pill text-[13px] font-medium transition-colors hover:text-pill-ink ${
                 active === l.id
-                  ? "text-black underline decoration-black/30 decoration-2 underline-offset-[6px]"
-                  : "text-gray-700"
+                  ? "text-pill-ink underline decoration-pill-ink/30 decoration-2 underline-offset-[6px]"
+                  : "text-pill-muted"
               }`}
             >
               {l.label}
@@ -145,19 +191,28 @@ function Navbar({ t, lang }) {
             href={other.href}
             hrefLang={other.hreflang}
             onClick={(e) => switchLocale(e, other.href)}
-            className="focus-dark hidden text-[13px] font-medium text-gray-700 transition-colors hover:text-black md:block"
+            className="focus-pill hidden text-[13px] font-medium text-pill-muted transition-colors hover:text-pill-ink md:block"
           >
             {other.label}
           </a>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={themeLabel}
+            title={themeLabel}
+            className="focus-pill hidden h-8 w-8 items-center justify-center rounded-full text-pill-muted transition-colors hover:text-pill-ink md:flex"
+          >
+            <ThemeIcon theme={theme} className="h-[17px] w-[17px]" />
+          </button>
           <a
             href="#kontakt"
-            className="inline-flex min-h-11 items-center rounded-full bg-[#111111] px-5 py-2 text-[13px] font-medium text-white transition duration-200 hover:bg-black active:scale-[0.97] md:min-h-0"
+            className="focus-pill inline-flex min-h-11 items-center rounded-full bg-pill-ink px-5 py-2 text-[13px] font-medium text-ink transition duration-200 hover:bg-pill-ink/90 active:scale-[0.97] md:min-h-0"
           >
             {t.nav_pill.contact}
           </a>
           <button
             type="button"
-            className="focus-dark flex h-11 w-11 items-center justify-center text-black md:hidden"
+            className="focus-pill flex h-11 w-11 items-center justify-center text-pill-ink md:hidden"
             aria-expanded={open}
             aria-label={open ? t.menu.close : t.menu.open}
             onClick={() => setOpen((o) => !o)}
@@ -181,22 +236,30 @@ function Navbar({ t, lang }) {
       </nav>
 
       {open && (
-        <div className="mt-2 flex flex-col rounded-2xl bg-white/95 p-2 shadow-lg shadow-black/20 backdrop-blur-md md:hidden">
+        <div className="mt-2 flex flex-col rounded-2xl bg-pill p-2 shadow-lg shadow-black/20 backdrop-blur-md md:hidden">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="focus-dark rounded-xl px-4 py-3 text-[15px] font-medium text-gray-800 hover:bg-black/5"
+              className="focus-pill rounded-xl px-4 py-3 text-[15px] font-medium text-pill-ink hover:bg-pill-ink/5"
               onClick={(e) => onNav(e, l.id)}
             >
               {l.label}
             </a>
           ))}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="focus-pill flex items-center gap-3 rounded-xl border-t border-pill-line/40 px-4 py-3 text-left text-[15px] font-medium text-pill-ink hover:bg-pill-ink/5"
+          >
+            <ThemeIcon theme={theme} className="h-[17px] w-[17px]" />
+            {themeLabel}
+          </button>
           <a
             href={other.href}
             hrefLang={other.hreflang}
             onClick={(e) => switchLocale(e, other.href)}
-            className="focus-dark rounded-xl border-t border-black/5 px-4 py-3 text-[15px] font-medium text-gray-800 hover:bg-black/5"
+            className="focus-pill rounded-xl border-t border-pill-line/40 px-4 py-3 text-[15px] font-medium text-pill-ink hover:bg-pill-ink/5"
           >
             {other.hreflang === "en" ? "English" : "Polski"}
           </a>
@@ -229,7 +292,7 @@ const AREA_TYPE = [
 ];
 
 // Ribbon glyphs pick up the section hues used deeper in the page.
-const AREA_COLOR = ["text-[#7DD3FC]", "text-[#FCD34D]", "text-[#C4B5FD]", "text-[#6EE7B7]"];
+const AREA_COLOR = ["text-accent-ai", "text-accent-app", "text-accent-web", "text-accent-ok"];
 
 function Hero({ t, lang }) {
   const [hintHidden, setHintHidden] = useState(false);
@@ -242,29 +305,29 @@ function Hero({ t, lang }) {
 
   return (
     <section id="top" className="relative h-svh w-full overflow-hidden md:h-screen">
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" aria-hidden="true" />
+      <div className="hero-scrim absolute inset-0" aria-hidden="true" />
 
       <Navbar t={t} lang={lang} />
 
       <div className="absolute bottom-6 left-0 flex w-full flex-col items-center px-6 md:bottom-8">
         <div className="mb-8 flex flex-col items-center text-center md:mb-[64px]">
-          <h1 className="max-w-[760px] text-balance text-[30px] font-semibold leading-[1.08] tracking-tight text-white md:text-[46px] lg:text-[52px]">
+          <h1 className="max-w-[760px] text-balance text-[30px] font-semibold leading-[1.08] tracking-tight text-ink md:text-[46px] lg:text-[52px]">
             {t.hero.headline}
           </h1>
-          <p className="mt-3 max-w-[460px] text-balance text-[14px] leading-relaxed text-[#D1D1D1] md:mt-4 md:text-[15px]">
+          <p className="mt-3 max-w-[460px] text-balance text-[14px] leading-relaxed text-ink-2 md:mt-4 md:text-[15px]">
             {t.hero.sub}
           </p>
           <a
             href="#kontakt"
-            className="focus-dark mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-8 py-3 text-[15px] font-semibold text-black transition duration-200 hover:-translate-y-0.5 hover:bg-white/90 active:translate-y-0 active:scale-[0.98] md:mt-7"
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-ink px-8 py-3 text-[15px] font-semibold text-bg transition duration-200 hover:-translate-y-0.5 hover:bg-ink/90 active:translate-y-0 active:scale-[0.98] md:mt-7"
           >
             {t.hero.cta}
           </a>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-70 md:gap-10">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-80 md:gap-10">
           {t.hero.areas.map((label, i) => (
-            <span key={label} className="flex items-center gap-2 text-white">
+            <span key={label} className="flex items-center gap-2 text-ink">
               <svg viewBox="0 0 20 20" className={`h-[17px] w-[17px] ${AREA_COLOR[i]}`} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 {AREA_GLYPHS[i]}
               </svg>
@@ -279,7 +342,7 @@ function Hero({ t, lang }) {
         >
           <svg
             viewBox="0 0 20 20"
-            className="h-5 w-5 animate-bounce text-white motion-reduce:animate-none"
+            className="h-5 w-5 animate-bounce text-ink motion-reduce:animate-none"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
@@ -310,18 +373,18 @@ function Contact({ t, lang }) {
   };
 
   return (
-    <footer id="kontakt" className="border-t border-white/10">
+    <footer id="kontakt" className="border-t border-line">
       <div className="mx-auto max-w-[1100px] px-6 py-24 md:py-32">
-        <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center text-black md:py-20">
+        <div className="flex flex-col items-center rounded-3xl bg-pill px-6 py-16 text-center text-pill-ink md:py-20">
           <h2 className="text-[36px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
             {t.contact.title_l1} {t.contact.title_l2}
             <br />
-            {t.contact.title_l3}
+            <span className="text-pill-accent">{t.contact.title_l3}</span>
           </h2>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
               href={`mailto:${t.email_addr}`}
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#111111] px-6 py-2.5 text-[13px] font-medium text-white transition duration-200 hover:-translate-y-0.5 hover:bg-black active:translate-y-0 active:scale-[0.98]"
+              className="focus-pill inline-flex min-h-11 items-center justify-center rounded-xl bg-pill-ink px-6 py-2.5 text-[13px] font-medium text-ink transition duration-200 hover:-translate-y-0.5 hover:bg-pill-ink/90 active:translate-y-0 active:scale-[0.98]"
             >
               {t.email_addr}
             </a>
@@ -330,7 +393,7 @@ function Contact({ t, lang }) {
               onClick={copyEmail}
               aria-label={copied ? t.contact.copied_l : t.contact.copy_l}
               title={t.contact.copy_l}
-              className="focus-dark inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-black/15 px-3 text-black transition duration-200 hover:-translate-y-0.5 hover:border-black/40 active:translate-y-0 active:scale-[0.98]"
+              className="focus-pill inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-pill-line px-3 text-pill-ink transition duration-200 hover:-translate-y-0.5 hover:border-pill-ink/40 active:translate-y-0 active:scale-[0.98]"
             >
               <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 {copied ? (
@@ -345,22 +408,22 @@ function Contact({ t, lang }) {
             </button>
             <a
               href="tel:+48503751676"
-              className="focus-dark inline-flex min-h-11 items-center justify-center rounded-xl border border-black/15 px-6 py-2.5 text-[13px] font-medium text-black transition duration-200 hover:-translate-y-0.5 hover:border-black/40 active:translate-y-0 active:scale-[0.98]"
+              className="focus-pill inline-flex min-h-11 items-center justify-center rounded-xl border border-pill-line px-6 py-2.5 text-[13px] font-medium text-pill-ink transition duration-200 hover:-translate-y-0.5 hover:border-pill-ink/40 active:translate-y-0 active:scale-[0.98]"
             >
               {t.hero.phone}
             </a>
           </div>
-          <div className="mt-7 flex items-center gap-2 text-[13px] text-black/60">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+          <div className="mt-7 flex items-center gap-2 text-[13px] text-pill-muted">
+            <span className="h-2 w-2 rounded-full bg-pill-accent" aria-hidden="true" />
             {t.contact.avail_v}
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-[12px] text-[#8A8A8A]">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-[12px] text-ink-3">
           <span>© {new Date().getFullYear()} Adrian Antosiak</span>
           <div className="flex items-center gap-6">
-            <a href={privacyHref} className="transition-colors hover:text-white">{t.contact.privacy_l}</a>
-            <a href={other.href} hrefLang={other.hreflang} onClick={(e) => switchLocale(e, other.href)} className="transition-colors hover:text-white">{other.label}</a>
+            <a href={privacyHref} className="transition-colors hover:text-ink">{t.contact.privacy_l}</a>
+            <a href={other.href} hrefLang={other.hreflang} onClick={(e) => switchLocale(e, other.href)} className="transition-colors hover:text-ink">{other.label}</a>
           </div>
         </div>
       </div>

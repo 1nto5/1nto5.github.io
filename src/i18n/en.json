@@ -4,7 +4,7 @@
   "email_addr": "hi@adrianantosiak.pl",
   "hero": {
     "headline": "Less busywork. More customers.",
-    "sub": "I put AI to work to save you time, build apps that stay yours, and ship websites that sell.",
+    "sub": "AI that saves time. Apps that stay yours. Websites that sell.",
     "cta": "Get in touch",
     "phone": "+48 503 751 676",
     "areas": ["Chatbots", "Automation", "Custom apps", "E-commerce"]
@@ -23,6 +23,10 @@
   "menu": {
     "open": "Menu",
     "close": "Close menu"
+  },
+  "theme": {
+    "to_light": "Switch to light theme",
+    "to_dark": "Switch to dark theme"
   },
   "contact": {
     "title_l1": "Got a",
@@ -45,21 +49,21 @@
       ["Legal basis", "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to inquiries)."],
       ["Retention", "Emails are kept in my inbox for as long as needed to handle the inquiry and any reasonable follow-up, after which they are deleted or archived."],
       ["Recipients", "The site is hosted on GitHub Pages (GitHub, Inc., USA). Email is handled by iCloud+ Custom Email Domain (Apple Inc., USA) - messages sent to @adrianantosiak.pl are delivered to my iCloud inbox. Web fonts are self-hosted alongside the site, so fetching them sends no data to any external provider. No data is shared with any other recipients."],
-      ["Cookies and tracking", "The site does not set any cookies or write to browser localStorage. I do not use Google Analytics, Meta Pixel, Hotjar, Clarity, or similar tools."],
+      ["Cookies and tracking", "The site sets no cookies. Browser localStorage stores only interface preferences (chosen language and color theme) - this data never leaves your browser and is not used for tracking. I do not use Google Analytics, Meta Pixel, Hotjar, Clarity, or similar tools."],
       ["Your rights", "You have the right to: access your data, rectify it, erase it, restrict processing, object, data portability, and lodge a complaint with Poland's supervisory authority, the President of the Personal Data Protection Office (uodo.gov.pl). To exercise these rights, email kontakt@adrianantosiak.pl."],
       ["Contact", "For any questions related to personal data, email kontakt@adrianantosiak.pl."]
     ],
     "updated_l": "Last updated",
-    "updated_v": "2026-07-07",
+    "updated_v": "2026-08-31",
     "back_home_l": "← Home"
   },
   "ai": {
     "title_l1": "AI that actually",
     "title_l2": "saves you hours.",
     "cards": [
-      ["CHATBOTS", "Chatbots for customers and your team, trained on your docs, emails and product catalog."],
-      ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - the boring stuff, done in the background."],
-      ["DOCUMENTS", "OCR, contract review, translation, summaries of meetings and calls - no more digging through paperwork after hours."]
+      ["CHATBOTS", "For customers and your team, trained on your docs, emails and product catalog."],
+      ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - all automatic."],
+      ["DOCUMENTS", "OCR, contract review, translation, meeting summaries - no more work after hours."]
     ],
     "code": "> adrian.ai.plan({ company })\n  ├─ free call to map what's eating your time\n  ├─ pick the processes worth automating\n  ├─ quick prototype instead of a long analysis\n  └─ train your team, hand over the keys"
   },
@@ -67,9 +71,7 @@
     "title_l1": "The app you",
     "title_l2": "can't buy",
     "title_l3": "off the shelf.",
-    "lead_a": "When Excel stops being enough and the SaaS tool costs more than it's worth, I build the web or mobile app you actually need",
-    "lead_and": " - ",
-    "lead_b": "production tracking, field-service apps, booking systems, internal dashboards, employee and customer portals. Clean code any developer can pick up later.",
+    "lead": "When Excel isn't enough and SaaS costs too much, I build the app you need - production tracking, field service, bookings, dashboards. Code any developer can pick up.",
     "feat": [
       ["Web apps", "Dashboards, portals, internal tools"],
       ["Mobile", "iOS + Android"],
@@ -87,8 +89,8 @@
     "title_l1": "A website that",
     "title_l2_em": "earns",
     "title_l3": "its keep.",
-    "p1": "Company sites, landing pages, portfolios and small online stores for businesses that want something better than a template but don't need a 50-page agency proposal.",
-    "p2": "Fast load times and proper SEO bring in traffic from Google, and clear stats show the effect. Plus a CMS you can update yourself - without calling me.",
+    "p1": "Company sites, landing pages, portfolios and small stores - better than a template, no 50-page proposal.",
+    "p2": "Fast load times and SEO bring traffic from Google. A CMS lets you update content without calling me.",
     "steps": [
       ["01", "Kickoff call & sitemap"],
       ["02", "Design & copy review"],

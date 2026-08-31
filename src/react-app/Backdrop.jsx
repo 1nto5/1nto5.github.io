@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { currentTheme, onThemeChange } from "./theme.js";
 
 // Scroll-scrubbed connective backdrop in three phases:
 // A - hero: the A.A monogram constellation, fully lit, with data pulses.
@@ -150,10 +151,13 @@ export default function Backdrop() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    // Opaque context: the backdrop paints its own #050505 ground every frame,
+    // Opaque context: the backdrop paints its own themed ground every frame,
     // so an alpha channel would only make compositing more expensive.
     const ctx = canvas.getContext("2d", { alpha: false });
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Theme ground + particle ink; a flip just marks the frame dirty.
+    let T = currentTheme();
+    let INK = "rgb(" + T.ink + ")";
 
     let w = 0;
     let h = 0;
@@ -261,7 +265,7 @@ export default function Backdrop() {
       const shimmer = reduced ? 0 : 1;
 
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#050505";
+      ctx.fillStyle = T.bg;
       ctx.fillRect(0, 0, w, h);
 
       for (let i = 0; i < N; i++) {
@@ -279,11 +283,11 @@ export default function Backdrop() {
       // Edges + pulses only while a formation is lit (phases A and C) - the
       // ambient middle stays edge-free and cheap. Pulse travel is scroll-driven
       // with a slow idle drift.
-      // White marks modulated via globalAlpha. Everything is drawn in batches
+      // Ink marks modulated via globalAlpha. Everything is drawn in batches
       // (one path per alpha bucket) - hundreds of individual stroke()/fill()
       // calls per frame were the main source of scroll jank.
-      ctx.strokeStyle = "#fff";
-      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = INK;
+      ctx.fillStyle = INK;
       if (lit > 0.04) {
         // Reach morphs with the phases: tight along the glyph outlines
         // (crisp, legible letterforms), wide for the ambient net.
@@ -383,9 +387,15 @@ export default function Backdrop() {
     measure();
     raf = requestAnimationFrame(draw);
     window.addEventListener("resize", measure);
+    const offTheme = onThemeChange(() => {
+      T = currentTheme();
+      INK = "rgb(" + T.ink + ")";
+      dirty = true;
+    });
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", measure);
+      offTheme();
     };
   }, []);
 

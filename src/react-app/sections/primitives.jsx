@@ -1,4 +1,4 @@
-export function Eyebrow({ color = "text-[#8A8A8A]", children }) {
+export function Eyebrow({ color = "text-ink-3", children }) {
   return (
     <div className={`font-mono text-[11px] uppercase tracking-[0.2em] ${color}`}>
       {children}
@@ -8,7 +8,7 @@ export function Eyebrow({ color = "text-[#8A8A8A]", children }) {
 
 export function Card({ className = "", children }) {
   return (
-    <div className={`rounded-2xl border border-white/10 bg-white/[0.04] ${className}`}>
+    <div className={`rounded-2xl border border-line bg-surface ${className}`}>
       {children}
     </div>
   );
@@ -24,13 +24,15 @@ export const trackSpot = (e) => {
   el.style.setProperty("--my", e.clientY - r.top + "px");
 };
 
-export function Spot({ rgb }) {
+// `v` names a space-separated rgb triplet var from global.css (--rgb-ai,
+// --rgb-app, --rgb-web) so the glow re-themes with the palette.
+export function Spot({ v }) {
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       style={{
-        background: `radial-gradient(240px circle at var(--mx, 50%) var(--my, 40%), rgba(${rgb}, 0.12), transparent 70%)`,
+        background: `radial-gradient(240px circle at var(--mx, 50%) var(--my, 40%), rgb(var(${v}) / 0.12), transparent 70%)`,
       }}
     />
   );

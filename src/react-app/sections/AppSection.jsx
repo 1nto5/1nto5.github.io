@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react";
 import { Eyebrow, Spot, trackSpot } from "./primitives.jsx";
+import { currentTheme, onThemeChange } from "../theme.js";
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const rng = (p, a, b) => clamp01((p - a) / (b - a));
 const ease = (t) => t * t * (3 - 2 * t);
-
-// Section accent: amber - live data points in the dashboard.
-const ACCENT = "rgb(252,211,77)";
 
 const BAR_H = [0.45, 0.7, 0.55, 0.85, 0.6, 1, 0.75, 0.9];
 const ROW_W = [0.62, 0.48, 0.72, 0.42];
@@ -40,6 +38,16 @@ export default function AppSection({ t }) {
     // Eased progress - see AISection: scenes glide instead of teleporting.
     let eP = -1;
     let eEnter = 0;
+    // Theme ink + section accent (amber - live data points in the dashboard).
+    let T = currentTheme();
+    let INK = "rgb(" + T.ink + ")";
+    let ACCENT = "rgb(" + T.app + ")";
+    const offTheme = onThemeChange(() => {
+      T = currentTheme();
+      INK = "rgb(" + T.ink + ")";
+      ACCENT = "rgb(" + T.app + ")";
+      lastP = -1;
+    });
 
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
     let reduced = mql.matches;
@@ -157,12 +165,12 @@ export default function AppSection({ t }) {
 
     const dot = (x, y, r, a, color) => {
       if (a <= 0.004) return;
-      ctx.fillStyle = color || "#fff";
+      ctx.fillStyle = color || INK;
       ctx.globalAlpha = Math.min(a, 0.85);
       ctx.beginPath();
       ctx.arc(x, y, r, 0, 6.2832);
       ctx.fill();
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = INK;
     };
 
     const draw = (p, now) => {
@@ -178,8 +186,8 @@ export default function AppSection({ t }) {
       const drift = now ? Math.sin(now * 0.0006) * 1.5 : 0;
       ctx.save();
       ctx.translate(0, drift);
-      ctx.strokeStyle = "#fff";
-      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = INK;
+      ctx.fillStyle = INK;
       ctx.lineWidth = 1;
 
       // Card echo intensities (mirror the HTML card stagger).
@@ -276,7 +284,7 @@ export default function AppSection({ t }) {
         ctx.beginPath();
         ctx.arc(dx, y, 3.6, 0, 6.2832);
         ctx.stroke();
-        ctx.strokeStyle = "#fff";
+        ctx.strokeStyle = INK;
       }
       // Scanline sweep.
       const st = rng(p, 0.36, 0.51);
@@ -288,7 +296,7 @@ export default function AppSection({ t }) {
         ctx.moveTo(R.x + 4, sy);
         ctx.lineTo(R.x + R.w - 4, sy);
         ctx.stroke();
-        ctx.strokeStyle = "#fff";
+        ctx.strokeStyle = INK;
       }
       // "Mobile" echo: small phone traces in.
       if (traceOn(0.38 * A, 2 * (phone.w + phone.h), e1)) {
@@ -375,20 +383,22 @@ export default function AppSection({ t }) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", layout);
       if (mql.removeEventListener) mql.removeEventListener("change", onMql);
+      offTheme();
     };
     // t is per-page (locale routes remount the island), safe to omit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <section id="app" ref={sectionRef} className="relative h-[180vh] border-t border-white/10 md:h-[220vh]">
+    <section id="app" ref={sectionRef} className="relative h-[180vh] border-t border-line md:h-[220vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
+        <div className="scene-tint" style={{ "--tint": "var(--rgb-app)" }} aria-hidden="true" />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pt-[96px] md:pt-[104px]">
           <div ref={headRef} style={{ opacity: 0 }}>
-            <Eyebrow color="text-[#FCD34D]">{t.nav.app}</Eyebrow>
+            <Eyebrow color="text-accent-app">{t.nav.app}</Eyebrow>
             <h2 className="mt-3 max-w-[620px] text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px] lg:text-[50px]">
-              {tt.title_l1} {tt.title_l2} {tt.title_l3}
+              {tt.title_l1} {tt.title_l2} <span className="whitespace-nowrap text-accent-app">{tt.title_l3}</span>
             </h2>
           </div>
           {/* Stacked grid (steps replace the fading lead) exactly when the JS
@@ -398,13 +408,11 @@ export default function AppSection({ t }) {
             <p
               ref={leadRef}
               style={{ opacity: 0 }}
-              className="col-start-1 row-start-1 text-[15px] leading-relaxed text-[#D1D1D1]"
+              className="col-start-1 row-start-1 text-[15px] leading-relaxed text-ink-2"
             >
-              {tt.lead_a}
-              {tt.lead_and}
-              {tt.lead_b}
+              {tt.lead}
             </p>
-            <ol className="col-start-1 row-start-1 self-start divide-y divide-white/10 border-y border-white/10 md:max-w-[420px] [@media(min-width:768px)_and_(min-height:760px)]:mt-6">
+            <ol className="col-start-1 row-start-1 self-start divide-y divide-line border-y border-line md:max-w-[420px] [@media(min-width:768px)_and_(min-height:760px)]:mt-6">
               {tt.steps.map(([n, l], i) => (
                 <li
                   key={n}
@@ -412,8 +420,8 @@ export default function AppSection({ t }) {
                   className="flex items-center gap-4 py-2 md:py-2.5"
                   style={{ opacity: 0 }}
                 >
-                  <span className="font-mono text-[11px] tracking-[0.15em] text-[#8A8A8A]">{n}</span>
-                  <span className="flex-1 text-[14px] text-white md:text-[15px]">{l}</span>
+                  <span className="font-mono text-[11px] tracking-[0.15em] text-ink-3">{n}</span>
+                  <span className="flex-1 text-[14px] text-ink md:text-[15px]">{l}</span>
                 </li>
               ))}
             </ol>
@@ -427,12 +435,12 @@ export default function AppSection({ t }) {
                   ref={(el) => (cardRefs.current[i] = el)}
                   style={{ opacity: 0 }}
                   onMouseMove={trackSpot}
-                  className="group pointer-events-auto relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition-colors duration-300 hover:border-[#FCD34D]/30 md:p-6"
+                  className="group pointer-events-auto relative overflow-hidden rounded-2xl border border-line bg-surface p-4 transition-colors duration-300 hover:border-accent-app/30 md:p-6"
                 >
-                  <Spot rgb="252,211,77" />
+                  <Spot v="--rgb-app" />
                   <div className="relative">
-                    <h3 className="text-[15px] font-semibold text-white md:text-[17px]">{k}</h3>
-                    <p className="mt-1 text-[13px] leading-relaxed text-[#D1D1D1] md:mt-2 md:text-[15px]">{v}</p>
+                    <h3 className="text-[15px] font-semibold text-ink md:text-[17px]">{k}</h3>
+                    <p className="mt-1 text-[13px] leading-relaxed text-ink-2 md:mt-2 md:text-[15px]">{v}</p>
                   </div>
                 </div>
               ))}

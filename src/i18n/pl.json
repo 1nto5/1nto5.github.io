@@ -4,7 +4,7 @@
   "email_addr": "czesc@adrianantosiak.pl",
   "hero": {
     "headline": "Mniej ręcznej roboty. Więcej klientów.",
-    "sub": "Wdrażam AI, które oszczędza Ci czas, buduję aplikacje, które zostają Twoje, i strony, które sprzedają.",
+    "sub": "AI, które oszczędza czas. Aplikacje, które zostają Twoje. Strony, które sprzedają.",
     "cta": "Napisz do mnie",
     "phone": "+48 503 751 676",
     "areas": ["Chatboty", "Automatyzacje", "Aplikacje", "E-commerce"]
@@ -23,6 +23,10 @@
   "menu": {
     "open": "Menu",
     "close": "Zamknij menu"
+  },
+  "theme": {
+    "to_light": "Włącz jasny motyw",
+    "to_dark": "Włącz ciemny motyw"
   },
   "contact": {
     "title_l1": "Masz",
@@ -45,21 +49,21 @@
       ["Podstawa prawna", "Podstawą prawną przetwarzania korespondencji jest art. 6 ust. 1 lit. b RODO (działania na żądanie osoby przed zawarciem umowy) oraz art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes w postaci odpowiedzi na zapytanie)."],
       ["Okres przechowywania", "Wiadomości przechowuję w skrzynce mailowej tak długo, jak jest to potrzebne do obsługi zapytania i ewentualnego dalszego kontaktu, po czym usuwam je lub archiwizuję."],
       ["Odbiorcy danych", "Strona jest hostowana w GitHub Pages (GitHub, Inc., USA). Pocztę obsługuje iCloud+ Custom Email Domain (Apple Inc., USA) - wiadomości kierowane na adres @adrianantosiak.pl trafiają do mojej skrzynki iCloud. Czcionki są hostowane razem ze stroną, więc ich pobranie nie wysyła żadnych danych do zewnętrznych dostawców. Nie przekazuję danych żadnym innym odbiorcom."],
-      ["Cookies i śledzenie", "Strona nie ustawia własnych plików cookie ani nie zapisuje danych w localStorage przeglądarki. Nie korzystam z Google Analytics, Meta Pixel, Hotjar, Clarity ani podobnych narzędzi."],
+      ["Cookies i śledzenie", "Strona nie ustawia plików cookie. W localStorage przeglądarki zapisuję wyłącznie ustawienia interfejsu (wybrany język i motyw kolorystyczny) - te dane nie opuszczają Twojej przeglądarki i nie służą do śledzenia. Nie korzystam z Google Analytics, Meta Pixel, Hotjar, Clarity ani podobnych narzędzi."],
       ["Twoje prawa", "Masz prawo: dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu, przenoszenia oraz wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl). Aby z nich skorzystać, napisz na kontakt@adrianantosiak.pl."],
       ["Kontakt", "W sprawach dotyczących danych osobowych napisz na kontakt@adrianantosiak.pl."]
     ],
     "updated_l": "Ostatnia aktualizacja",
-    "updated_v": "2026-07-07",
+    "updated_v": "2026-08-31",
     "back_home_l": "← Strona główna"
   },
   "ai": {
     "title_l1": "AI, które realnie",
     "title_l2": "oszczędza godziny.",
     "cards": [
-      ["CHATBOTY", "Chatboty dla klientów i zespołu, uczone na Twoich dokumentach, mailach i katalogu produktów."],
-      ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - żmudna robota, która robi się sama."],
-      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań i rozmów - bez przekopywania się przez dokumenty po godzinach."]
+      ["CHATBOTY", "Dla klientów i zespołu, uczone na Twoich dokumentach, mailach i katalogu produktów."],
+      ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - automatycznie."],
+      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań - koniec pracy po godzinach."]
     ],
     "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa rozmowa: co pożera Ci czas\n  ├─ wybór procesów do automatyzacji\n  ├─ szybki prototyp zamiast długich analiz\n  └─ szkolenie zespołu i przekazanie kluczy"
   },
@@ -67,9 +71,7 @@
     "title_l1": "Aplikacja, której",
     "title_l2": "nie kupisz",
     "title_l3": "z półki.",
-    "lead_a": "Kiedy Excel przestaje wystarczać, a gotowy SaaS kosztuje więcej, niż jest wart, buduję aplikację webową lub mobilną, której naprawdę potrzebujesz",
-    "lead_and": " - ",
-    "lead_b": "śledzenie produkcji, aplikacje dla serwisantów w terenie, systemy rezerwacji, panele wewnętrzne, portale dla pracowników i klientów. Czysty kod, który każdy programista może później przejąć i rozwijać.",
+    "lead": "Gdy Excel nie starcza, a SaaS kosztuje za dużo, buduję aplikację, jakiej potrzebujesz - śledzenie produkcji, serwis w terenie, rezerwacje, panele. Kod, który przejmie każdy programista.",
     "feat": [
       ["Web", "Panele, portale, narzędzia wewnętrzne"],
       ["Mobile", "iOS + Android"],
@@ -87,8 +89,8 @@
     "title_l1": "Strona, która",
     "title_l2_em": "zarabia",
     "title_l3": "na siebie.",
-    "p1": "Strony firmowe, landingi, portfolia i mniejsze sklepy dla firm, które chcą czegoś lepszego niż szablon, ale nie potrzebują 50-stronicowej oferty od agencji.",
-    "p2": "Szybkie ładowanie i porządne SEO ściągają ruch z Google, a przejrzyste statystyki pokazują efekt. Do tego CMS, w którym treści zmienisz bez dzwonienia do mnie.",
+    "p1": "Strony firmowe, landingi, portfolia i małe sklepy - lepsze niż szablon, bez 50-stronicowej oferty.",
+    "p2": "Szybkie ładowanie i SEO ściągają ruch z Google. CMS pozwala zmieniać treści bez dzwonienia do mnie.",
     "steps": [
       ["01", "Spotkanie startowe i mapa strony"],
       ["02", "Projekt i przegląd tekstów"],

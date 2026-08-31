@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Eyebrow, Spot, trackSpot } from "./primitives.jsx";
+import { currentTheme, onThemeChange } from "../theme.js";
 
 // Neuron counts per column, left to right. Last column is the output neuron.
 const LAYERS = [3, 5, 6, 5, 1];
@@ -20,9 +21,6 @@ const CARD_P = [crossP(0.25), crossP(0.5), crossP(0.75)];
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const ease = (t) => t * t * (3 - 2 * t);
-
-// Section accent: sky - the color of the activation wave.
-const ACCENT = "rgb(125,211,252)";
 
 // Deterministic pseudo-random in [0,1).
 function hash(n) {
@@ -86,6 +84,17 @@ export default function AISection({ t }) {
     let lastP = -1;
     let idleTick = false;
     let raf = 0;
+    // Theme ink + section accent (sky - the activation wave) come from the
+    // shared canvas palette; a flip just forces a full redraw.
+    let T = currentTheme();
+    let INK = "rgb(" + T.ink + ")";
+    let ACCENT = "rgb(" + T.ai + ")";
+    const offTheme = onThemeChange(() => {
+      T = currentTheme();
+      INK = "rgb(" + T.ink + ")";
+      ACCENT = "rgb(" + T.ai + ")";
+      lastP = -1;
+    });
     // Eased progress: fast wheel flicks jump scroll by hundreds of px;
     // chasing the target keeps the scene gliding instead of teleporting.
     let eP = -1;
@@ -197,8 +206,8 @@ export default function AISection({ t }) {
       const waveGate = clamp01((p - (WAVE_P0 - 0.03)) / 0.03);
 
       // Edges draw themselves in along their length, then carry the wave glow.
-      ctx.strokeStyle = "#fff";
-      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = INK;
+      ctx.fillStyle = INK;
       ctx.lineWidth = 1;
       for (let i = 0; i < edges.length; i++) {
         const e = edges[i];
@@ -232,8 +241,8 @@ export default function AISection({ t }) {
             ctx.beginPath();
             ctx.arc(dx, dy, 4, 0, Math.PI * 2);
             ctx.stroke();
-            ctx.fillStyle = "#fff";
-            ctx.strokeStyle = "#fff";
+            ctx.fillStyle = INK;
+            ctx.strokeStyle = INK;
           }
         }
       }
@@ -257,7 +266,7 @@ export default function AISection({ t }) {
         ctx.beginPath();
         ctx.arc(px[i], py[i], 5 + flare * 3, 0, Math.PI * 2);
         ctx.stroke();
-        if (flare > 0.05) ctx.strokeStyle = "#fff";
+        if (flare > 0.05) ctx.strokeStyle = INK;
       }
 
       // Output neuron flares with thin concentric rings while the plan writes.
@@ -270,7 +279,7 @@ export default function AISection({ t }) {
           ctx.arc(px[oi], py[oi], 7 + r * 5 + outGlow * 4, 0, Math.PI * 2);
           ctx.stroke();
         }
-        ctx.strokeStyle = "#fff";
+        ctx.strokeStyle = INK;
       }
       ctx.globalAlpha = 1;
     };
@@ -279,19 +288,21 @@ export default function AISection({ t }) {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", measure);
+      offTheme();
     };
   }, [lines.length]);
 
   return (
-    <section id="ai" ref={sectionRef} className="relative h-[180vh] border-t border-white/10 md:h-[220vh]">
+    <section id="ai" ref={sectionRef} className="relative h-[180vh] border-t border-line md:h-[220vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
+        <div className="scene-tint" style={{ "--tint": "var(--rgb-ai)" }} aria-hidden="true" />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col px-6 pb-6 pt-[96px] md:pb-10 md:pt-[110px]">
           <div ref={headRef} style={{ opacity: 0 }}>
-            <Eyebrow color="text-[#7DD3FC]">{t.nav.ai}</Eyebrow>
+            <Eyebrow color="text-accent-ai">{t.nav.ai}</Eyebrow>
             <h2 className="mt-3 max-w-[640px] text-[32px] font-semibold leading-[1.08] tracking-tight md:mt-4 md:text-[44px] lg:text-[50px]">
-              {tt.title_l1} {tt.title_l2}
+              {tt.title_l1} <span className="text-accent-ai">{tt.title_l2}</span>
             </h2>
           </div>
 
@@ -304,12 +315,12 @@ export default function AISection({ t }) {
                 }}
                 style={{ opacity: 0 }}
                 onMouseMove={trackSpot}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0C0C0C]/95 p-4 transition-colors duration-300 hover:border-[#7DD3FC]/30 md:p-6"
+                className="group relative overflow-hidden rounded-2xl border border-line bg-panel p-4 transition-colors duration-300 hover:border-accent-ai/30 md:p-6"
               >
-                <Spot rgb="125,211,252" />
+                <Spot v="--rgb-ai" />
                 <div className="relative">
-                  <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7DD3FC]">{k}</div>
-                  <p className="mt-2 text-[13px] leading-snug text-[#D1D1D1] md:mt-3 md:text-[15px] md:leading-relaxed">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent-ai">{k}</div>
+                  <p className="mt-2 text-[13px] leading-snug text-ink-2 md:mt-3 md:text-[15px] md:leading-relaxed">
                     {v}
                   </p>
                 </div>
@@ -320,9 +331,9 @@ export default function AISection({ t }) {
           <div
             ref={codeRef}
             style={{ opacity: 0 }}
-            className="mt-3 rounded-2xl border border-white/10 bg-[#0C0C0C]/95 p-4 md:mt-4 md:p-6"
+            className="mt-3 rounded-2xl border border-line bg-panel p-4 md:mt-4 md:p-6"
           >
-            <pre className="font-mono text-[12px] leading-6 text-[#D1D1D1] md:overflow-x-auto md:text-[13px] md:leading-7">
+            <pre className="font-mono text-[12px] leading-6 text-ink-2 md:overflow-x-auto md:text-[13px] md:leading-7">
               {lines.map((ln, i) => (
                 <div
                   key={i}
@@ -337,7 +348,7 @@ export default function AISection({ t }) {
                     <span
                       ref={caretRef}
                       style={{ opacity: 0 }}
-                      className="ml-1 inline-block h-[0.95em] w-[7px] translate-y-[2px] bg-[#7DD3FC]"
+                      className="ml-1 inline-block h-[0.95em] w-[7px] translate-y-[2px] bg-accent-ai"
                       aria-hidden="true"
                     />
                   )}

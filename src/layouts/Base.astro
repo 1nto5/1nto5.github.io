@@ -93,6 +93,23 @@ const websiteJsonLd = {
 
     <script is:inline>
       document.documentElement.classList.add("js-on");
+      // Resolve the theme before first paint: stored choice wins, then the
+      // system preference, then dark. Keep in sync with theme.js.
+      (function () {
+        var t = "dark";
+        try {
+          var s = localStorage.getItem("aa_theme");
+          t =
+            s === "light" || s === "dark"
+              ? s
+              : window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+        } catch (e) {}
+        document.documentElement.dataset.theme = t;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", t === "light" ? "#f4f5f7" : "#050505");
+      })();
     </script>
   </head>
   <body>

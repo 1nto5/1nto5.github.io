@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Eyebrow, Spot, trackSpot } from "./primitives.jsx";
+import { currentTheme, onThemeChange } from "../theme.js";
 
 const TAU = Math.PI * 2;
-// Section accent: violet - the performance gauge and step ticks.
-const ACCENT_RGB = "196,181,253";
 // step activation thresholds along scroll progress p
 const TS = [0.42, 0.51, 0.6, 0.69, 0.78];
 const DASH = [0, 0];
@@ -43,6 +42,17 @@ export default function WebSection({ t }) {
     let eP = -1;
     let eEnter = 0;
     const L = {};
+    // Theme ink + section accent (violet - the performance gauge), as
+    // comma triplets for rgba() string building.
+    let T = currentTheme();
+    let INKC = T.ink;
+    let ACCENT_RGB = T.web;
+    const offTheme = onThemeChange(() => {
+      T = currentTheme();
+      INKC = T.ink;
+      ACCENT_RGB = T.web;
+      lastKey = -1;
+    });
 
     function layout() {
       const md = w >= 768;
@@ -92,7 +102,7 @@ export default function WebSection({ t }) {
 
     function line(x1, y1, x2, y2, a, lw) {
       ctx.lineWidth = lw || 1.25;
-      ctx.strokeStyle = "rgba(255,255,255," + a + ")";
+      ctx.strokeStyle = "rgba(" + INKC + "," + a + ")";
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
@@ -115,7 +125,7 @@ export default function WebSection({ t }) {
       const per = 2 * (rw + rh);
       rrPath(x, y, rw, rh, r);
       ctx.lineWidth = 1.25;
-      ctx.strokeStyle = "rgba(255,255,255," + a + ")";
+      ctx.strokeStyle = "rgba(" + INKC + "," + a + ")";
       DASH[0] = per * f;
       DASH[1] = per;
       ctx.setLineDash(DASH);
@@ -146,14 +156,14 @@ export default function WebSection({ t }) {
         const dx = L.bx + 18 + i * 13;
         ctx.beginPath();
         ctx.arc(dx, dy, 3 * q, 0, TAU);
-        ctx.fillStyle = "rgba(255,255,255," + 0.75 * q * D + ")";
+        ctx.fillStyle = "rgba(" + INKC + "," + 0.75 * q * D + ")";
         ctx.fill();
         if (now) {
           const halo = 0.05 + 0.03 * Math.sin(now / 900 + i * 2.1);
           ctx.beginPath();
           ctx.arc(dx, dy, 5.5, 0, TAU);
           ctx.lineWidth = 1;
-          ctx.strokeStyle = "rgba(255,255,255," + halo * q * D + ")";
+          ctx.strokeStyle = "rgba(" + INKC + "," + halo * q * D + ")";
           ctx.stroke();
         }
       }
@@ -182,7 +192,7 @@ export default function WebSection({ t }) {
       if (q0 > 0) {
         rrPath(L.cl, L.ct - 2, 10, 10, 2);
         ctx.lineWidth = 1.25;
-        ctx.strokeStyle = "rgba(255,255,255," + 0.4 * q0 * D + ")";
+        ctx.strokeStyle = "rgba(" + INKC + "," + 0.4 * q0 * D + ")";
         ctx.stroke();
         for (let i = 0; i < 3; i++) {
           const lx = L.cr - (3 - i) * 26;
@@ -195,7 +205,7 @@ export default function WebSection({ t }) {
       const q1 = stage(p, TS[1], TS[1] + 0.06);
       if (q1 > 0) {
         ctx.lineWidth = 1.25;
-        ctx.strokeStyle = "rgba(255,255,255," + 0.38 * D + ")";
+        ctx.strokeStyle = "rgba(" + INKC + "," + 0.38 * D + ")";
         ctx.strokeRect(L.cl, L.hy, L.cw * 0.5 * q1, 9);
         ctx.strokeRect(L.cl, L.hy + 16, L.cw * 0.36 * q1, 9);
         line(L.cl, L.hy + 36, L.cl + L.cw * 0.3 * q1, L.hy + 36, 0.24 * D);
@@ -218,7 +228,7 @@ export default function WebSection({ t }) {
         line(tx + 8, L.ty + L.th - 10, tx + 8 + (L.tw - 20) * 0.6 * q3, L.ty + L.th - 10, 0.2 * D);
         ctx.beginPath();
         ctx.arc(tx + 12, L.ty + 12, 2.5 * q3, 0, TAU);
-        ctx.fillStyle = "rgba(255,255,255," + 0.5 * q3 * D + ")";
+        ctx.fillStyle = "rgba(" + INKC + "," + 0.5 * q3 * D + ")";
         ctx.fill();
       }
 
@@ -226,7 +236,7 @@ export default function WebSection({ t }) {
       const fR = stage(p, 0.8, 0.86);
       if (fR > 0) {
         ctx.lineWidth = 1;
-        ctx.strokeStyle = "rgba(255,255,255," + 0.15 * D + ")";
+        ctx.strokeStyle = "rgba(" + INKC + "," + 0.15 * D + ")";
         ctx.beginPath();
         ctx.arc(L.gx, L.gy, L.gr, -Math.PI / 2, -Math.PI / 2 + TAU * fR);
         ctx.stroke();
@@ -337,41 +347,43 @@ export default function WebSection({ t }) {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      offTheme();
     };
   }, []);
 
   return (
-    <section ref={sectionRef} id="web" className="relative h-[180vh] border-t border-white/10 md:h-[220vh]">
+    <section ref={sectionRef} id="web" className="relative h-[180vh] border-t border-line md:h-[220vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
+        <div className="scene-tint" style={{ "--tint": "var(--rgb-web)" }} aria-hidden="true" />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1100px] flex-col justify-center px-6 pb-6 pt-[90px] md:pb-10 md:pt-24">
           <div className="max-w-[560px]">
             <div ref={headerRef} style={{ opacity: 0, transform: "translate(0px,18px)" }}>
-              <Eyebrow color="text-[#C4B5FD]">{t.nav.web}</Eyebrow>
+              <Eyebrow color="text-accent-web">{t.nav.web}</Eyebrow>
               <h2 className="mt-4 text-[32px] font-semibold leading-[1.08] tracking-tight md:text-[44px] lg:text-[50px]">
-                {tt.title_l1} <em className="italic">{tt.title_l2_em}</em> {tt.title_l3}
+                {tt.title_l1} <em className="italic text-accent-web">{tt.title_l2_em}</em> {tt.title_l3}
               </h2>
             </div>
 
             <div className="mt-5 grid md:mt-6">
               <p
                 ref={p1Ref}
-                className="col-start-1 row-start-1 text-[14px] leading-relaxed text-[#D1D1D1] md:text-[15px]"
+                className="col-start-1 row-start-1 text-[14px] leading-relaxed text-ink-2 md:text-[15px]"
                 style={{ opacity: 0 }}
               >
                 {tt.p1}
               </p>
               <p
                 ref={p2Ref}
-                className="col-start-1 row-start-1 text-[14px] leading-relaxed text-[#D1D1D1] md:text-[15px]"
+                className="col-start-1 row-start-1 text-[14px] leading-relaxed text-ink-2 md:text-[15px]"
                 style={{ opacity: 0 }}
               >
                 {tt.p2}
               </p>
             </div>
 
-            <ol className="mt-5 divide-y divide-white/10 border-y border-white/10 md:mt-8">
+            <ol className="mt-5 divide-y divide-line border-y border-line md:mt-8">
               {tt.steps.map(([n, l], i) => (
                 <li
                   key={n}
@@ -379,12 +391,12 @@ export default function WebSection({ t }) {
                   className="flex items-center gap-4 py-2 md:py-2.5"
                   style={{ opacity: 0 }}
                 >
-                  <span className="font-mono text-[11px] tracking-[0.15em] text-[#8A8A8A]">{n}</span>
-                  <span className="flex-1 text-[14px] text-white md:text-[15px]">{l}</span>
-                  <span className="relative h-[14px] w-[14px] shrink-0 rounded-full border border-white/25">
+                  <span className="font-mono text-[11px] tracking-[0.15em] text-ink-3">{n}</span>
+                  <span className="flex-1 text-[14px] text-ink md:text-[15px]">{l}</span>
+                  <span className="relative h-[14px] w-[14px] shrink-0 rounded-full border border-line-2">
                     <span
                       ref={(el) => (dotRefs.current[i] = el)}
-                      className="absolute inset-[3px] rounded-full bg-[#C4B5FD]"
+                      className="absolute inset-[3px] rounded-full bg-accent-web"
                       style={{ transform: "scale(0)" }}
                     />
                   </span>
@@ -399,13 +411,13 @@ export default function WebSection({ t }) {
                 key={k}
                 ref={(el) => (railRefs.current[i] = el)}
                 onMouseMove={trackSpot}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-3 transition-colors duration-300 hover:border-[#C4B5FD]/30 md:p-4"
+                className="group relative overflow-hidden rounded-2xl border border-line bg-surface p-3 transition-colors duration-300 hover:border-accent-web/30 md:p-4"
                 style={{ opacity: 0 }}
               >
-                <Spot rgb="196,181,253" />
+                <Spot v="--rgb-web" />
                 <div className="relative">
-                  <h3 className="text-[13px] font-semibold text-white md:text-[14px]">{k}</h3>
-                  <p className="mt-1 text-[11px] leading-snug text-[#8A8A8A] md:text-[12px]">{v}</p>
+                  <h3 className="text-[13px] font-semibold text-ink md:text-[14px]">{k}</h3>
+                  <p className="mt-1 text-[11px] leading-snug text-ink-3 md:text-[12px]">{v}</p>
                 </div>
               </div>
             ))}
