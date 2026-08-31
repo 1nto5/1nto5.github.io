@@ -92,11 +92,9 @@ export default function AppSection({ t }) {
       const nRows = Math.max(2, Math.min(4, Math.floor((mb - rowY0 - 2) / 16)));
       const rightX = mx + mw * 0.74;
       const rightW = mr - rightX;
-      const pw = Math.min(30, rightW * 0.8);
-      const ph = Math.min(56, chart.h * 0.95);
-      const phone = { x: rightX + (rightW - pw) / 2, y: my + 2, w: pw, h: ph };
+      const stack = { x: rightX + rightW / 2, y: my + 10 };
       const navN = Math.max(3, Math.min(5, Math.floor((R.y + R.h - topY - 24) / 18)));
-      G = { R, topY, sideX, mx, my, mr, mb, mw, chart, rowY0, nRows, phone, navN };
+      G = { R, topY, sideX, mx, my, mr, mb, mw, chart, rowY0, nRows, stack, navN };
       lastP = -1;
     };
 
@@ -176,7 +174,7 @@ export default function AppSection({ t }) {
     const draw = (p, now) => {
       ctx.clearRect(0, 0, cw, chh);
       if (!G || p < 0.04) return;
-      const { R, topY, sideX, mx, mb, chart, rowY0, nRows, phone, navN } = G;
+      const { R, topY, sideX, mx, mb, chart, rowY0, nRows, stack, navN } = G;
 
       let A = behind ? 0.42 : 1;
       if (behind) A *= 1 - 0.5 * ease(rng(p, 0.55, 0.78));
@@ -298,43 +296,31 @@ export default function AppSection({ t }) {
         ctx.stroke();
         ctx.strokeStyle = INK;
       }
-      // "Mobile" echo: small phone traces in.
-      if (traceOn(0.38 * A, 2 * (phone.w + phone.h), e1)) {
-        rr(phone.x, phone.y, phone.w, phone.h, 5);
+      // "Integrations" echo: a connector stack traces in beside the panel.
+      const gap = Math.max(12, Math.min(20, (mb - stack.y - 8) / 4));
+      const span = gap * 3;
+      if (traceOn(0.34 * A, span, e1)) {
+        ctx.moveTo(stack.x, stack.y);
+        ctx.lineTo(stack.x, stack.y + span);
         traceOff();
       }
       if (e1 > 0) {
-        ctx.globalAlpha = Math.min(0.25 * e1 * A, 0.5);
-        ctx.beginPath();
-        ctx.moveTo(phone.x + 5, phone.y + 8);
-        ctx.lineTo(phone.x + phone.w - 5, phone.y + 8);
-        ctx.stroke();
-        dot(phone.x + phone.w / 2, phone.y + phone.h - 5, 1.2, 0.5 * e1 * A);
+        for (let i = 0; i < 4; i++) dot(stack.x, stack.y + i * gap, 1.6, 0.65 * e1 * A);
       }
-      // "API" echo: connector nodes below the phone.
+      // "Support" echo: the nodes reach out and link back to the table.
       if (e2 > 0) {
-        const cx = phone.x + phone.w / 2;
-        const y0 = phone.y + phone.h + 14;
-        const gap = Math.max(10, Math.min(15, (mb - y0 - 4) / 2));
-        ctx.globalAlpha = Math.min(0.3 * e2 * A, 0.5);
-        ctx.beginPath();
-        ctx.moveTo(cx, phone.y + phone.h);
-        ctx.lineTo(cx, y0 + gap * 2 * e2);
-        ctx.stroke();
-        for (let i = 0; i < 3; i++) {
-          const y = y0 + i * gap;
-          if (y > mb) break;
-          dot(cx, y, 1.6, 0.65 * e2 * A);
+        for (let i = 0; i < 4; i++) {
+          const y = stack.y + i * gap;
           ctx.globalAlpha = Math.min(0.22 * e2 * A, 0.5);
           ctx.beginPath();
-          ctx.moveTo(cx - 6, y);
-          ctx.lineTo(cx - 6 - 12 * e2, y);
+          ctx.moveTo(stack.x - 6, y);
+          ctx.lineTo(stack.x - 6 - 12 * e2, y);
           ctx.stroke();
         }
         // Link middle node toward the table.
         ctx.globalAlpha = Math.min(0.18 * e2 * A, 0.5);
         ctx.beginPath();
-        ctx.moveTo(cx - 18, y0 + gap);
+        ctx.moveTo(stack.x - 18, stack.y + gap);
         ctx.lineTo(mx + chart.w * 0.82 + 20, rowY0 + 16);
         ctx.stroke();
       }
@@ -390,7 +376,7 @@ export default function AppSection({ t }) {
   }, []);
 
   return (
-    <section id="app" ref={sectionRef} className="relative h-[180vh] border-t border-line md:h-[220vh]">
+    <section id="app" ref={sectionRef} className="relative h-[240vh] border-t border-line md:h-[320vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
         <div className="scene-tint" style={{ "--tint": "var(--rgb-app)" }} aria-hidden="true" />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />

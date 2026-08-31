@@ -352,7 +352,7 @@ export default function WebSection({ t }) {
   }, []);
 
   return (
-    <section ref={sectionRef} id="web" className="relative h-[180vh] border-t border-line md:h-[220vh]">
+    <section ref={sectionRef} id="web" className="relative h-[240vh] border-t border-line md:h-[320vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
         <div className="scene-tint" style={{ "--tint": "var(--rgb-web)" }} aria-hidden="true" />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />

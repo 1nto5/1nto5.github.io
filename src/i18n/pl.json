@@ -7,12 +7,12 @@
     "sub": "AI, które oszczędza czas. Aplikacje, które zostają Twoje. Strony, które sprzedają.",
     "cta": "Napisz do mnie",
     "phone": "+48 503 751 676",
-    "areas": ["Chatboty", "Automatyzacje", "Aplikacje", "E-commerce"]
+    "areas": ["Chatboty", "Automatyzacje", "Aplikacje", "Szkolenia"]
   },
   "nav": {
     "ai": "AI dla Twojej firmy",
     "app": "Aplikacje szyte na miarę",
-    "web": "Strony i sklepy internetowe"
+    "web": "Strony internetowe"
   },
   "nav_pill": {
     "ai": "AI",
@@ -60,12 +60,13 @@
   "ai": {
     "title_l1": "AI, które realnie",
     "title_l2": "oszczędza godziny.",
+    "lead": "Od audytu procesów, przez prototyp, po warsztat dla zespołu.",
     "cards": [
+      ["AUTOMATYZACJE", "Ofertowanie, faktury, segregacja maili, kwalifikacja leadów - powtarzalne kroki dzieją się w tle, Ty zatwierdzasz."],
       ["CHATBOTY", "Dla klientów i zespołu, uczone na Twoich dokumentach, mailach i katalogu produktów."],
-      ["AUTOMATYZACJE", "Segregacja maili, ofertowanie, odczyt faktur, kwalifikacja leadów - automatycznie."],
-      ["DOKUMENTY", "OCR, analiza umów, tłumaczenia, streszczenia spotkań - koniec pracy po godzinach."]
+      ["DOKUMENTY", "OCR, analiza umów, streszczenia spotkań - koniec pracy po godzinach."]
     ],
-    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa rozmowa: co pożera Ci czas\n  ├─ wybór procesów do automatyzacji\n  ├─ szybki prototyp zamiast długich analiz\n  └─ szkolenie zespołu i przekazanie kluczy"
+    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa rozmowa: co pożera Ci czas\n  ├─ wybór procesów do automatyzacji\n  ├─ szybki prototyp zamiast długich analiz\n  └─ warsztat dla zespołu i przekazanie kluczy"
   },
   "app": {
     "title_l1": "Aplikacja, której",
@@ -74,8 +75,8 @@
     "lead": "Gdy Excel nie starcza, a SaaS kosztuje za dużo, buduję aplikację, jakiej potrzebujesz - śledzenie produkcji, serwis w terenie, rezerwacje, panele. Kod, który przejmie każdy programista.",
     "feat": [
       ["Web", "Panele, portale, narzędzia wewnętrzne"],
-      ["Mobile", "iOS + Android"],
-      ["API", "Integracje z ERP, CRM, księgowością"]
+      ["Integracje", "ERP, CRM, księgowość, magazyn"],
+      ["Wsparcie", "Poprawki i rozwój po wdrożeniu"]
     ],
     "steps": [
       ["01", "Rozmowa o potrzebach i zakresie"],
@@ -85,24 +86,24 @@
     ]
   },
   "web": {
-    "subtitle": "Strony firmowe i sklepy internetowe",
+    "subtitle": "Strony firmowe i landingi",
     "title_l1": "Strona, która",
     "title_l2_em": "zarabia",
     "title_l3": "na siebie.",
-    "p1": "Strony firmowe, landingi, portfolia i małe sklepy - lepsze niż szablon, bez 50-stronicowej oferty.",
+    "p1": "Strony firmowe, landingi i strony ofertowe - lepsze niż szablon, bez 50-stronicowej oferty.",
     "p2": "Szybkie ładowanie i SEO ściągają ruch z Google. CMS pozwala zmieniać treści bez dzwonienia do mnie.",
     "steps": [
       ["01", "Spotkanie startowe i mapa strony"],
       ["02", "Projekt i przegląd tekstów"],
       ["03", "Budowa i konfiguracja CMS"],
       ["04", "SEO, analityka, wdrożenie"],
-      ["05", "Hosting i wsparcie"]
+      ["05", "Wsparcie po wdrożeniu"]
     ],
     "rail": [
       ["Landing", "Produkt, kampania, wdrożenie"],
-      ["Firmowe", "Wizytówka, oferta, portfolio"],
-      ["E-commerce", "Katalog, koszyk, płatności"],
-      ["Hosting", "Utrzymanie, monitoring, domena"]
+      ["Firmowe", "Wizytówka, oferta, referencje"],
+      ["SEO", "Widoczność w Google i szybkość"],
+      ["CMS", "Treści zmieniasz sam"]
     ]
   }
 }

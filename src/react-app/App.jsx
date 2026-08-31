@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { DICT, LangCtx } from "./i18n.js";
 import { currentThemeName, onThemeChange, toggleTheme } from "./theme.js";
 import Backdrop from "./Backdrop.jsx";
@@ -124,6 +125,46 @@ function useTheme() {
   return theme;
 }
 
+// Theme flip as a View Transition: the new palette is wiped in as a circle
+// growing from the control that was activated, over one frozen frame of the
+// old one. flushSync keeps the icon swap inside the transition's "new"
+// snapshot - a scheduled React update would land after it and pop. Browsers
+// without the API, and readers who asked for less motion, flip instantly.
+function flipTheme(e) {
+  const origin = e.currentTarget;
+  if (
+    typeof document.startViewTransition !== "function" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    toggleTheme();
+    return;
+  }
+  // Keyboard activation reports clientX/Y as 0 - start from the control.
+  const box = origin.getBoundingClientRect();
+  const x = e.detail === 0 ? box.left + box.width / 2 : e.clientX;
+  const y = e.detail === 0 ? box.top + box.height / 2 : e.clientY;
+  const r = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y),
+  );
+  const vt = document.startViewTransition(() => flushSync(toggleTheme));
+  vt.ready
+    .then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`],
+        },
+        {
+          duration: 420,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    })
+    // A second toggle mid-wipe skips this transition and rejects `ready`.
+    .catch(() => {});
+}
+
 function Navbar({ t, lang }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(null);
@@ -197,7 +238,7 @@ function Navbar({ t, lang }) {
           </a>
           <button
             type="button"
-            onClick={toggleTheme}
+            onClick={flipTheme}
             aria-label={themeLabel}
             title={themeLabel}
             className="focus-pill hidden h-8 w-8 items-center justify-center rounded-full text-pill-muted transition-colors hover:text-pill-ink md:flex"
@@ -249,7 +290,7 @@ function Navbar({ t, lang }) {
           ))}
           <button
             type="button"
-            onClick={toggleTheme}
+            onClick={flipTheme}
             className="focus-pill flex items-center gap-3 rounded-xl border-t border-pill-line/40 px-4 py-3 text-left text-[15px] font-medium text-pill-ink hover:bg-pill-ink/5"
           >
             <ThemeIcon theme={theme} className="h-[17px] w-[17px]" />
@@ -279,8 +320,8 @@ const AREA_GLYPHS = [
     <path d="M3 6.5 A2.5 2.5 0 0 1 5.5 4 H14.5 A2.5 2.5 0 0 1 17 6.5 V13.5 A2.5 2.5 0 0 1 14.5 16 H5.5 A2.5 2.5 0 0 1 3 13.5 Z" />
     <path d="M3 8 H17" />
   </g>,
-  /* shopping bag */
-  <path key="d" d="M4.5 6.5 H15.5 L14.5 16.5 H5.5 Z M7.5 6.5 V5.5 A2.5 2.5 0 0 1 12.5 5.5 V6.5" />,
+  /* mortarboard */
+  <path key="d" d="M10 3.4 3 7l7 3.6L17 7Z M6 8.5v4c0 1.2 1.8 2.2 4 2.2s4-1 4-2.2v-4" />,
 ];
 
 // Uniform weight - the chips support the headline, they don't compete with it.
@@ -311,23 +352,37 @@ function Hero({ t, lang }) {
 
       <div className="absolute bottom-6 left-0 flex w-full flex-col items-center px-6 md:bottom-8">
         <div className="mb-8 flex flex-col items-center text-center md:mb-[64px]">
-          <h1 className="max-w-[760px] text-balance text-[30px] font-semibold leading-[1.08] tracking-tight text-ink md:text-[46px] lg:text-[52px]">
+          <h1
+            className="aa-rise max-w-[760px] text-balance text-[30px] font-semibold leading-[1.08] tracking-tight text-ink md:text-[46px] lg:text-[52px]"
+            style={{ animationDelay: "0.35s" }}
+          >
             {t.hero.headline}
           </h1>
-          <p className="mt-3 max-w-[460px] text-balance text-[14px] leading-relaxed text-ink-2 md:mt-4 md:text-[15px]">
+          <p
+            className="aa-rise mt-3 max-w-[460px] text-balance text-[14px] leading-relaxed text-ink-2 md:mt-4 md:text-[15px]"
+            style={{ animationDelay: "0.45s" }}
+          >
             {t.hero.sub}
           </p>
-          <a
-            href="#kontakt"
-            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-ink px-8 py-3 text-[15px] font-semibold text-bg transition duration-200 hover:-translate-y-0.5 hover:bg-ink/90 active:translate-y-0 active:scale-[0.98] md:mt-7"
-          >
-            {t.hero.cta}
-          </a>
+          {/* The reveal rides a wrapper: filling forwards on the button itself
+              would pin transform: none and kill its hover lift. */}
+          <div className="aa-rise mt-6 md:mt-7" style={{ animationDelay: "0.55s" }}>
+            <a
+              href="#kontakt"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-ink px-8 py-3 text-[15px] font-semibold text-bg transition duration-200 hover:-translate-y-0.5 hover:bg-ink/90 active:translate-y-0 active:scale-[0.98]"
+            >
+              {t.hero.cta}
+            </a>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-80 md:gap-10">
           {t.hero.areas.map((label, i) => (
-            <span key={label} className="flex items-center gap-2 text-ink">
+            <span
+              key={label}
+              className="aa-rise flex items-center gap-2 text-ink"
+              style={{ animationDelay: `${0.65 + i * 0.06}s` }}
+            >
               <svg viewBox="0 0 20 20" className={`h-[17px] w-[17px] ${AREA_COLOR[i]}`} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 {AREA_GLYPHS[i]}
               </svg>
@@ -336,21 +391,23 @@ function Hero({ t, lang }) {
           ))}
         </div>
 
-        <div
-          aria-hidden="true"
-          className={`mt-5 transition-opacity duration-500 md:mt-6 ${hintHidden ? "opacity-0" : "opacity-50"}`}
-        >
-          <svg
-            viewBox="0 0 20 20"
-            className="h-5 w-5 animate-bounce text-ink motion-reduce:animate-none"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <div className="aa-rise mt-5 md:mt-6" style={{ animationDelay: "0.9s" }}>
+          <div
+            aria-hidden="true"
+            className={`transition-opacity duration-500 ${hintHidden ? "opacity-0" : "opacity-50"}`}
           >
-            <path d="M5 8 L10 13 L15 8" />
-          </svg>
+            <svg
+              viewBox="0 0 20 20"
+              className="h-5 w-5 animate-bounce text-ink motion-reduce:animate-none"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 8 L10 13 L15 8" />
+            </svg>
+          </div>
         </div>
       </div>
     </section>

@@ -7,12 +7,12 @@
     "sub": "AI that saves time. Apps that stay yours. Websites that sell.",
     "cta": "Get in touch",
     "phone": "+48 503 751 676",
-    "areas": ["Chatbots", "Automation", "Custom apps", "E-commerce"]
+    "areas": ["Chatbots", "Automation", "Custom apps", "Training"]
   },
   "nav": {
     "ai": "AI for your business",
     "app": "Custom applications",
-    "web": "Websites & online stores"
+    "web": "Websites"
   },
   "nav_pill": {
     "ai": "AI",
@@ -60,12 +60,13 @@
   "ai": {
     "title_l1": "AI that actually",
     "title_l2": "saves you hours.",
+    "lead": "From a process audit, through a prototype, to a workshop for your team.",
     "cards": [
+      ["AUTOMATION", "Quoting, invoices, email triage, lead routing - the repeat steps run in the background, you approve."],
       ["CHATBOTS", "For customers and your team, trained on your docs, emails and product catalog."],
-      ["AUTOMATION", "Email triage, quoting, invoice parsing, lead routing - all automatic."],
-      ["DOCUMENTS", "OCR, contract review, translation, meeting summaries - no more work after hours."]
+      ["DOCUMENTS", "OCR, contract review, meeting summaries - no more work after hours."]
     ],
-    "code": "> adrian.ai.plan({ company })\n  ├─ free call to map what's eating your time\n  ├─ pick the processes worth automating\n  ├─ quick prototype instead of a long analysis\n  └─ train your team, hand over the keys"
+    "code": "> adrian.ai.plan({ company })\n  ├─ free call to map what's eating your time\n  ├─ pick the processes worth automating\n  ├─ quick prototype instead of a long analysis\n  └─ workshop for your team, hand over the keys"
   },
   "app": {
     "title_l1": "The app you",
@@ -74,8 +75,8 @@
     "lead": "When Excel isn't enough and SaaS costs too much, I build the app you need - production tracking, field service, bookings, dashboards. Code any developer can pick up.",
     "feat": [
       ["Web apps", "Dashboards, portals, internal tools"],
-      ["Mobile", "iOS + Android"],
-      ["APIs", "Integrate your ERP, CRM, accounting"]
+      ["Integrations", "ERP, CRM, accounting, inventory"],
+      ["Support", "Fixes and new features after launch"]
     ],
     "steps": [
       ["01", "Call about needs and scope"],
@@ -85,24 +86,24 @@
     ]
   },
   "web": {
-    "subtitle": "Business websites and online stores",
+    "subtitle": "Business websites and landing pages",
     "title_l1": "A website that",
     "title_l2_em": "earns",
     "title_l3": "its keep.",
-    "p1": "Company sites, landing pages, portfolios and small stores - better than a template, no 50-page proposal.",
+    "p1": "Company sites, landing pages and sales pages - better than a template, no 50-page proposal.",
     "p2": "Fast load times and SEO bring traffic from Google. A CMS lets you update content without calling me.",
     "steps": [
       ["01", "Kickoff call & sitemap"],
       ["02", "Design & copy review"],
       ["03", "Build & CMS setup"],
       ["04", "SEO, analytics, launch"],
-      ["05", "Hosting & support"]
+      ["05", "Support after launch"]
     ],
     "rail": [
       ["Landing", "Product, campaign, launch"],
-      ["Corporate", "Company sites, portfolios"],
-      ["E-commerce", "Catalog, cart, checkout"],
-      ["Hosting", "Deploy, monitor, domain"]
+      ["Corporate", "Profile, offer, references"],
+      ["SEO", "Google visibility and speed"],
+      ["CMS", "Update content yourself"]
     ]
   }
 }

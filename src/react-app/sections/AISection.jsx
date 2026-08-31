@@ -293,7 +293,7 @@ export default function AISection({ t }) {
   }, [lines.length]);
 
   return (
-    <section id="ai" ref={sectionRef} className="relative h-[180vh] border-t border-line md:h-[220vh]">
+    <section id="ai" ref={sectionRef} className="relative h-[240vh] border-t border-line md:h-[320vh]">
       <div className="sticky top-0 h-svh overflow-hidden md:h-screen">
         <div className="scene-tint" style={{ "--tint": "var(--rgb-ai)" }} aria-hidden="true" />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
@@ -304,6 +304,9 @@ export default function AISection({ t }) {
             <h2 className="mt-3 max-w-[640px] text-[32px] font-semibold leading-[1.08] tracking-tight md:mt-4 md:text-[44px] lg:text-[50px]">
               {tt.title_l1} <span className="text-accent-ai">{tt.title_l2}</span>
             </h2>
+            <p className="mt-3 max-w-[520px] text-[14px] leading-snug text-ink-2 md:mt-4 md:text-[16px]">
+              {tt.lead}
+            </p>
           </div>
 
           <div className="mt-auto grid gap-3 md:grid-cols-3 md:gap-4">

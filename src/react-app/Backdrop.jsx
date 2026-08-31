@@ -7,9 +7,16 @@ import { currentTheme, onThemeChange } from "./theme.js";
 //     (no edges, no pulses) so the section scenes above own the stage.
 // C - contact: particles regroup into an "@" glyph behind the contact card
 //     and the hero brightness returns.
-// Scroll position is the clock; wall-clock time only adds a <= 2px shimmer.
+// Scroll position is the clock; wall-clock time only adds a <= 2px shimmer -
+// the one exception is the entry intro, where the particles fly in from a
+// scattered start and assemble into the monogram over INTRO_MS. That intro
+// runs once, off wall-clock time, and is skipped for a deep link or a
+// restored scroll position (nothing to assemble - the hero is already gone).
 
 const N = 150;
+
+// Entry intro: particles converge into the monogram over this span.
+const INTRO_MS = 1150;
 
 // Geometric A.A monogram as polylines (same shape as the favicon mark).
 const MARK_POLYS = [
@@ -59,6 +66,11 @@ function clamp01(t) {
 
 function smoothstep(t) {
   return t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+}
+
+function easeOut(t) {
+  const u = 1 - clamp01(t);
+  return 1 - u * u * u;
 }
 
 function polylineLength(polys) {
@@ -127,6 +139,13 @@ function buildFormations(w, h) {
   // outline instead of webbing across the letter counters.
   const markReach = Math.max(12, (polylineLength(MARK_POLYS) / N / 64) * markSize * 1.75);
 
+  // Entry: particles start spread past the viewport edges, so the intro
+  // reads as a swarm flying in rather than a shape expanding in place.
+  const seed = [];
+  for (let i = 0; i < N; i++) {
+    seed.push([(rand(i, 11) * 1.4 - 0.2) * w, (rand(i, 12) * 1.4 - 0.2) * h]);
+  }
+
   // Middle: an even ambient scatter across the whole viewport.
   const star = [];
   for (let i = 0; i < N; i++) {
@@ -142,7 +161,7 @@ function buildFormations(w, h) {
   ]);
   const atReach = Math.max(10, (polylineLength(AT_POLYS) / N / 64) * atSize * 1.75);
 
-  return { mark, star, at, markReach, atReach };
+  return { mark, seed, star, at, markReach, atReach };
 }
 
 export default function Backdrop() {
@@ -173,6 +192,10 @@ export default function Backdrop() {
     // with a short lerp turns those steps into continuous motion.
     let syEase = -1;
     let idleTick = false;
+    // Intro clock, in ms since the first drawn frame. A deep link or a
+    // restored scroll offset means the hero is not on screen - start done.
+    let introT0 = -1;
+    let intro = window.scrollY > 4 || window.location.hash ? 1 : 0;
 
     // Reused every frame - no per-frame allocation.
     const px = new Float64Array(N);
@@ -218,8 +241,9 @@ export default function Backdrop() {
       const el = document.getElementById("kontakt");
       const cTop = el ? el.offsetTop : maxScroll;
       const cEnd = Math.min(cTop - h * 0.15, maxScroll);
-      // Short ramp: regrouping starts only once the Web finale is mostly gone.
-      cSpan = Math.max(h * 0.55, 1);
+      // Regrouping starts once the Web finale is mostly gone, then takes
+      // most of a viewport - long enough to read as the "@" forming.
+      cSpan = Math.max(h * 0.9, 1);
       cStart = cEnd - cSpan;
       dirty = true;
     };
@@ -233,12 +257,18 @@ export default function Backdrop() {
     const drawFrame = (time) => {
       const target = window.scrollY;
       const reduced = mql.matches;
+      // Reduced motion gets the assembled monogram, not a fly-in.
+      if (reduced) intro = 1;
+      else if (intro < 1) {
+        if (introT0 < 0) introT0 = time;
+        intro = clamp01((time - introT0) / INTRO_MS);
+      }
       // With reduced motion the scrub is direct and a still page needs no redraw.
       if (reduced && target === lastY && !dirty) {
         return;
       }
       // Fully settled: shimmer-only repaints run at half rate.
-      if (!reduced && !dirty && target === lastY && syEase === target) {
+      if (!reduced && !dirty && intro >= 1 && target === lastY && syEase === target) {
         idleTick = !idleTick;
         if (idleTick) return;
       } else {
@@ -257,7 +287,10 @@ export default function Backdrop() {
       // Global phase progress - r1: mark -> starfield, r2: starfield -> "@".
       // No dead zone: the dissolve is in motion from the very first pixel
       // of scroll, so there is no static-then-snap moment leaving the hero.
-      const r1 = hStable > 0 ? clamp01(scrollY / (hStable * 0.95)) : 0;
+      // The dissolve runs over ~1.6 viewports, matching the slower pinned
+      // scenes - the monogram should still be coming apart when the first
+      // section takes the stage, not gone before the hero has scrolled out.
+      const r1 = hStable > 0 ? clamp01(scrollY / (hStable * 1.6)) : 0;
       const r2 = clamp01((scrollY - cStart) / cSpan);
       const lit = Math.max(1 - smoothstep(r1), smoothstep(r2));
       // Dim floor keeps phase B node alpha at or below ~0.15.
@@ -274,8 +307,13 @@ export default function Backdrop() {
         const lag = rand(i, 5) * 0.35;
         const t1 = smoothstep(clamp01((r1 - lag) / (1 - lag)));
         const t2 = smoothstep(clamp01((r2 - lag) / (1 - lag)));
-        const mx = F.mark[i][0] + (F.star[i][0] - F.mark[i][0]) * t1;
-        const my = F.mark[i][1] + (F.star[i][1] - F.mark[i][1]) * t1;
+        // Same per-node stagger as the morphs, eased out hard so the swarm
+        // decelerates into the letterforms instead of sliding in linearly.
+        const ti = easeOut(clamp01((intro - lag) / (1 - lag)));
+        const ax = F.seed[i][0] + (F.mark[i][0] - F.seed[i][0]) * ti;
+        const ay = F.seed[i][1] + (F.mark[i][1] - F.seed[i][1]) * ti;
+        const mx = ax + (F.star[i][0] - ax) * t1;
+        const my = ay + (F.star[i][1] - ay) * t1;
         px[i] = mx + (F.at[i][0] - mx) * t2 + Math.sin(time * 0.0006 + i * 2.1) * 1.6 * shimmer;
         py[i] = my + (F.at[i][1] - my) * t2 + Math.cos(time * 0.0005 + i * 1.7) * 1.6 * shimmer;
       }

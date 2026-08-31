@@ -162,6 +162,50 @@ button {
   outline-color: var(--color-pill-ink);
 }
 
+/* Entry reveal for the hero copy - runs once on load, staggered per element
+   via an inline animation-delay. Fill mode "both" holds the from-state during
+   the delay, so nothing flashes in before its cue. Transform + opacity only:
+   no layout shift, no reflow. */
+@keyframes aa-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.aa-rise {
+  animation: aa-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-rise {
+    animation: none;
+  }
+}
+
+/* Theme flip runs through a View Transition (src/react-app/App.jsx): the new
+   theme is wiped in as a circle growing from the toggle. Drop the UA
+   cross-fade so only the wipe shows, and let the frozen overlay pass clicks
+   through - it sits above the fixed navbar for the length of the wipe. */
+::view-transition-image-pair(root) {
+  isolation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  display: block;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
 /* Hero legibility scrim over the backdrop canvas. */
 .hero-scrim {
   background: linear-gradient(to bottom, var(--scrim-0), transparent, var(--scrim-1));

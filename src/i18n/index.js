@@ -48,8 +48,8 @@ export function getMeta(locale, page = "home") {
       ? "Adrian Antosiak - AI, Apps, Web"
       : "Adrian Antosiak - AI, aplikacje, strony",
     description: isEn
-      ? "AI, chatbots and automation for small and mid-sized companies. Custom web and mobile apps, plus fast websites and online stores."
-      : "Wdrożenia AI, chatboty i automatyzacje dla małych i średnich firm. Aplikacje webowe i mobilne szyte na miarę oraz szybkie strony i sklepy internetowe.",
+      ? "AI chatbots and automation for small and mid-sized companies. Custom web apps, AI training and fast websites."
+      : "Automatyzacje i chatboty AI dla małych i średnich firm. Aplikacje webowe szyte na miarę, szkolenia z AI i szybkie strony internetowe.",
     ogImageAlt: isEn
       ? "Adrian Antosiak - AI, Apps, Web"
       : "Adrian Antosiak - AI, aplikacje, strony",
