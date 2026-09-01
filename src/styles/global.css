@@ -242,6 +242,19 @@ button {
   }
 }
 
+/* The entry intro paints over everything for its ~1.6s, then removes itself. */
+#aa-intro {
+  position: fixed;
+  inset: 0;
+  /* A canvas is a replaced element: with width auto it takes its attribute
+     size as its CSS size and inset: 0 cannot stretch it, so the drawing
+     lands at DPR scale in the corner. The explicit size is load-bearing. */
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+}
+
 /* The terminal underneath the page: one character cell of JetBrains Mono at
    the body size, tiled across the viewport as two 1px gradients, and shown
    only through a soft circle that the pointer drags around. The layer is
@@ -281,6 +294,19 @@ button {
   100% {
     opacity: 0;
   }
+}
+
+/* The entry intro paints over everything for its ~1.6s, then removes itself. */
+#aa-intro {
+  position: fixed;
+  inset: 0;
+  /* A canvas is a replaced element: with width auto it takes its attribute
+     size as its CSS size and inset: 0 cannot stretch it, so the drawing
+     lands at DPR scale in the corner. The explicit size is load-bearing. */
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
 }
 
 /* The terminal underneath the page: one character cell of JetBrains Mono at

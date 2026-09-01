@@ -15,8 +15,14 @@ const BG = "#1e1e2e";
 const MUTE = "#9399b2";
 const ACCENT = "#ff8c42";
 
+// Catppuccin Latte, for the icon only.
+const ICON_BG = "#eff1f5";
+const ICON_FG = "#4c4f69";
+const ICON_ACCENT = "#b34d00";
+
 // Geometric A.A monogram - two angular A's flanking a square period. The
-// period carries the accent, the same orange the page uses for its cursor.
+// period carries the accent, the same orange the page uses for its cursor
+// and for the dot in the wordmark.
 const MARK_LETTERS = `
   <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fill-rule="evenodd"/>
   <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fill-rule="evenodd"/>
@@ -27,8 +33,8 @@ const mark = (fg, accent) =>
 
 const faviconSvg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="${BG}"/>
-  ${mark(FG, ACCENT)}
+  <rect width="64" height="64" fill="${ICON_BG}"/>
+  ${mark(ICON_FG, ICON_ACCENT)}
 </svg>`;
 
 // 1200x630 share card - the page itself: mono name, the services line and
@@ -46,7 +52,7 @@ const ogSvg = (tagline) => `<?xml version="1.0" encoding="UTF-8"?>
         font-family="'JetBrains Mono', ui-monospace, monospace"
         font-size="118"
         font-weight="700"
-        fill="${FG}">Adrian</text>
+        fill="${FG}">Adrian<tspan fill="${ACCENT}">.</tspan></text>
   <text x="72" y="418"
         font-family="'JetBrains Mono', ui-monospace, monospace"
         font-size="118"

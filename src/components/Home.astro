@@ -1,5 +1,6 @@
 ---
 import { getTranslations } from "../i18n/index.js";
+import Intro from "./Intro.astro";
 
 const { locale = "pl" } = Astro.props;
 const t = getTranslations(locale);
@@ -14,6 +15,8 @@ const railClass = "aa-rev text-[11px] uppercase tracking-[0.18em] text-ink-3";
 <!-- Terminal register: everything is mono, the copy sits between a prompt
      line and a waiting block cursor, and 16px / 1.6 echoes the Ghostty
      config's font-size 16 with adjust-cell-height 12%. -->
+<Intro />
+
 <div class="aa-grid" aria-hidden="true"></div>
 
 <div class="relative z-10 flex min-h-svh flex-col px-6 py-6 font-mono md:px-10 md:py-8 lg:px-16">
@@ -41,21 +44,24 @@ const railClass = "aa-rev text-[11px] uppercase tracking-[0.18em] text-ink-3";
 
     <main class="flex flex-1 items-center">
       <div class="max-w-[620px]">
+        <!-- The wordmark is the monogram written out: letter, accent dot,
+             letter. The three spans are also what the intro lands on, so it
+             measures real glyph boxes instead of counting characters. The
+             aria-label keeps the spoken name a name, not "Adrian dot". -->
         <h1
+          aria-label="Adrian Antosiak"
           class="aa-rise text-[clamp(28px,6.2vw,52px)] font-bold leading-[1.1] text-ink"
-          style="animation-delay: 0.16s"
-        >
-          Adrian Antosiak
-        </h1>
+          style="animation-delay: calc(var(--rise-base, 0s) + 0.16s)"
+        ><span data-glyph="a1">A</span>drian<span data-glyph="dot" class="text-accent">.</span><span data-glyph="a2">A</span>ntosiak</h1>
 
         <p
           class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]"
-          style="animation-delay: 0.28s"
+          style="animation-delay: calc(var(--rise-base, 0s) + 0.28s)"
         >
           {t.lead}<span class="aa-cursor ml-1.5" aria-hidden="true"></span>
         </p>
 
-        <div class="aa-rise mt-10 flex flex-col items-start gap-1.5" style="animation-delay: 0.4s">
+        <div class="aa-rise mt-10 flex flex-col items-start gap-1.5" style="animation-delay: calc(var(--rise-base, 0s) + 0.4s)">
           <a
             href={`mailto:${t.email_addr}`}
             data-label={t.email_addr}

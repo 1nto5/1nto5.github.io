@@ -1,0 +1,226 @@
+---
+// Entry intro: the A.A monogram assembles out of terminal cells, holds, then
+// dissolves and hands the screen to the copy. Same mark as the favicon, but
+// every particle is snapped to the 9.6 x 24 character cell the pointer reveal
+// already uses - the old canvas version drew free-floating points, which no
+// longer belongs on a page set entirely in one mono grid.
+---
+
+<canvas id="aa-intro" aria-hidden="true"></canvas>
+
+<script is:inline>
+  // Pre-paint, so the copy never flashes in before its cue: if the intro is
+  // going to run, hold the .aa-rise reveals back by its length. No JS, or
+  // motion unwelcome, and the base stays 0 - the copy rises immediately.
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.documentElement.style.setProperty("--rise-base", "1.05s");
+    document.documentElement.dataset.intro = "on";
+  })();
+</script>
+
+<script>
+  const CELL_X = 9.6;
+  const CELL_Y = 24;
+  const N = 150;
+  const CONVERGE = 650;
+  const STAGGER_IN = 180;
+  const HOLD = 180;
+  // The handoff: the mark does not dissolve where it stands, it shrinks onto
+  // the wordmark and goes out exactly as the real letters rise through it.
+  // No per-cell stagger on the way out, deliberately: the mark has to travel
+  // as one rigid object or the handoff reads as a hundred dots scattering.
+  const COLLAPSE = 620;
+  const TOTAL = CONVERGE + STAGGER_IN + HOLD + COLLAPSE;
+
+  // The favicon mark, as polylines in a 64 x 64 box. Index 2 is the square
+  // period between the two A's - it carries the accent, as it does everywhere.
+  const MARK = [
+    [[14, 4], [1, 60], [27, 60], [14, 4]],
+    [[14, 18], [7, 38], [21, 38], [14, 18]],
+    [[30, 52], [34, 52], [34, 60], [30, 60], [30, 52]],
+    [[50, 4], [37, 60], [63, 60], [50, 4]],
+    [[50, 18], [43, 38], [57, 38], [50, 18]],
+  ];
+
+  // Deterministic scatter - a seeded hash, so the intro is the same every
+  // load and nothing depends on Math.random ordering.
+  const rand = (i, k) => {
+    const s = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453;
+    return s - Math.floor(s);
+  };
+
+  function samplePolylines(polys, n) {
+    const segs = [];
+    let total = 0;
+    polys.forEach((poly, pi) => {
+      for (let i = 0; i < poly.length - 1; i++) {
+        const [x1, y1] = poly[i];
+        const [x2, y2] = poly[i + 1];
+        const len = Math.hypot(x2 - x1, y2 - y1);
+        segs.push({ x1, y1, x2, y2, len, pi });
+        total += len;
+      }
+    });
+    const pts = [];
+    const step = total / n;
+    let acc = 0;
+    let si = 0;
+    for (let k = 0; k < n; k++) {
+      const target = k * step;
+      while (si < segs.length - 1 && acc + segs[si].len < target) {
+        acc += segs[si].len;
+        si++;
+      }
+      const s = segs[si];
+      const t = s.len === 0 ? 0 : Math.min(1, Math.max(0, (target - acc) / s.len));
+      pts.push([s.x1 + (s.x2 - s.x1) * t, s.y1 + (s.y2 - s.y1) * t, s.pi]);
+    }
+    return pts;
+  }
+
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+  const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+
+  const canvas = document.getElementById("aa-intro");
+  const run = canvas && document.documentElement.dataset.intro === "on";
+
+  if (!run) {
+    canvas?.remove();
+  } else {
+    const ctx = canvas.getContext("2d");
+    const css = getComputedStyle(document.documentElement);
+    const ink = css.getPropertyValue("--color-ink").trim() || "#cdd6f4";
+    const accent = css.getPropertyValue("--color-accent").trim() || "#ff8c42";
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.scale(dpr, dpr);
+
+    // The mark stands above the copy, then collapses onto the wordmark's
+    // first character. The target has to be the wordmark's RESTING box: it
+    // carries .aa-rise, which parks it 14px low until its cue, so the live
+    // transform is subtracted rather than hard-coded.
+    // The cell is a fixed 9.6 x 24 regardless of screen, so a phone needs a
+    // proportionally bigger mark - at desktop proportions it quantises down
+    // to seven rows and stops reading as two letters.
+    const narrow = w < 768;
+    const size = narrow ? Math.min(w * 0.78, h * 0.36) : Math.min(w * 0.44, h * 0.46);
+    const cx = w / 2;
+    const cy = h * 0.34;
+
+    const word = document.querySelector("h1");
+
+
+    // One cell per sample, snapped to the grid and de-duplicated so the mark
+    // reads as drawn characters rather than a smear of overlapping rects.
+    const seen = new Set();
+    const cells = [];
+    samplePolylines(MARK, N).forEach(([mx, my, pi], i) => {
+      const tx = Math.round((cx + ((mx - 32) / 64) * size) / CELL_X) * CELL_X;
+      const ty = Math.round((cy + ((my - 32) / 64) * size) / CELL_Y) * CELL_Y;
+      const key = tx + ":" + ty;
+      if (seen.has(key)) return;
+      seen.add(key);
+      cells.push({
+        tx,
+        ty,
+        // 0 = left A (outline + counter), 1 = the period, 2 = right A.
+        grp: pi === 2 ? 1 : pi < 2 ? 0 : 2,
+        // Flying in from outside the frame, so it reads as a swarm arriving.
+        sx: (rand(i, 11) * 1.6 - 0.3) * w,
+        sy: (rand(i, 12) * 1.6 - 0.3) * h,
+        din: rand(i, 3) * STAGGER_IN,
+        accent: pi === 2,
+      });
+    });
+
+    // Group extents in mark space: 0 = left A, 1 = the period, 2 = right A.
+    // Each one lands on its own glyph in the wordmark - the left A on the A
+    // of "Adrian", the period on the accent dot, the right A on the A of
+    // "Antosiak". Measured only when the collapse starts: at load the webfont
+    // may still be out, and a canvas probe then reports the fallback's cap
+    // height, landing every letter about a fifth short.
+    const boxOf = (g) => {
+      const xs = cells.filter((c) => c.grp === g);
+      const y0 = Math.min(...xs.map((c) => c.ty));
+      const y1 = Math.max(...xs.map((c) => c.ty));
+      const x0 = Math.min(...xs.map((c) => c.tx));
+      const x1 = Math.max(...xs.map((c) => c.tx));
+      return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, h: y1 - y0 || 1 };
+    };
+    const BOXES = [boxOf(0), boxOf(1), boxOf(2)];
+
+    
+    let land = null;
+    const measure = () => {
+      const wm = new DOMMatrixReadOnly(getComputedStyle(word).transform);
+      const fs = parseFloat(getComputedStyle(word).fontSize);
+      const box = (key) => {
+        const b = word.querySelector(`[data-glyph="${key}"]`).getBoundingClientRect();
+        return {
+          // .aa-rise parks the wordmark 14px low until its cue - the resting
+          // box is what the mark has to land on, so the transform comes off.
+          cx: b.left + b.width / 2 - wm.e,
+          // Cap band, not line box: the same 0.09em correction the caret uses.
+          cy: b.top + b.height / 2 - wm.f - 0.09 * fs,
+        };
+      };
+      const probe = document.createElement("canvas").getContext("2d");
+      probe.font = getComputedStyle(word).font;
+      const cap = probe.measureText("A").actualBoundingBoxAscent || fs * 0.73;
+      return {
+        glyphs: [box("a1"), box("dot"), box("a2")],
+        // One scale for every group, taken from the left A - the period has
+        // to stay a period, not grow to the height of a letter.
+        k: cap / BOXES[0].h,
+      };
+    };
+
+    let t0 = 0;
+    const frame = (now) => {
+      if (!t0) t0 = now;
+      const t = now - t0;
+      ctx.clearRect(0, 0, w, h);
+
+      for (const c of cells) {
+        const p = easeOut(clamp01((t - c.din) / CONVERGE));
+        const q = easeInOut(clamp01((t - (CONVERGE + STAGGER_IN + HOLD)) / COLLAPSE));
+        if (q > 0 && !land) land = measure();
+        // Assembled position, then the same point remapped into the wordmark.
+        const ax = c.sx + (c.tx - c.sx) * p;
+        const ay = c.sy + (c.ty - c.sy) * p;
+        const g = land ? land.glyphs[c.grp] : null;
+        const box = BOXES[c.grp];
+        const bx = g ? g.cx + (c.tx - box.cx) * land.k : c.tx;
+        const by = g ? g.cy + (c.ty - box.cy) * land.k : c.ty;
+        const x = ax + (bx - ax) * q;
+        const y = ay + (by - ay) * q;
+        // Cells shrink as they travel, so the mark reads as one object being
+        // put down rather than a hundred dots fading out.
+        const scale = 1 - (1 - (land ? land.k : 1)) * q;
+        // Holds full strength most of the way in, then goes out fast at the
+        // end - the letters underneath are already coming up to take over.
+        const alpha = (0.25 + 0.75 * p) * (1 - Math.pow(q, 2.2));
+        if (alpha <= 0.01) continue;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = c.accent ? accent : ink;
+        const cw = (CELL_X - 2) * scale;
+        const ch = (CELL_Y - 6) * scale;
+        // A cell with its own gutter, the way a terminal leaves one.
+        ctx.fillRect(x - cw / 2, y - ch / 2, cw, ch);
+      }
+
+      if (t < TOTAL) {
+        requestAnimationFrame(frame);
+      } else {
+        canvas.remove();
+      }
+    };
+    requestAnimationFrame(frame);
+  }
+</script>
