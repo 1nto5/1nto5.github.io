@@ -8,7 +8,7 @@ import "../styles/global.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#050505" />
+    <meta name="theme-color" content="#1e1e2e" />
     <title>404 - Adrian Antosiak</title>
     <meta name="robots" content="noindex" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -30,47 +30,56 @@ import "../styles/global.css";
         } catch (e) {}
         document.documentElement.dataset.theme = t;
         var m = document.querySelector('meta[name="theme-color"]');
-        if (m) m.setAttribute("content", t === "light" ? "#f4f5f7" : "#050505");
+        if (m) m.setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
       })();
     </script>
   </head>
   <body>
-    <main class="flex min-h-[100dvh] flex-col items-center justify-center px-6 text-center">
-      <a href="/" aria-label="Adrian Antosiak" class="mb-6 text-ink/40 transition-colors duration-200 hover:text-ink">
-        <svg viewBox="0 0 64 64" class="h-8 w-8" fill="currentColor" aria-hidden="true" focusable="false">
-          <path d="M14 4 L1 60 L27 60 Z M14 18 L7 38 L21 38 Z" fill-rule="evenodd"></path>
-          <rect x="30" y="52" width="4" height="8"></rect>
-          <path d="M50 4 L37 60 L63 60 Z M50 18 L43 38 L57 38 Z" fill-rule="evenodd"></path>
-        </svg>
-      </a>
-      <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-ink-3">404</p>
-      <h1 class="mt-4 text-[40px] font-semibold leading-[1.05] tracking-tight md:text-[56px]">
-        Nie ma takiej strony.
-      </h1>
-      <p class="mt-4 max-w-[420px] text-[15px] leading-relaxed text-ink-2">
-        Adres jest nieaktualny albo wkradła się literówka. / This page does not exist.
-      </p>
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <a
-          href="/"
-          class="inline-flex min-h-11 items-center justify-center rounded-xl bg-ink px-6 py-2.5 text-[13px] font-medium text-bg transition duration-200 hover:-translate-y-0.5 hover:bg-ink/90 active:translate-y-0 active:scale-[0.98]"
-        >
-          Strona główna
-        </a>
-        <a
-          href="/en/"
-          hreflang="en"
-          class="inline-flex min-h-11 items-center justify-center rounded-xl border border-line-2 px-6 py-2.5 text-[13px] font-medium text-ink transition duration-200 hover:-translate-y-0.5 hover:border-ink/50 active:translate-y-0 active:scale-[0.98]"
-        >
-          Home (EN)
-        </a>
-        <a
-          href="mailto:czesc@adrianantosiak.pl"
-          class="inline-flex min-h-11 items-center justify-center rounded-xl border border-line-2 px-6 py-2.5 text-[13px] font-medium text-ink transition duration-200 hover:-translate-y-0.5 hover:border-ink/50 active:translate-y-0 active:scale-[0.98]"
-        >
-          czesc@adrianantosiak.pl
-        </a>
+    <!-- Same register as the home page: mono, left-aligned, one screen, the
+         same inverse-video links. Bilingual, because GitHub Pages serves this
+         one file for every missing path in both locales. -->
+    <div class="flex min-h-svh flex-col px-6 py-6 font-mono md:px-10 md:py-8 lg:px-16">
+      <div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col">
+        <main class="flex flex-1 items-center">
+          <div class="max-w-[620px]">
+            <p class="text-[13px] leading-none text-ink-3">404</p>
+
+            <h1 class="mt-5 text-[clamp(28px,6.2vw,52px)] font-bold leading-[1.1] text-ink">
+              Nie ma takiej strony
+            </h1>
+
+            <p class="mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]">
+              Adres jest nieaktualny albo wkradła się literówka.<br />
+              This page does not exist.<span class="aa-cursor ml-1.5" aria-hidden="true"></span>
+            </p>
+
+            <div class="mt-10 flex flex-col items-start gap-1.5">
+              <a
+                href="/"
+                data-label="strona główna"
+                class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+              >
+                strona główna
+              </a>
+              <a
+                href="/en/"
+                hreflang="en"
+                data-label="home (EN)"
+                class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+              >
+                home (EN)
+              </a>
+              <a
+                href="mailto:czesc@adrianantosiak.pl"
+                data-label="czesc@adrianantosiak.pl"
+                class="aa-rev text-[15px] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[16px]"
+              >
+                czesc@adrianantosiak.pl
+              </a>
+            </div>
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
   </body>
 </html>

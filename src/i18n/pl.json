@@ -1,109 +1,49 @@
 {
   "langName": "Polski",
-  "kicker": "AI, Aplikacje, WWW",
+  "lead": "aplikacje / AI / www",
   "email_addr": "czesc@adrianantosiak.pl",
-  "hero": {
-    "headline": "Mniej ręcznej roboty. Więcej klientów.",
-    "sub": "AI, które oszczędza czas. Aplikacje, które zostają Twoje. Strony, które sprzedają.",
-    "cta": "Napisz do mnie",
-    "phone": "+48 503 751 676",
-    "areas": ["Chatboty", "Automatyzacje", "Aplikacje", "Szkolenia"]
-  },
-  "nav": {
-    "ai": "AI dla Twojej firmy",
-    "app": "Aplikacje szyte na miarę",
-    "web": "Strony internetowe"
-  },
-  "nav_pill": {
-    "ai": "AI",
-    "app": "Aplikacje",
-    "web": "Strony WWW",
-    "contact": "Kontakt"
-  },
-  "menu": {
-    "open": "Menu",
-    "close": "Zamknij menu"
-  },
-  "theme": {
-    "to_light": "Włącz jasny motyw",
-    "to_dark": "Włącz ciemny motyw"
-  },
-  "contact": {
-    "title_l1": "Masz",
-    "title_l2": "pytanie?",
-    "title_l3": "Napisz.",
-    "email_l": "E-mail",
-    "phone_l": "Telefon",
-    "avail_l": "Status",
-    "avail_v": "Przyjmuję nowych klientów",
-    "copy_l": "Skopiuj adres e-mail",
-    "copied_l": "Skopiowano",
-    "privacy_l": "Polityka prywatności"
-  },
+  "phone": "+48 503 751 676",
+  "theme_l": "Zmień motyw",
+  "privacy_l": "Prywatność",
   "privacy": {
     "heading": "Polityka prywatności",
     "lead": "Ta strona - adrianantosiak.pl - nie używa plików cookie śledzących, nie zbiera analityki ani nie wyświetla reklam. Dane osobowe przetwarzam tylko wtedy, gdy sam wyślesz mi e-mail lub zadzwonisz.",
     "sections": [
-      ["Administrator danych", "Administratorem danych jest Adrian Antosiak. Kontakt w sprawach związanych z danymi osobowymi: kontakt@adrianantosiak.pl."],
-      ["Zakres zbieranych danych", "Sama wizyta na stronie nie powoduje zapisu danych osobowych po mojej stronie. Hosting GitHub Pages może prowadzić techniczne logi serwerowe (adres IP, user-agent, czas żądania) zgodnie z własną polityką - nie mam do nich dostępu. Jeśli napiszesz na kontakt@adrianantosiak.pl lub zadzwonisz, zapisuję Twoje imię, adres e-mail lub numer telefonu oraz treść zapytania."],
-      ["Podstawa prawna", "Podstawą prawną przetwarzania korespondencji jest art. 6 ust. 1 lit. b RODO (działania na żądanie osoby przed zawarciem umowy) oraz art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes w postaci odpowiedzi na zapytanie)."],
-      ["Okres przechowywania", "Wiadomości przechowuję w skrzynce mailowej tak długo, jak jest to potrzebne do obsługi zapytania i ewentualnego dalszego kontaktu, po czym usuwam je lub archiwizuję."],
-      ["Odbiorcy danych", "Strona jest hostowana w GitHub Pages (GitHub, Inc., USA). Pocztę obsługuje iCloud+ Custom Email Domain (Apple Inc., USA) - wiadomości kierowane na adres @adrianantosiak.pl trafiają do mojej skrzynki iCloud. Czcionki są hostowane razem ze stroną, więc ich pobranie nie wysyła żadnych danych do zewnętrznych dostawców. Nie przekazuję danych żadnym innym odbiorcom."],
-      ["Cookies i śledzenie", "Strona nie ustawia plików cookie. W localStorage przeglądarki zapisuję wyłącznie ustawienia interfejsu (wybrany język i motyw kolorystyczny) - te dane nie opuszczają Twojej przeglądarki i nie służą do śledzenia. Nie korzystam z Google Analytics, Meta Pixel, Hotjar, Clarity ani podobnych narzędzi."],
-      ["Twoje prawa", "Masz prawo: dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu, przenoszenia oraz wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl). Aby z nich skorzystać, napisz na kontakt@adrianantosiak.pl."],
-      ["Kontakt", "W sprawach dotyczących danych osobowych napisz na kontakt@adrianantosiak.pl."]
+      [
+        "Administrator danych",
+        "Administratorem danych jest Adrian Antosiak. Kontakt w sprawach związanych z danymi osobowymi: kontakt@adrianantosiak.pl."
+      ],
+      [
+        "Zakres zbieranych danych",
+        "Sama wizyta na stronie nie powoduje zapisu danych osobowych po mojej stronie. Hosting GitHub Pages może prowadzić techniczne logi serwerowe (adres IP, user-agent, czas żądania) zgodnie z własną polityką - nie mam do nich dostępu. Jeśli napiszesz na kontakt@adrianantosiak.pl lub zadzwonisz, zapisuję Twoje imię, adres e-mail lub numer telefonu oraz treść zapytania."
+      ],
+      [
+        "Podstawa prawna",
+        "Podstawą prawną przetwarzania korespondencji jest art. 6 ust. 1 lit. b RODO (działania na żądanie osoby przed zawarciem umowy) oraz art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes w postaci odpowiedzi na zapytanie)."
+      ],
+      [
+        "Okres przechowywania",
+        "Wiadomości przechowuję w skrzynce mailowej tak długo, jak jest to potrzebne do obsługi zapytania i ewentualnego dalszego kontaktu, po czym usuwam je lub archiwizuję."
+      ],
+      [
+        "Odbiorcy danych",
+        "Strona jest hostowana w GitHub Pages (GitHub, Inc., USA). Pocztę obsługuje iCloud+ Custom Email Domain (Apple Inc., USA) - wiadomości kierowane na adres @adrianantosiak.pl trafiają do mojej skrzynki iCloud. Czcionki są hostowane razem ze stroną, więc ich pobranie nie wysyła żadnych danych do zewnętrznych dostawców. Nie przekazuję danych żadnym innym odbiorcom."
+      ],
+      [
+        "Cookies i śledzenie",
+        "Strona nie ustawia plików cookie. W localStorage przeglądarki zapisuję wyłącznie jedno ustawienie interfejsu - wybrany motyw kolorystyczny - te dane nie opuszczają Twojej przeglądarki i nie służą do śledzenia. Nie korzystam z Google Analytics, Meta Pixel, Hotjar, Clarity ani podobnych narzędzi."
+      ],
+      [
+        "Twoje prawa",
+        "Masz prawo: dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu, przenoszenia oraz wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl). Aby z nich skorzystać, napisz na kontakt@adrianantosiak.pl."
+      ],
+      [
+        "Kontakt",
+        "W sprawach dotyczących danych osobowych napisz na kontakt@adrianantosiak.pl."
+      ]
     ],
     "updated_l": "Ostatnia aktualizacja",
     "updated_v": "2026-08-31",
     "back_home_l": "← Strona główna"
-  },
-  "ai": {
-    "title_l1": "AI, które realnie",
-    "title_l2": "oszczędza godziny.",
-    "lead": "Od audytu procesów, przez prototyp, po warsztat dla zespołu.",
-    "cards": [
-      ["AUTOMATYZACJE", "Ofertowanie, faktury, segregacja maili, kwalifikacja leadów - powtarzalne kroki dzieją się w tle, Ty zatwierdzasz."],
-      ["CHATBOTY", "Dla klientów i zespołu, uczone na Twoich dokumentach, mailach i katalogu produktów."],
-      ["DOKUMENTY", "OCR, analiza umów, streszczenia spotkań - koniec pracy po godzinach."]
-    ],
-    "code": "> adrian.ai.plan({ firma })\n  ├─ darmowa rozmowa: co pożera Ci czas\n  ├─ wybór procesów do automatyzacji\n  ├─ szybki prototyp zamiast długich analiz\n  └─ warsztat dla zespołu i przekazanie kluczy"
-  },
-  "app": {
-    "title_l1": "Aplikacja, której",
-    "title_l2": "nie kupisz",
-    "title_l3": "z półki.",
-    "lead": "Gdy Excel nie starcza, a SaaS kosztuje za dużo, buduję aplikację, jakiej potrzebujesz - śledzenie produkcji, serwis w terenie, rezerwacje, panele. Kod, który przejmie każdy programista.",
-    "feat": [
-      ["Web", "Panele, portale, narzędzia wewnętrzne"],
-      ["Integracje", "ERP, CRM, księgowość, magazyn"],
-      ["Wsparcie", "Poprawki i rozwój po wdrożeniu"]
-    ],
-    "steps": [
-      ["01", "Rozmowa o potrzebach i zakresie"],
-      ["02", "Wycena i plan etapów"],
-      ["03", "Budowa i testy na bieżąco"],
-      ["04", "Przekazanie kodu i dokumentacji"]
-    ]
-  },
-  "web": {
-    "subtitle": "Strony firmowe i landingi",
-    "title_l1": "Strona, która",
-    "title_l2_em": "zarabia",
-    "title_l3": "na siebie.",
-    "p1": "Strony firmowe, landingi i strony ofertowe - lepsze niż szablon, bez 50-stronicowej oferty.",
-    "p2": "Szybkie ładowanie i SEO ściągają ruch z Google. CMS pozwala zmieniać treści bez dzwonienia do mnie.",
-    "steps": [
-      ["01", "Spotkanie startowe i mapa strony"],
-      ["02", "Projekt i przegląd tekstów"],
-      ["03", "Budowa i konfiguracja CMS"],
-      ["04", "SEO, analityka, wdrożenie"],
-      ["05", "Wsparcie po wdrożeniu"]
-    ],
-    "rail": [
-      ["Landing", "Produkt, kampania, wdrożenie"],
-      ["Firmowe", "Wizytówka, oferta, referencje"],
-      ["SEO", "Widoczność w Google i szybkość"],
-      ["CMS", "Treści zmieniasz sam"]
-    ]
   }
 }

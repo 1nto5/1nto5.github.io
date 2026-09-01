@@ -1,72 +1,48 @@
 @import "tailwindcss";
 
-/* Design tokens. Dark is the default theme; html[data-theme="light"]
+/* Design tokens. The palette is Catppuccin - Mocha for dark, Latte for
+   light - because that is the theme this site's author runs in Ghostty
+   ("theme = Catppuccin Mocha"), and the accent is that config's own
+   split-divider orange. Dark is the default; html[data-theme="light"]
    overrides the same custom properties, so every utility built on them
-   (text-ink, bg-surface, border-line, ...) re-themes with no extra classes.
-   Canvas scenes read the matching values from src/react-app/theme.js -
-   keep both files in sync. */
+   (text-ink, border-line, text-accent, ...) re-themes with no extra classes.
+   Every ink grade clears 4.5:1 on its own ground. */
 @theme {
   --font-sans: "Inter Tight", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-bg: #050505;
-  --color-ink: #ffffff;
-  --color-ink-2: #d1d1d1;
-  --color-ink-3: #8a8a8a;
-  --color-line: rgba(255, 255, 255, 0.1);
-  --color-line-2: rgba(255, 255, 255, 0.25);
-  --color-surface: rgba(255, 255, 255, 0.04);
-  --color-panel: rgba(12, 12, 12, 0.95);
-
-  /* Inverse surfaces: navbar pill, contact card, and everything on them. */
-  --color-pill: rgba(255, 255, 255, 0.95);
-  --color-pill-ink: #111111;
-  --color-pill-muted: rgba(17, 17, 17, 0.64);
-  --color-pill-line: rgba(0, 0, 0, 0.15);
-  --color-pill-accent: #059669;
-
-  /* Section accents, text grade (AA on the page background). */
-  --color-accent-ai: #7dd3fc;
-  --color-accent-app: #fcd34d;
-  --color-accent-web: #c4b5fd;
-  --color-accent-ok: #6ee7b7;
+  /* Catppuccin Mocha. text on base is 11.3:1 - the ratio the Ghostty
+     config notes for its foreground. */
+  --color-bg: #1e1e2e;
+  --color-ink: #cdd6f4;
+  --color-ink-2: #a6adc8;
+  --color-ink-3: #9399b2;
+  --color-line: #45475a;
+  --color-line-2: #585b70;
+  --color-accent: #ff8c42;
+  --color-grid: #3b3d52;
 }
 
-/* Effect-grade accent triplets (space-separated, for rgb(var(--x) / a))
-   and scrim stops - not needed as Tailwind utilities. */
 :root {
   color-scheme: dark;
-  --rgb-ai: 125 211 252;
-  --rgb-app: 252 211 77;
-  --rgb-web: 196 181 253;
-  --scrim-0: rgba(0, 0, 0, 0.1);
-  --scrim-1: rgba(0, 0, 0, 0.4);
+  /* Space-separated triplet of --color-accent, for the one place that needs
+     the accent at an alpha: the touch highlight. */
+  --rgb-accent: 255 140 66;
 }
 
+/* Catppuccin Latte. The accent is darkened from #ff8c42, which only
+   reaches 2.6:1 on paper - same hue, 4.7:1. */
 html[data-theme="light"] {
   color-scheme: light;
-  --color-bg: #f4f5f7;
-  --color-ink: #0e1013;
-  --color-ink-2: #3f444c;
-  --color-ink-3: #5d656e;
-  --color-line: rgba(14, 16, 19, 0.12);
-  --color-line-2: rgba(14, 16, 19, 0.28);
-  --color-surface: rgba(255, 255, 255, 0.55);
-  --color-panel: rgba(255, 255, 255, 0.92);
-  --color-pill: rgba(16, 17, 20, 0.95);
-  --color-pill-ink: #ffffff;
-  --color-pill-muted: rgba(255, 255, 255, 0.68);
-  --color-pill-line: rgba(255, 255, 255, 0.22);
-  --color-pill-accent: #34d399;
-  --color-accent-ai: #0369a1;
-  --color-accent-app: #b45309;
-  --color-accent-web: #6d28d9;
-  --color-accent-ok: #047857;
-  --rgb-ai: 2 132 199;
-  --rgb-app: 217 119 6;
-  --rgb-web: 124 58 237;
-  --scrim-0: rgba(244, 245, 247, 0.25);
-  --scrim-1: rgba(244, 245, 247, 0.55);
+  --color-bg: #eff1f5;
+  --color-ink: #4c4f69;
+  --color-ink-2: #5c5f77;
+  --color-ink-3: #6c6f85;
+  --color-line: #ccd0da;
+  --color-line-2: #bcc0cc;
+  --color-accent: #b34d00;
+  --rgb-accent: 179 77 0;
+  --color-grid: #ccd0da;
 }
 
 /* Self-hosted variable fonts (no third-party font CDN). */
@@ -136,8 +112,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-ink);
-  color: var(--color-bg);
+  background: var(--color-line-2);
+  color: var(--color-ink);
 }
 
 :focus-visible {
@@ -154,15 +130,7 @@ button {
   outline-color: var(--color-ink);
 }
 
-/* Controls sitting on inverse surfaces (navbar pill, contact card) need a
-   ring in the surface's own ink - the global one vanishes there. Unlayered
-   on purpose: it must win against the base rule above. */
-.focus-pill,
-.focus-pill:focus-visible {
-  outline-color: var(--color-pill-ink);
-}
-
-/* Entry reveal for the hero copy - runs once on load, staggered per element
+/* Entry reveal for the page copy - runs once on load, staggered per element
    via an inline animation-delay. Fill mode "both" holds the from-state during
    the delay, so nothing flashes in before its cue. Transform + opacity only:
    no layout shift, no reflow. */
@@ -206,130 +174,237 @@ button {
   pointer-events: none;
 }
 
-/* Hero legibility scrim over the backdrop canvas. */
-.hero-scrim {
-  background: linear-gradient(to bottom, var(--scrim-0), transparent, var(--scrim-1));
+/* Inverse video: in a terminal, pointing at something highlights the cell,
+   so that is what an interactive element does here. The inline padding is
+   cancelled by an equal negative margin, so the block never shifts the line.
+   Hover is gated on a real pointer; :focus-visible gets the same state so
+   the keyboard sees what the mouse sees, and :active covers touch, which
+   has no hover at all. */
+.aa-rev {
+  padding-inline: 0.3em;
+  margin-inline: -0.3em;
+  /* Touch has no hover, so the tap gets the same answer, and the tap
+     highlight underneath is tinted to the accent for the browsers that
+     paint their own instead. */
+  -webkit-tap-highlight-color: rgb(var(--rgb-accent) / 0.3);
 }
 
-/* Ambient accent wash behind each pinned scene - set --tint per section. */
-.scene-tint {
+/* Elements with no text to overlay (the icon button) flip whole. */
+.aa-rev:not([data-label]):focus-visible,
+.aa-rev:not([data-label]):active {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+@media (hover: hover) {
+  .aa-rev:not([data-label]):hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+}
+
+/* Anything with text gets the highlight swept in left to right, the way a
+   selection is dragged across a line. The overlay is the same string,
+   inverted, revealed by clip-path - so the text flips colour exactly where
+   the block has reached, never before it. */
+.aa-rev[data-label] {
+  position: relative;
+}
+
+.aa-rev[data-label]::before {
+  content: attr(data-label);
   position: absolute;
   inset: 0;
+  padding-inline: 0.3em;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  text-decoration: none;
+  white-space: pre;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.aa-rev[data-label]:focus-visible::before,
+.aa-rev[data-label]:active::before {
+  clip-path: inset(0 0 0 0);
+  transition: none;
+}
+
+@media (hover: hover) {
+  .aa-rev[data-label]:hover::before {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-rev[data-label]::before {
+    transition: none;
+  }
+}
+
+/* The terminal underneath the page: one character cell of JetBrains Mono at
+   the body size, tiled across the viewport as two 1px gradients, and shown
+   only through a soft circle that the pointer drags around. The layer is
+   inert - no hit testing, no repaint outside the mask - and it starts fully
+   hidden, so a visitor who never moves a mouse never sees it.
+   The script gates it on a real pointer and on motion being welcome. */
+.aa-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
-  background: radial-gradient(
-    56% 44% at 70% 30%,
-    rgb(var(--tint) / 0.09),
-    transparent 70%
-  );
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+  background-image:
+    repeating-linear-gradient(to right, var(--color-grid) 0 1px, transparent 1px 9.6px),
+    repeating-linear-gradient(to bottom, var(--color-grid) 0 1px, transparent 1px 24px);
+  -webkit-mask-image: radial-gradient(circle 190px at var(--x, 50%) var(--y, 50%), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 72%);
+  mask-image: radial-gradient(circle 190px at var(--x, 50%) var(--y, 50%), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 72%);
 }
 
-/* Non-JS / pre-hydration fallback content. Hidden once React mounts. */
-#prerender {
-  max-width: 72ch;
-  margin: 0 auto;
-  padding: 4rem 1.25rem 6rem;
+@media (prefers-reduced-motion: reduce) {
+  .aa-grid {
+    display: none;
+  }
 }
 
-.js-on #prerender {
-  display: none;
+/* The one terminal signal that carries the register: a thin beam cursor
+   standing at the end of the services line. The Ghostty config runs
+   cursor-style-blink = true, so it blinks - except under reduced motion,
+   where it stays solid rather than disappearing. */
+@keyframes aa-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 
-/* With client:load the app markup is server-rendered too - without JS both
-   would show at once, so the island stays hidden until js-on lands.
-   Unlayered so it beats Tailwind's layered utilities. */
-html:not(.js-on) astro-island {
-  display: none;
+/* The terminal underneath the page: one character cell of JetBrains Mono at
+   the body size, tiled across the viewport as two 1px gradients, and shown
+   only through a soft circle that the pointer drags around. The layer is
+   inert - no hit testing, no repaint outside the mask - and it starts fully
+   hidden, so a visitor who never moves a mouse never sees it.
+   The script gates it on a real pointer and on motion being welcome. */
+.aa-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+  background-image:
+    repeating-linear-gradient(to right, var(--color-grid) 0 1px, transparent 1px 9.6px),
+    repeating-linear-gradient(to bottom, var(--color-grid) 0 1px, transparent 1px 24px);
+  -webkit-mask-image: radial-gradient(circle 190px at var(--x, 50%) var(--y, 50%), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 72%);
+  mask-image: radial-gradient(circle 190px at var(--x, 50%) var(--y, 50%), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 72%);
 }
 
-#prerender h1 {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 1;
-  margin: 0 0 0.5em;
-  letter-spacing: -0.02em;
-  font-weight: 600;
+@media (prefers-reduced-motion: reduce) {
+  .aa-grid {
+    display: none;
+  }
 }
 
-#prerender .kicker {
-  color: var(--color-ink-3);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  margin: 0 0 0.5em;
+/* The one terminal signal that carries the register: a thin beam cursor
+   standing at the end of the services line. The Ghostty config runs
+   cursor-style-blink = true, so it blinks - except under reduced motion,
+   where it stays solid rather than disappearing. */
+@keyframes aa-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 
-#prerender .lead {
-  font-size: 1.15rem;
-  color: var(--color-ink-2);
-  margin: 1rem 0 2.5rem;
+/* Once the script has measured the lines, the caret leaves the text flow
+   and is driven by transform, so it can travel to whichever line the
+   pointer is on. Without JS it stays exactly where it is rendered. */
+.aa-block {
+  position: relative;
 }
 
-#prerender section {
-  margin: 3rem 0;
-  border-top: 1px solid var(--color-line);
-  padding-top: 2rem;
+/* Both classes, so this beats the base .aa-cursor rule below it, which
+   sets position: relative for the inline cap-band nudge. Free of the flow,
+   that nudge moves into the script's own measurement. */
+.aa-cursor.aa-cursor--free {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  transition:
+    transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    font-size 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-#prerender h2 {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  line-height: 1.1;
-  margin: 0 0 0.5em;
-  letter-spacing: -0.01em;
-  font-weight: 600;
+@media (prefers-reduced-motion: reduce) {
+  .aa-cursor.aa-cursor--free {
+    transition: none;
+  }
 }
 
-#prerender h2 small {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--color-ink-3);
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5em;
-}
-
-#prerender ul {
-  padding-left: 1.2em;
-  margin: 1rem 0;
-  list-style: disc;
-}
-
-#prerender li {
-  margin: 0.35em 0;
-  color: var(--color-ink-2);
-}
-
-#prerender p {
-  margin: 0.75em 0;
-  color: var(--color-ink-2);
-}
-
-#prerender .contact dl {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.5rem 1.5rem;
-  margin: 1rem 0;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-}
-
-#prerender .contact dt {
-  color: var(--color-ink-3);
-}
-
-#prerender a {
-  color: inherit;
-}
-
-#prerender .lang-switch {
+.aa-cursor {
   display: inline-block;
-  margin-top: 2rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--color-ink-3);
-  text-decoration: underline;
+  width: 0.13em;
+  height: 1.15em;
+  /* Centered on the cap band, not on the line box. vertical-align: middle
+     lands the block's center at baseline - x-height/2 (~0.275em in JetBrains
+     Mono); the cap band's center is baseline - cap-height/2 (~0.365em), so
+     the relative nudge makes up the 0.09em difference. */
+  vertical-align: middle;
+  position: relative;
+  top: -0.09em;
+  background: var(--color-accent);
+  animation: aa-blink 1.06s steps(1, end) infinite;
 }
 
-/* Privacy policy pages */
+@media (prefers-reduced-motion: reduce) {
+  /* Once the script has measured the lines, the caret leaves the text flow
+   and is driven by transform, so it can travel to whichever line the
+   pointer is on. Without JS it stays exactly where it is rendered. */
+.aa-block {
+  position: relative;
+}
+
+/* Both classes, so this beats the base .aa-cursor rule below it, which
+   sets position: relative for the inline cap-band nudge. Free of the flow,
+   that nudge moves into the script's own measurement. */
+.aa-cursor.aa-cursor--free {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  transition: transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-cursor.aa-cursor--free {
+    transition: none;
+  }
+}
+
+.aa-cursor {
+    animation: none;
+  }
+}
+
+/* Theme-conditional icons: the toggle ships both glyphs and the theme
+   attribute picks one, so the right icon is there at first paint. */
+html[data-theme="light"] .only-dark {
+  display: none;
+}
+
+html[data-theme="dark"] .only-light {
+  display: none;
+}
+
 .doc {
   max-width: 72ch;
   margin: 0 auto;

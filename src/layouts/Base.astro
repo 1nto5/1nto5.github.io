@@ -1,10 +1,9 @@
 ---
 import "../styles/global.css";
-import { getMeta, getTranslations } from "../i18n/index.js";
+import { getMeta } from "../i18n/index.js";
 
 const { locale = "pl", page = "home" } = Astro.props;
 const meta = getMeta(locale, page);
-const t = getTranslations(locale);
 const SITE = "https://adrianantosiak.pl";
 const canonical = SITE + meta.path;
 const ogImage = SITE + (locale === "en" ? "/og-en.png" : "/og.png");
@@ -16,21 +15,6 @@ const personJsonLd = {
   "@type": "Person",
   name: "Adrian Antosiak",
   url: SITE + "/",
-  makesOffer: [t.nav.ai, t.nav.app, t.nav.web].map((name) => ({
-    "@type": "Offer",
-    itemOffered: { "@type": "Service", name, provider: { "@type": "Person", name: "Adrian Antosiak" } },
-  })),
-  knowsAbout: [
-    "Artificial Intelligence",
-    "Large Language Models",
-    "ChatGPT for Business",
-    "Business Process Automation",
-    "AI Training",
-    "Custom Software Development",
-    "Web Applications",
-    "API Integration",
-    "Website Development",
-  ],
   email: "mailto:kontakt@adrianantosiak.pl",
   telephone: "+48503751676",
   knowsLanguage: ["pl", "en"],
@@ -50,7 +34,7 @@ const websiteJsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#050505" />
+    <meta name="theme-color" content="#1e1e2e" />
 
     <title>{meta.title}</title>
     <meta name="description" content={meta.description} />
@@ -91,7 +75,6 @@ const websiteJsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
 
     <script is:inline>
-      document.documentElement.classList.add("js-on");
       // Resolve the theme before first paint: stored choice wins, then the
       // system preference, then dark. Keep in sync with theme.js.
       (function () {
@@ -107,12 +90,11 @@ const websiteJsonLd = {
         } catch (e) {}
         document.documentElement.dataset.theme = t;
         var m = document.querySelector('meta[name="theme-color"]');
-        if (m) m.setAttribute("content", t === "light" ? "#f4f5f7" : "#050505");
+        if (m) m.setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
       })();
     </script>
   </head>
   <body>
-    <slot name="prerender" />
     <slot />
   </body>
 </html>

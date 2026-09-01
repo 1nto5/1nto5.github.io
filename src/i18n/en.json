@@ -1,109 +1,49 @@
 {
   "langName": "English",
-  "kicker": "AI, Apps, Web",
+  "lead": "apps / AI / web",
   "email_addr": "hi@adrianantosiak.pl",
-  "hero": {
-    "headline": "Less busywork. More customers.",
-    "sub": "AI that saves time. Apps that stay yours. Websites that sell.",
-    "cta": "Get in touch",
-    "phone": "+48 503 751 676",
-    "areas": ["Chatbots", "Automation", "Custom apps", "Training"]
-  },
-  "nav": {
-    "ai": "AI for your business",
-    "app": "Custom applications",
-    "web": "Websites"
-  },
-  "nav_pill": {
-    "ai": "AI",
-    "app": "Apps",
-    "web": "Websites",
-    "contact": "Contact"
-  },
-  "menu": {
-    "open": "Menu",
-    "close": "Close menu"
-  },
-  "theme": {
-    "to_light": "Switch to light theme",
-    "to_dark": "Switch to dark theme"
-  },
-  "contact": {
-    "title_l1": "Got a",
-    "title_l2": "question?",
-    "title_l3": "Email me.",
-    "email_l": "Email",
-    "phone_l": "Phone",
-    "avail_l": "Status",
-    "avail_v": "Taking on new clients",
-    "copy_l": "Copy email address",
-    "copied_l": "Copied",
-    "privacy_l": "Privacy policy"
-  },
+  "phone": "+48 503 751 676",
+  "theme_l": "Switch theme",
+  "privacy_l": "Privacy",
   "privacy": {
     "heading": "Privacy Policy",
     "lead": "This site - adrianantosiak.pl - uses no tracking cookies, collects no analytics, and shows no ads. Personal data is processed only when you choose to email or call me.",
     "sections": [
-      ["Data controller", "The data controller is Adrian Antosiak. For anything related to personal data, contact kontakt@adrianantosiak.pl."],
-      ["What data is collected", "Visiting the site on its own does not store personal data on my side. The host, GitHub Pages, may keep technical server logs (IP address, user-agent, request time) under its own policy - I have no access to them. If you email kontakt@adrianantosiak.pl or call, I retain your name, email or phone number, and the content of your inquiry."],
-      ["Legal basis", "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to inquiries)."],
-      ["Retention", "Emails are kept in my inbox for as long as needed to handle the inquiry and any reasonable follow-up, after which they are deleted or archived."],
-      ["Recipients", "The site is hosted on GitHub Pages (GitHub, Inc., USA). Email is handled by iCloud+ Custom Email Domain (Apple Inc., USA) - messages sent to @adrianantosiak.pl are delivered to my iCloud inbox. Web fonts are self-hosted alongside the site, so fetching them sends no data to any external provider. No data is shared with any other recipients."],
-      ["Cookies and tracking", "The site sets no cookies. Browser localStorage stores only interface preferences (chosen language and color theme) - this data never leaves your browser and is not used for tracking. I do not use Google Analytics, Meta Pixel, Hotjar, Clarity, or similar tools."],
-      ["Your rights", "You have the right to: access your data, rectify it, erase it, restrict processing, object, data portability, and lodge a complaint with Poland's supervisory authority, the President of the Personal Data Protection Office (uodo.gov.pl). To exercise these rights, email kontakt@adrianantosiak.pl."],
-      ["Contact", "For any questions related to personal data, email kontakt@adrianantosiak.pl."]
+      [
+        "Data controller",
+        "The data controller is Adrian Antosiak. For anything related to personal data, contact kontakt@adrianantosiak.pl."
+      ],
+      [
+        "What data is collected",
+        "Visiting the site on its own does not store personal data on my side. The host, GitHub Pages, may keep technical server logs (IP address, user-agent, request time) under its own policy - I have no access to them. If you email kontakt@adrianantosiak.pl or call, I retain your name, email or phone number, and the content of your inquiry."
+      ],
+      [
+        "Legal basis",
+        "I process correspondence under GDPR art. 6(1)(b) (steps taken at the request of the data subject prior to entering into a contract) and art. 6(1)(f) (legitimate interest in replying to inquiries)."
+      ],
+      [
+        "Retention",
+        "Emails are kept in my inbox for as long as needed to handle the inquiry and any reasonable follow-up, after which they are deleted or archived."
+      ],
+      [
+        "Recipients",
+        "The site is hosted on GitHub Pages (GitHub, Inc., USA). Email is handled by iCloud+ Custom Email Domain (Apple Inc., USA) - messages sent to @adrianantosiak.pl are delivered to my iCloud inbox. Web fonts are self-hosted alongside the site, so fetching them sends no data to any external provider. No data is shared with any other recipients."
+      ],
+      [
+        "Cookies and tracking",
+        "The site sets no cookies. Browser localStorage stores only one interface preference - the chosen color theme - this data never leaves your browser and is not used for tracking. I do not use Google Analytics, Meta Pixel, Hotjar, Clarity, or similar tools."
+      ],
+      [
+        "Your rights",
+        "You have the right to: access your data, rectify it, erase it, restrict processing, object, data portability, and lodge a complaint with Poland's supervisory authority, the President of the Personal Data Protection Office (uodo.gov.pl). To exercise these rights, email kontakt@adrianantosiak.pl."
+      ],
+      [
+        "Contact",
+        "For any questions related to personal data, email kontakt@adrianantosiak.pl."
+      ]
     ],
     "updated_l": "Last updated",
     "updated_v": "2026-08-31",
     "back_home_l": "← Home"
-  },
-  "ai": {
-    "title_l1": "AI that actually",
-    "title_l2": "saves you hours.",
-    "lead": "From a process audit, through a prototype, to a workshop for your team.",
-    "cards": [
-      ["AUTOMATION", "Quoting, invoices, email triage, lead routing - the repeat steps run in the background, you approve."],
-      ["CHATBOTS", "For customers and your team, trained on your docs, emails and product catalog."],
-      ["DOCUMENTS", "OCR, contract review, meeting summaries - no more work after hours."]
-    ],
-    "code": "> adrian.ai.plan({ company })\n  ├─ free call to map what's eating your time\n  ├─ pick the processes worth automating\n  ├─ quick prototype instead of a long analysis\n  └─ workshop for your team, hand over the keys"
-  },
-  "app": {
-    "title_l1": "The app you",
-    "title_l2": "can't buy",
-    "title_l3": "off the shelf.",
-    "lead": "When Excel isn't enough and SaaS costs too much, I build the app you need - production tracking, field service, bookings, dashboards. Code any developer can pick up.",
-    "feat": [
-      ["Web apps", "Dashboards, portals, internal tools"],
-      ["Integrations", "ERP, CRM, accounting, inventory"],
-      ["Support", "Fixes and new features after launch"]
-    ],
-    "steps": [
-      ["01", "Call about needs and scope"],
-      ["02", "Quote and milestone plan"],
-      ["03", "Build and test as we go"],
-      ["04", "Code and docs handover"]
-    ]
-  },
-  "web": {
-    "subtitle": "Business websites and landing pages",
-    "title_l1": "A website that",
-    "title_l2_em": "earns",
-    "title_l3": "its keep.",
-    "p1": "Company sites, landing pages and sales pages - better than a template, no 50-page proposal.",
-    "p2": "Fast load times and SEO bring traffic from Google. A CMS lets you update content without calling me.",
-    "steps": [
-      ["01", "Kickoff call & sitemap"],
-      ["02", "Design & copy review"],
-      ["03", "Build & CMS setup"],
-      ["04", "SEO, analytics, launch"],
-      ["05", "Support after launch"]
-    ],
-    "rail": [
-      ["Landing", "Product, campaign, launch"],
-      ["Corporate", "Profile, offer, references"],
-      ["SEO", "Google visibility and speed"],
-      ["CMS", "Update content yourself"]
-    ]
   }
 }

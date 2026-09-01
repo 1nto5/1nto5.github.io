@@ -3,55 +3,161 @@ import { getTranslations } from "../i18n/index.js";
 
 const { locale = "pl" } = Astro.props;
 const t = getTranslations(locale);
-const otherLocale = locale === "pl" ? "en" : "pl";
+const otherLocale = locale === "en" ? "pl" : "en";
 const otherHref = otherLocale === "en" ? "/en/" : "/";
-const otherLabel = otherLocale === "en" ? "English" : "Polski";
+const otherLabel = otherLocale === "en" ? "EN" : "PL";
+const privacyHref = locale === "en" ? "/en/privacy/" : "/prywatnosc/";
+const tel = t.phone.replace(/\s/g, "");
+const railClass = "aa-rev text-[11px] uppercase tracking-[0.18em] text-ink-3";
 ---
-<main id="prerender">
-  <p class="kicker">{t.kicker}</p>
-  <h1>Adrian Antosiak</h1>
-  <p class="lead">{t.hero.sub}</p>
 
-  <section>
-    <h2>{t.nav.ai}</h2>
-    <p>{t.ai.title_l1} {t.ai.title_l2}</p>
-    <p>{t.ai.lead}</p>
-    <ul>
-      {t.ai.cards.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
-    </ul>
-  </section>
+<!-- Terminal register: everything is mono, the copy sits between a prompt
+     line and a waiting block cursor, and 16px / 1.6 echoes the Ghostty
+     config's font-size 16 with adjust-cell-height 12%. -->
+<div class="aa-grid" aria-hidden="true"></div>
 
-  <section>
-    <h2>{t.nav.app}</h2>
-    <p>{t.app.lead}</p>
-    <ul>
-      {t.app.feat.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
-    </ul>
-  </section>
+<div class="relative z-10 flex min-h-svh flex-col px-6 py-6 font-mono md:px-10 md:py-8 lg:px-16">
+  <!-- One column governs every edge: the controls, the name and the footer
+       link all start and end on the same two axes. -->
+  <div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col">
+    <header class="flex items-center justify-end gap-6">
+      <a href={otherHref} hreflang={otherLocale} class={railClass} data-label={otherLabel}>{otherLabel}</a>
 
-  <section>
-    <h2>
-      <small>{t.web.subtitle}</small>
-      {t.nav.web}
-    </h2>
-    <p>{t.web.p1}</p>
-    <p>{t.web.p2}</p>
-    <ul>
-      {t.web.rail.map(([k, v]) => <li><strong>{k}</strong> - {v}</li>)}
-    </ul>
-  </section>
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label={t.theme_l}
+        class="aa-rev -mx-1.5 -my-1.5 p-1.5 text-ink-3"
+      >
+        <svg viewBox="0 0 20 20" class="only-dark h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <circle cx="10" cy="10" r="3.4" />
+          <path d="M10 2.4v1.8M10 15.8v1.8M17.6 10h-1.8M4.2 10H2.4M15.37 4.63l-1.27 1.27M5.9 14.1l-1.27 1.27M15.37 15.37l-1.27-1.27M5.9 5.9L4.63 4.63" />
+        </svg>
+        <svg viewBox="0 0 20 20" class="only-light h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16.5 12.6A7 7 0 0 1 7.4 3.5a7 7 0 1 0 9.1 9.1Z" />
+        </svg>
+      </button>
+    </header>
 
-  <section class="contact">
-    <h2>{t.contact.title_l1} {t.contact.title_l2} {t.contact.title_l3}</h2>
-    <dl>
-      <dt>{t.contact.email_l}</dt>
-      <dd><a href={`mailto:${t.email_addr}`}>{t.email_addr}</a></dd>
-      <dt>{t.contact.phone_l}</dt>
-      <dd>{t.hero.phone}</dd>
-      <dt>{t.contact.avail_l}</dt>
-      <dd>{t.contact.avail_v}</dd>
-    </dl>
-    <a class="lang-switch" href={otherHref} hreflang={otherLocale}>{otherLabel}</a>
-    <a class="lang-switch" href={locale === "pl" ? "/prywatnosc/" : "/en/privacy/"}>{t.contact.privacy_l}</a>
-  </section>
-</main>
+    <main class="flex flex-1 items-center">
+      <div class="max-w-[620px]">
+        <h1
+          class="aa-rise text-[clamp(28px,6.2vw,52px)] font-bold leading-[1.1] text-ink"
+          style="animation-delay: 0.16s"
+        >
+          Adrian Antosiak
+        </h1>
+
+        <p
+          class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]"
+          style="animation-delay: 0.28s"
+        >
+          {t.lead}<span class="aa-cursor ml-1.5" aria-hidden="true"></span>
+        </p>
+
+        <div class="aa-rise mt-10 flex flex-col items-start gap-1.5" style="animation-delay: 0.4s">
+          <a
+            href={`mailto:${t.email_addr}`}
+            data-label={t.email_addr}
+            class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+          >
+            {t.email_addr}
+          </a>
+          <a
+            href={`tel:${tel}`}
+            data-label={t.phone}
+            class="aa-rev text-[15px] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[16px]"
+          >
+            {t.phone}
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="flex items-center justify-start">
+      <a href={privacyHref} class={railClass} data-label={t.privacy_l}>{t.privacy_l}</a>
+    </footer>
+  </div>
+</div>
+
+<script>
+  // The pointer uncovers the terminal underneath the page: a character-cell
+  // grid, drawn once as two repeating gradients and shown only inside a soft
+  // circle that follows the cursor. Position is written as custom properties
+  // on rAF, so a move costs one style write and no layout. Pointer-only and
+  // motion-safe: touch and prefers-reduced-motion never see it.
+  const grid = document.querySelector(".aa-grid");
+  const wants =
+    window.matchMedia("(hover: hover)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (grid && wants) {
+    let px = 0;
+    let py = 0;
+    let raf = 0;
+
+    const draw = () => {
+      raf = 0;
+      grid.style.setProperty("--x", px + "px");
+      grid.style.setProperty("--y", py + "px");
+    };
+
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        if (e.pointerType === "touch") return;
+        px = e.clientX;
+        py = e.clientY;
+        grid.style.opacity = "1";
+        if (!raf) raf = requestAnimationFrame(draw);
+      },
+      { passive: true },
+    );
+
+    document.addEventListener("pointerleave", () => {
+      grid.style.opacity = "0";
+    });
+  }
+</script>
+
+<script>
+  // Theme flip. The pre-paint script in Base.astro already resolved the
+  // stored or system choice; this only swaps it, behind a circular wipe
+  // growing from the control (MDN's reveal recipe). Keyboard activation
+  // reports clientX/Y 0, so the origin falls back to the button's center.
+  const btn = document.getElementById("theme-toggle");
+
+  function apply(next) {
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("aa_theme", next);
+    } catch (e) {}
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute("content", next === "light" ? "#eff1f5" : "#1e1e2e");
+  }
+
+  btn?.addEventListener("click", (e) => {
+    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduce || !document.startViewTransition) {
+      apply(next);
+      return;
+    }
+
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX || r.left + r.width / 2;
+    const y = e.clientY || r.top + r.height / 2;
+    const reach = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    document.startViewTransition(() => apply(next)).ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${reach}px at ${x}px ${y}px)`] },
+        { duration: 420, easing: "ease-in-out", pseudoElement: "::view-transition-new(root)" },
+      );
+    });
+  });
+</script>

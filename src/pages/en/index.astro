@@ -1,9 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Home from "../../components/Home.astro";
-import App from "../../react-app/App.jsx";
 ---
 <Base locale="en">
-  <Home locale="en" slot="prerender" />
-  <App locale="en" client:load />
+  <Home locale="en" />
 </Base>
