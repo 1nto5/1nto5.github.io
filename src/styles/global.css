@@ -130,23 +130,28 @@ button {
   outline-color: var(--color-ink);
 }
 
-/* Entry reveal for the page copy - runs once on load, staggered per element
-   via an inline animation-delay. Fill mode "both" holds the from-state during
-   the delay, so nothing flashes in before its cue. Transform + opacity only:
-   no layout shift, no reflow. */
-@keyframes aa-rise {
+/* Entry reveal: every element paints itself in from the left, in steps, the
+   way a terminal fills a screen - the same clip-path idea the hover
+   highlight uses, so the page has one motion language instead of two. The
+   right edge overshoots slightly so nothing clips its own last pixel.
+   Delays are inline per element and all offset by --rise-base, which the
+   intro sets before first paint so the copy waits for the monogram.
+   Fill mode is "backwards", not "both", and that is load-bearing: it holds
+   the clipped from-state through the delay so nothing flashes in early, but
+   leaves no clip behind afterwards. With "both" a stepped animation rests on
+   its LAST step - one fourteenth still clipped - and the shortest labels
+   lose their final character for good. */
+@keyframes aa-paint {
   from {
-    opacity: 0;
-    transform: translateY(14px);
+    clip-path: inset(0 100% 0 0);
   }
   to {
-    opacity: 1;
-    transform: none;
+    clip-path: inset(0 -0.2em 0 0);
   }
 }
 
 .aa-rise {
-  animation: aa-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: aa-paint 0.32s steps(14, end) backwards;
 }
 
 @media (prefers-reduced-motion: reduce) {

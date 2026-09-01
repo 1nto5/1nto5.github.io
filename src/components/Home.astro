@@ -9,7 +9,7 @@ const otherHref = otherLocale === "en" ? "/en/" : "/";
 const otherLabel = otherLocale === "en" ? "EN" : "PL";
 const privacyHref = locale === "en" ? "/en/privacy/" : "/prywatnosc/";
 const tel = t.phone.replace(/\s/g, "");
-const railClass = "aa-rev text-[11px] uppercase tracking-[0.18em] text-ink-3";
+const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-ink-3";
 ---
 
 <!-- Terminal register: everything is mono, the copy sits between a prompt
@@ -24,13 +24,20 @@ const railClass = "aa-rev text-[11px] uppercase tracking-[0.18em] text-ink-3";
        link all start and end on the same two axes. -->
   <div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col">
     <header class="flex items-center justify-end gap-6">
-      <a href={otherHref} hreflang={otherLocale} class={railClass} data-label={otherLabel}>{otherLabel}</a>
+      <a
+        href={otherHref}
+        hreflang={otherLocale}
+        class={railClass}
+        data-label={otherLabel}
+        style="animation-delay: calc(var(--rise-base, 0s) + 0.52s)"
+      >{otherLabel}</a>
 
       <button
         id="theme-toggle"
         type="button"
         aria-label={t.theme_l}
-        class="aa-rev -mx-1.5 -my-1.5 p-1.5 text-ink-3"
+        class="aa-rev aa-rise -mx-1.5 -my-1.5 p-1.5 text-ink-3"
+        style="animation-delay: calc(var(--rise-base, 0s) + 0.58s)"
       >
         <svg viewBox="0 0 20 20" class="only-dark h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
           <circle cx="10" cy="10" r="3.4" />
@@ -81,7 +88,12 @@ const railClass = "aa-rev text-[11px] uppercase tracking-[0.18em] text-ink-3";
     </main>
 
     <footer class="flex items-center justify-start">
-      <a href={privacyHref} class={railClass} data-label={t.privacy_l}>{t.privacy_l}</a>
+      <a
+        href={privacyHref}
+        class={railClass}
+        data-label={t.privacy_l}
+        style="animation-delay: calc(var(--rise-base, 0s) + 0.64s)"
+      >{t.privacy_l}</a>
     </footer>
   </div>
 </div>

@@ -163,8 +163,10 @@
       const box = (key) => {
         const b = word.querySelector(`[data-glyph="${key}"]`).getBoundingClientRect();
         return {
-          // .aa-rise parks the wordmark 14px low until its cue - the resting
-          // box is what the mark has to land on, so the transform comes off.
+          // The resting box is what the mark has to land on. .aa-rise paints
+          // rather than moves today, so the transform is usually identity -
+          // subtracting it anyway keeps this correct if the reveal ever goes
+          // back to a transform.
           cx: b.left + b.width / 2 - wm.e,
           // Cap band, not line box: the same 0.09em correction the caret uses.
           cy: b.top + b.height / 2 - wm.f - 0.09 * fs,
