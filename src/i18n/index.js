@@ -46,8 +46,8 @@ export function getMeta(locale, page = "home") {
     ...localeBase,
     title: "Adrian Antosiak",
     description: isEn
-      ? "Adrian Antosiak - I build software to order."
-      : "Adrian Antosiak - buduję oprogramowanie na zamówienie.",
+      ? "Adrian Antosiak - apps / AI / web"
+      : "Adrian Antosiak - aplikacje / AI / www",
     ogImageAlt: "Adrian Antosiak",
   };
 }
