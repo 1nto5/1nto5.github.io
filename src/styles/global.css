@@ -160,6 +160,28 @@ button {
   }
 }
 
+/* The end card opens like the iris old cartoons closed on, in reverse: a
+   circle growing out of the copy's own box. Restarts every time the card is
+   shown, since display: none between showings resets it. */
+@keyframes aa-iris {
+  from {
+    clip-path: circle(0 at 30% 50%);
+  }
+  to {
+    clip-path: circle(120% at 30% 50%);
+  }
+}
+
+.aa-iris {
+  animation: aa-iris 0.45s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-iris {
+    animation: none;
+  }
+}
+
 /* Theme flip runs through a View Transition (src/react-app/App.jsx): the new
    theme is wiped in as a circle growing from the toggle. Drop the UA
    cross-fade so only the wipe shows, and let the frozen overlay pass clicks

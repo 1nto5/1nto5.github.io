@@ -50,7 +50,7 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
     </header>
 
     <main class="flex flex-1 items-center">
-      <div class="max-w-[620px]">
+      <div id="aa-home" class="max-w-[620px]">
         <!-- The wordmark is the monogram written out: letter, accent dot,
              letter. The three spans are also what the intro lands on, so it
              measures real glyph boxes instead of counting characters. The
@@ -85,6 +85,35 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
           </a>
         </div>
       </div>
+
+      <!-- The page does not scroll, so a scroll attempt is the one thing left
+           to do. It gets the old cartoon ending: the copy swaps for a title
+           card in the same spot, the chrome stays put. Scrolling back up (or
+           Escape) brings the page back. -->
+      <div id="aa-end" class="aa-iris max-w-[620px]" hidden>
+        <p
+          class="aa-rise text-[clamp(28px,6.2vw,52px)] font-bold leading-[1.1] text-ink"
+          style="animation-delay: 0.16s"
+        >{t.end_title}<span class="text-accent">.</span></p>
+
+        <p
+          class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]"
+          style="animation-delay: 0.28s"
+        >{t.end_l}<br />{t.end_l2}</p>
+
+        <div class="aa-rise mt-10 flex flex-col items-start gap-1.5" style="animation-delay: 0.4s">
+          <a
+            href={`mailto:${t.email_addr}`}
+            data-label={t.email_addr}
+            class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+          >{t.email_addr}</a>
+          <a
+            href={`tel:${tel}`}
+            data-label={t.phone}
+            class="aa-rev text-[15px] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[16px]"
+          >{t.phone}</a>
+        </div>
+      </div>
     </main>
 
     <footer class="flex items-center justify-start">
@@ -97,6 +126,7 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
     </footer>
   </div>
 </div>
+
 
 <script>
   // The pointer uncovers the terminal underneath the page: a character-cell
@@ -136,6 +166,53 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
       grid.style.opacity = "0";
     });
   }
+</script>
+
+<script>
+  // Scroll intent flips between the page and the end card. Down (wheel,
+  // swipe up, ArrowDown / PageDown / End / Space) closes the iris; up (or
+  // Escape) opens it again. A short lock keeps one wheel gesture from
+  // toggling twice.
+  const home = document.getElementById("aa-home");
+  const end = document.getElementById("aa-end");
+  let lock = 0;
+
+  function show(on) {
+    if (!home || !end || end.hidden === !on) return;
+    if (lock) return;
+    // Coming back, the copy should not wait for an intro that already ran.
+    home.style.setProperty("--rise-base", "0s");
+    home.hidden = on;
+    end.hidden = !on;
+    lock = window.setTimeout(() => (lock = 0), 700);
+  }
+
+  window.addEventListener(
+    "wheel",
+    (e) => {
+      if (Math.abs(e.deltaY) < 4) return;
+      show(e.deltaY > 0);
+    },
+    { passive: true },
+  );
+
+  let touchY = 0;
+  window.addEventListener("touchstart", (e) => (touchY = e.touches[0].clientY), { passive: true });
+  window.addEventListener(
+    "touchmove",
+    (e) => {
+      const d = touchY - e.touches[0].clientY;
+      if (Math.abs(d) > 24) show(d > 0);
+    },
+    { passive: true },
+  );
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") return show(false);
+    if (e.target !== document.body && !end?.contains(e.target) && !home?.contains(e.target)) return;
+    if (["ArrowDown", "PageDown", "End", " "].includes(e.key)) show(true);
+    if (["ArrowUp", "PageUp", "Home"].includes(e.key)) show(false);
+  });
 </script>
 
 <script>
