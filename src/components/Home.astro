@@ -17,8 +17,6 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
      config's font-size 16 with adjust-cell-height 12%. -->
 <Intro />
 
-<div class="aa-grid" aria-hidden="true"></div>
-
 <div class="relative z-10 flex min-h-svh flex-col px-6 py-6 font-mono md:px-10 md:py-8 lg:px-16">
   <!-- One column governs every edge: the controls, the name and the footer
        link all start and end on the same two axes. -->
@@ -129,26 +127,97 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
 
 
 <script>
-  // The pointer uncovers the terminal underneath the page: a character-cell
-  // grid, drawn once as two repeating gradients and shown only inside a soft
-  // circle that follows the cursor. Position is written as custom properties
-  // on rAF, so a move costs one style write and no layout. Pointer-only and
-  // motion-safe: touch and prefers-reduced-motion never see it.
-  const grid = document.querySelector(".aa-grid");
+  // The pointer uncovers the terminal underneath the page: a buffer that is
+  // still computing something - faint, meaningless punctuation sitting in
+  // the same 9.6 x 24 character cells the intro assembles from, shown only
+  // inside a soft circle that follows the cursor. While the layer is
+  // visible, a few dozen cells around the pointer are rewritten every tick,
+  // so the buffer keeps churning; the rest of the canvas is never touched.
+  // A move writes two custom properties on rAF and touches no layout.
+  // Pointer-only and motion-safe: touch and prefers-reduced-motion never see
+  // it. The canvas is created here rather than in the markup: Astro's
+  // compiler moves a <canvas>'s closing tag past whatever follows it, which
+  // swallowed the whole page into the layer. Without JS there is no layer.
   const wants =
     window.matchMedia("(hover: hover)").matches &&
     !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (grid && wants) {
+  if (wants) {
+    const grid = document.createElement("canvas");
+    grid.className = "aa-grid";
+    grid.setAttribute("aria-hidden", "true");
+    document.body.prepend(grid);
+
+    const CELL_W = 9.6;
+    const CELL_H = 24;
+    const GLYPHS = ".:-+/\\|_=*'`";
+    const DENSITY = 0.55;
+    // The mask fades out at 72% of 190px; churn a little past that.
+    const RADIUS = 150;
+    const TICK = 70;
+    const CHURN = 36;
     let px = 0;
     let py = 0;
     let raf = 0;
+    let ctx: CanvasRenderingContext2D | null = null;
+    let cols = 0;
+    let rows = 0;
+    let visible = false;
+    let last = 0;
 
-    const draw = () => {
+    const cell = (c: number, r: number) => {
+      if (!ctx || c < 0 || r < 0 || c >= cols || r >= rows) return;
+      ctx.clearRect(c * CELL_W, r * CELL_H, CELL_W, CELL_H);
+      if (Math.random() > DENSITY) return;
+      const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      ctx.fillText(g, (c + 0.5) * CELL_W, (r + 0.5) * CELL_H);
+    };
+
+    const paint = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      grid.width = Math.ceil(w * dpr);
+      grid.height = Math.ceil(h * dpr);
+      ctx = grid.getContext("2d");
+      if (!ctx) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = getComputedStyle(grid).color;
+      ctx.font = "16px 'JetBrains Mono', monospace";
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "center";
+      cols = Math.ceil(w / CELL_W);
+      rows = Math.ceil(h / CELL_H);
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) cell(c, r);
+    };
+
+    const churn = () => {
+      const rc = Math.ceil(RADIUS / CELL_W);
+      const rr = Math.ceil(RADIUS / CELL_H);
+      const cc = Math.floor(px / CELL_W);
+      const cr = Math.floor(py / CELL_H);
+      for (let i = 0; i < CHURN; i++) {
+        cell(cc + Math.round((Math.random() * 2 - 1) * rc), cr + Math.round((Math.random() * 2 - 1) * rr));
+      }
+    };
+
+    const frame = (t: number) => {
       raf = 0;
       grid.style.setProperty("--x", px + "px");
       grid.style.setProperty("--y", py + "px");
+      if (t - last >= TICK) {
+        last = t;
+        churn();
+      }
+      if (visible) raf = requestAnimationFrame(frame);
     };
+
+    document.fonts.ready.then(paint);
+    window.addEventListener("resize", paint);
+    new MutationObserver(paint).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     window.addEventListener(
       "pointermove",
@@ -156,13 +225,17 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
         if (e.pointerType === "touch") return;
         px = e.clientX;
         py = e.clientY;
-        grid.style.opacity = "1";
-        if (!raf) raf = requestAnimationFrame(draw);
+        if (!visible) {
+          visible = true;
+          grid.style.opacity = "1";
+        }
+        if (!raf) raf = requestAnimationFrame(frame);
       },
       { passive: true },
     );
 
     document.addEventListener("pointerleave", () => {
+      visible = false;
       grid.style.opacity = "0";
     });
   }
