@@ -42,7 +42,7 @@ Personal site for Adrian Antosiak. One screen, text only, Polish + English.
 ## Content scope (decided, do not widen)
 
 - The site is a **minimal one-screen text page**: name, one general sentence, email, phone. Nothing else. It deliberately does **not** describe services, list pillars, name technologies, show projects, prices, process, availability or social proof.
-- **Do not reintroduce** the removed layer: the AI / applications / websites sections, the pinned scrollytelling scenes and their canvases, the particle backdrop and A.A monogram, the fixed pill navbar with scroll-spy, the service chips, the contact card, the `#prerender` no-JS fallback. All of it is in git history (last commit before the cut) if it is ever wanted back; it is not to come back by drift.
+- **Do not reintroduce** the removed layer: the AI / applications / websites sections, the pinned scrollytelling scenes and their canvases, the particle backdrop and its old scroll-scrubbed A.A monogram (the current animated intro in `Intro.astro` stays), the fixed pill navbar with scroll-spy, the service chips, the contact card, the `#prerender` no-JS fallback. All of it is in git history (last commit before the cut) if it is ever wanted back; it is not to come back by drift.
 - The one line carries all the positioning: PL `aplikacje / AI / www` / EN `apps / AI / web`. Areas named, nothing described. If it grows into a sentence about what he does for you, it has become the thing that was cut.
 - The one exception is the **end card**: the page does not scroll, so a scroll attempt (wheel down, swipe up, ArrowDown / PageDown / End / Space) swaps the copy block in `main` for a title card in the same spot - `Koniec.` / `The End.` in the wordmark's size with the accent period, one two-line sentence (`end_l` + `end_l2`, hard break between them), and the same two contact links. Header and footer do not move. Scroll up, ArrowUp / PageUp / Home or Escape swap back at once (`--rise-base` is zeroed on the home block so the copy does not wait for an intro that already ran). The card opens with `.aa-iris`, a circle growing out of the block, and its lines paint in with `.aa-rise`. A 700 ms lock stops one wheel gesture from toggling twice. It is a joke about the page ending, not a second page: no new copy goes on it.
 - Adding anything to the page means it stops fitting one viewport. That is the test: the page must not scroll at 1440x900 or at 390x844.
@@ -113,7 +113,7 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 ## Conventions
 
 - Site is bilingual (PL/EN) via `src/i18n/pl.json` + `src/i18n/en.json`. When editing user-facing strings, update both locales.
-- Typography: hyphens only (`-`); never em dash (`-`) or en dash (`-`) in UI strings, comments, or docs.
+- Typography: hyphens only (`-`); never em dash (U+2014) or en dash (U+2013) in UI strings, comments, or docs.
 - Git interactions (commit messages, branch names, PR titles/descriptions) in English.
 - All commits require user approval of the message before creation.
 - Before every push, confirm `bun run build` succeeds locally - the deploy action repeats the build, but catching errors here saves a failed Actions run.
@@ -125,4 +125,4 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 
 ## Search Console verification (pending)
 
-- Use the DNS TXT method: in home.pl panel, add a TXT record, host empty, value `google-site-verification=...` (no quotes). Follow the negative-cache lesson below - wait 30-60 min before clicking Verify. Once verified, submit `https://adrianantosiak.pl/sitemap-index.xml` in GSC > Sitemaps. Bing Webmaster imports from GSC.
+- Use the DNS TXT method: in home.pl panel, add a TXT record, host empty, value `google-site-verification=...` (no quotes). Follow lesson 2 in Lessons learned (above) - wait 30-60 min before clicking Verify. Once verified, submit `https://adrianantosiak.pl/sitemap-index.xml` in GSC > Sitemaps. Bing Webmaster imports from GSC.
