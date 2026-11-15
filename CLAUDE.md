@@ -8,7 +8,7 @@ Personal site for Adrian Antosiak. One screen, text only, Polish + English.
 - Styling: **Tailwind CSS 4** via `@tailwindcss/vite` (registered in `astro.config.mjs` under `vite.plugins`); base styles, tokens and `.doc` (privacy pages) live in `src/styles/global.css`.
 - Package manager: **bun** (lockfile `bun.lock`).
 - Bilingual via Astro i18n: Polish at `/` (default locale), English at `/en/`. Config in `astro.config.mjs`.
-- Translations: `src/i18n/pl.json` + `src/i18n/en.json` - deliberately tiny (`lead`, `email_addr`, `phone`, `theme_l`, `privacy_l`, plus the `privacy` page body). Loader + meta helpers in `src/i18n/index.js`.
+- Translations: `src/i18n/pl.json` + `src/i18n/en.json` - deliberately tiny. Loader + meta helpers in `src/i18n/index.js`.
 - Layout + SEO head: `src/layouts/Base.astro` (meta, canonical, hreflang, Open Graph, Twitter Card, JSON-LD Person + WebSite). The JSON-LD carries no `makesOffer`/`knowsAbout` - the page does not describe services, so neither does its structured data.
 - Page content: `src/components/Home.astro` - the entire site. One viewport, no scroll: a flex column inside a single `max-w-[1100px]` axis, with the locale link and theme toggle top-right, the `<h1>` wordmark plus one general sentence and the contact links optically centered, and the privacy link bottom-left. Every edge lands on the same two axes; that alignment is the whole design, so keep header, main and footer inside that one wrapper.
 - Pages: `src/pages/index.astro` (PL), `src/pages/en/index.astro` (EN), `src/pages/{prywatnosc,en/privacy}.astro`, `src/pages/404.astro` (single bilingual 404, served by GitHub Pages for every missing path, noindex, does not use Base).
