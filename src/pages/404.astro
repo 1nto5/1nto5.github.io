@@ -9,28 +9,33 @@ import "../styles/global.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1e1e2e" />
+    <meta name="color-scheme" content="light dark" />
     <title>404 - Adrian Antosiak</title>
     <meta name="robots" content="noindex" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="preload" href="/fonts/inter-tight-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>
       // Resolve the theme before first paint - same logic as Base.astro.
       (function () {
-        var t = "dark";
-        try {
-          var s = localStorage.getItem("aa_theme");
-          t =
-            s === "light" || s === "dark"
-              ? s
-              : window.matchMedia("(prefers-color-scheme: light)").matches
-                ? "light"
-                : "dark";
-        } catch (e) {}
-        document.documentElement.dataset.theme = t;
-        var m = document.querySelector('meta[name="theme-color"]');
-        if (m) m.setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
+        var q = window.matchMedia("(prefers-color-scheme: light)");
+        function resolve() {
+          var t = "dark";
+          try {
+            var s = localStorage.getItem("aa_theme");
+            t = s === "light" || s === "dark" ? s : q.matches ? "light" : "dark";
+          } catch (e) {}
+          document.documentElement.dataset.theme = t;
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m) m.setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
+        }
+        resolve();
+        // Follow live, with no wipe: the system theme while nothing is
+        // stored, and a choice made (or cleared) in another open tab.
+        q.addEventListener("change", resolve);
+        window.addEventListener("storage", function (e) {
+          if (e.key === "aa_theme" || e.key === null) resolve();
+        });
       })();
     </script>
   </head>
@@ -50,7 +55,7 @@ import "../styles/global.css";
 
             <p class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]" style="animation-delay: 0.28s">
               Adres jest nieaktualny albo wkradła się literówka.<br />
-              This page does not exist.<span class="aa-cursor ml-1.5" aria-hidden="true"></span>
+              <span lang="en">This page does not exist.</span><span class="aa-cursor ml-1.5" aria-hidden="true"></span>
             </p>
 
             <div class="aa-rise mt-10 flex flex-col items-start gap-1.5" style="animation-delay: 0.4s">
@@ -64,6 +69,7 @@ import "../styles/global.css";
               <a
                 href="/en/"
                 hreflang="en"
+                lang="en"
                 data-label="home (EN)"
                 class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
               >

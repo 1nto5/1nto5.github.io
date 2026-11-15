@@ -97,7 +97,7 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
         <p
           class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]"
           style="animation-delay: 0.28s"
-        >{t.end_l}<br />{t.end_l2}</p>
+        >{t.end_l}</p>
 
         <div class="aa-rise mt-10 flex flex-col items-start gap-1.5" style="animation-delay: 0.4s">
           <a
@@ -255,8 +255,20 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
     if (lock) return;
     // Coming back, the copy should not wait for an intro that already ran.
     home.style.setProperty("--rise-base", "0s");
+    const from = on ? home : end;
+    const to = on ? end : home;
+    const focused = document.activeElement;
+    const hadFocus = focused instanceof HTMLElement && from.contains(focused);
     home.hidden = on;
     end.hidden = !on;
+    // Hiding the block that holds focus would drop it to <body>. Hand it to
+    // the same link in the block now shown (both carry the contact links),
+    // or to its first link.
+    if (hadFocus) {
+      const href = focused.getAttribute("href");
+      const twin = href ? to.querySelector(`a[href="${CSS.escape(href)}"]`) : null;
+      (twin || to.querySelector("a"))?.focus({ preventScroll: true });
+    }
     lock = window.setTimeout(() => (lock = 0), 700);
   }
 
@@ -297,8 +309,12 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
 
   function apply(next) {
     document.documentElement.dataset.theme = next;
+    // A choice that matches the system is no choice: drop the key, so the
+    // page follows the system again (the head script listens for that).
+    const system = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
     try {
-      localStorage.setItem("aa_theme", next);
+      if (next === system) localStorage.removeItem("aa_theme");
+      else localStorage.setItem("aa_theme", next);
     } catch (e) {}
     const m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute("content", next === "light" ? "#eff1f5" : "#1e1e2e");

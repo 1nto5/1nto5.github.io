@@ -37,7 +37,8 @@ html[data-theme="light"] {
   --color-bg: #eff1f5;
   --color-ink: #4c4f69;
   --color-ink-2: #5c5f77;
-  --color-ink-3: #6c6f85;
+  /* One step darker than Latte subtext0 (#6c6f85, 4.37:1): 4.70:1. */
+  --color-ink-3: #676a80;
   --color-line: #ccd0da;
   --color-line-2: #bcc0cc;
   --color-accent: #b34d00;
@@ -108,7 +109,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 ::selection {
@@ -240,6 +241,9 @@ button {
 
 .aa-rev[data-label]::before {
   content: attr(data-label);
+  /* Empty alt text: the overlay repeats the link's own name, so screen
+     readers must not announce it twice. The line above is the fallback. */
+  content: attr(data-label) / "";
   position: absolute;
   inset: 0;
   padding-inline: 0.3em;
@@ -369,6 +373,7 @@ html[data-theme="dark"] .only-light {
   margin: 0 0 0.5em;
   letter-spacing: -0.02em;
   font-weight: 600;
+  text-wrap: balance;
 }
 
 .doc .lead {
@@ -389,12 +394,14 @@ html[data-theme="dark"] .only-light {
   margin: 0 0 0.5em;
   letter-spacing: -0.01em;
   font-weight: 600;
+  text-wrap: balance;
 }
 
 .doc p {
   margin: 0.75em 0;
   line-height: 1.6;
   color: var(--color-ink-2);
+  text-wrap: pretty;
 }
 
 .doc .meta {
