@@ -34,7 +34,7 @@ Personal site for Adrian Antosiak. One screen, text only, Polish + English.
 
 - This directory IS the `1nto5/1nto5.github.io` repo (GitHub Pages user site). `git remote -v` confirms `origin = 1nto5/1nto5.github.io.git`.
 - `.github/workflows/deploy.yml` runs on push to `main`: `bun install` > `bun run build` > upload `dist/` as Pages artifact > `actions/deploy-pages@v4` publishes it.
-- **One-time setup:** in repo Settings > Pages, set **Source = "GitHub Actions"** (not "Deploy from a branch"). Before switching sources, the workflow will fail - flip the setting first, then re-run.
+- Pages source is **GitHub Actions** (repo Settings > Pages).
 - Live at `https://adrianantosiak.pl` (custom domain). Also reachable via `https://www.adrianantosiak.pl` and the default `https://1nto5.github.io` (which 301-redirects to the custom domain).
 - HTTPS: free Let's Encrypt cert auto-provisioned and auto-renewed by GitHub. "Enforce HTTPS" is enabled in repo Settings > Pages.
 - `public/CNAME` contains `adrianantosiak.pl` and is copied to `dist/` by Astro on every build. Do not delete.
@@ -102,13 +102,10 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 
 ## Lessons learned (do not repeat)
 
-1. **Do not buy home.pl SSL or hosting add-ons at checkout.** GitHub Pages provides free HTTPS and hosting for a static site. The only required cart item is the domain itself.
-2. **Negative DNS cache after registering a `.pl` domain can last up to 1 hour** (`.pl` SOA MINIMUM = 3600 s). Any resolver that queried the name before records were published caches NXDOMAIN. Don't click GitHub's "Check again" or Apple's "Verify" until records are live AND ~30-60 min have passed, otherwise you just extend the cached failure.
-3. **iCloud+ Custom Domain setup flow, Step 2 ("Add existing email addresses") is misleading.** It's only for addresses that already receive mail elsewhere. For new addresses, click "No email addresses" to skip Step 2, finish DNS verification, then create new addresses on the domain-management screen afterwards. Adding non-existent addresses in Step 2 leaves them stuck "Pending Verification" forever.
-4. **iCloud+ Custom Domain supports catch-all** via the "Allow All Incoming Messages" toggle on the domain-management screen. No need for ImprovMX/Cloudflare Email Routing unless iCloud+ is unavailable.
-5. **GitHub DNS check caches failures.** After fixing DNS, GitHub may keep showing "InvalidDNSError" briefly. A hard refresh of the Pages settings page and one "Check again" click usually clears it once DNS has actually propagated.
-6. **Switching Pages source from "Deploy from a branch" to "GitHub Actions" does not auto-serve the most recent Actions artifact.** After flipping the source, the site returns 404 until the next workflow run completes. Re-trigger the workflow manually (`gh workflow run "Build and deploy" --ref main`) or push a small commit. Do not troubleshoot DNS or propagation - the fix is a re-run.
-7. **The legacy `pages-build-deployment` workflow runs in parallel on every push as long as the repo has any `main` branch.** Once the repo migrates to Actions-source deployment with non-static sources at root (e.g., Astro), that legacy workflow will keep failing on every push. This failure is expected and harmless. It cannot be disabled from the UI; it only stops once the branch-based Pages source is abandoned (which it is, under Actions source).
+1. **Negative DNS cache after registering a `.pl` domain can last up to 1 hour** (`.pl` SOA MINIMUM = 3600 s). Any resolver that queried the name before records were published caches NXDOMAIN. Don't click GitHub's "Check again" or Apple's "Verify" until records are live AND ~30-60 min have passed, otherwise you just extend the cached failure.
+2. **GitHub DNS check caches failures.** After fixing DNS, GitHub may keep showing "InvalidDNSError" briefly. A hard refresh of the Pages settings page and one "Check again" click usually clears it once DNS has actually propagated.
+
+One-off domain, email and Pages setup lessons: `docs/setup-history.md` (read only when redoing that setup).
 
 ## Conventions
 
@@ -125,4 +122,4 @@ Managed via home.pl panel (Domeny > adrianantosiak.pl > Zarządzaj rekordami DNS
 
 ## Search Console verification (pending)
 
-- Use the DNS TXT method: in home.pl panel, add a TXT record, host empty, value `google-site-verification=...` (no quotes). Follow lesson 2 in Lessons learned (above) - wait 30-60 min before clicking Verify. Once verified, submit `https://adrianantosiak.pl/sitemap-index.xml` in GSC > Sitemaps. Bing Webmaster imports from GSC.
+- Use the DNS TXT method: in home.pl panel, add a TXT record, host empty, value `google-site-verification=...` (no quotes). Follow lesson 1 in Lessons learned (above) - wait 30-60 min before clicking Verify. Once verified, submit `https://adrianantosiak.pl/sitemap-index.xml` in GSC > Sitemaps. Bing Webmaster imports from GSC.

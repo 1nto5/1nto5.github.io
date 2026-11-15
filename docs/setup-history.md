@@ -1,0 +1,9 @@
+# Setup history
+
+One-off lessons from the domain, email and GitHub Pages setup (2026-04). Moved out of `CLAUDE.md` on 2026-11-15 because the setup is finished; read only when redoing it.
+
+- **Do not buy home.pl SSL or hosting add-ons at checkout.** GitHub Pages provides free HTTPS and hosting for a static site. The only required cart item is the domain itself.
+- **iCloud+ Custom Domain setup flow, Step 2 ("Add existing email addresses") is misleading.** It's only for addresses that already receive mail elsewhere. For new addresses, click "No email addresses" to skip Step 2, finish DNS verification, then create new addresses on the domain-management screen afterwards. Adding non-existent addresses in Step 2 leaves them stuck "Pending Verification" forever.
+- **iCloud+ Custom Domain supports catch-all** via the "Allow All Incoming Messages" toggle on the domain-management screen. No need for ImprovMX/Cloudflare Email Routing unless iCloud+ is unavailable.
+- **Switching Pages source from "Deploy from a branch" to "GitHub Actions" does not auto-serve the most recent Actions artifact.** After flipping the source, the site returns 404 until the next workflow run completes. Re-trigger the workflow manually (`gh workflow run "Build and deploy" --ref main`) or push a small commit. Do not troubleshoot DNS or propagation - the fix is a re-run.
+- **The legacy `pages-build-deployment` workflow runs in parallel on every push as long as the repo has any `main` branch.** Once the repo migrates to Actions-source deployment with non-static sources at root (e.g., Astro), that legacy workflow will keep failing on every push. This failure is expected and harmless. It cannot be disabled from the UI; it only stops once the branch-based Pages source is abandoned (which it is, under Actions source).
