@@ -3,7 +3,7 @@
 /* Design tokens. The palette is Catppuccin - Mocha for dark, Latte for
    light - because that is the theme this site's author runs in Ghostty
    ("theme = Catppuccin Mocha"), and the accent is that config's own
-   split-divider orange. Dark is the default; html[data-theme="light"]
+   split-divider orange. Dark is the default; the theme-light variant below
    overrides the same custom properties, so every utility built on them
    (text-ink, border-line, text-accent, ...) re-themes with no extra classes.
    Every ink grade clears 4.5:1 on its own ground. */
@@ -23,27 +23,59 @@
   --color-grid: #3b3d52;
 }
 
+/* Which theme is showing. With JS, the pre-paint script in Base.astro always
+   sets data-theme on <html> (stored choice, then system, then dark), and the
+   attribute decides. Without JS there is no attribute, and the system
+   preference decides instead. Each variant covers both cases, so every
+   theme-dependent rule is written once. */
+@custom-variant theme-light {
+  &:where([data-theme="light"], [data-theme="light"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: light) {
+    &:where(:root:not([data-theme]), :root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
+
+@custom-variant theme-dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media not all and (prefers-color-scheme: light) {
+    &:where(:root:not([data-theme]), :root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
+
 :root {
-  color-scheme: dark;
+  /* Follow the system until a theme is known; the variants pin it. */
+  color-scheme: light dark;
   /* Space-separated triplet of --color-accent, for the one place that needs
      the accent at an alpha: the touch highlight. */
   --rgb-accent: 255 140 66;
-}
 
-/* Catppuccin Latte. The accent is darkened from #ff8c42, which only
-   reaches 2.6:1 on paper - same hue, 4.7:1. */
-html[data-theme="light"] {
-  color-scheme: light;
-  --color-bg: #eff1f5;
-  --color-ink: #4c4f69;
-  --color-ink-2: #5c5f77;
-  /* One step darker than Latte subtext0 (#6c6f85, 4.37:1): 4.70:1. */
-  --color-ink-3: #676a80;
-  --color-line: #ccd0da;
-  --color-line-2: #bcc0cc;
-  --color-accent: #b34d00;
-  --rgb-accent: 179 77 0;
-  --color-grid: #ccd0da;
+  @variant theme-dark {
+    color-scheme: dark;
+  }
+
+  /* Catppuccin Latte. The accent is darkened from #ff8c42, which only
+     reaches 2.6:1 on paper - same hue, 4.7:1. */
+  @variant theme-light {
+    color-scheme: light;
+    --color-bg: #eff1f5;
+    --color-ink: #4c4f69;
+    --color-ink-2: #5c5f77;
+    /* One step darker than Latte subtext0 (#6c6f85, 4.37:1): 4.70:1. */
+    --color-ink-3: #676a80;
+    --color-line: #ccd0da;
+    --color-line-2: #bcc0cc;
+    --color-accent: #b34d00;
+    --rgb-accent: 179 77 0;
+    --color-grid: #ccd0da;
+  }
 }
 
 /* Self-hosted variable fonts (no third-party font CDN). */
@@ -183,10 +215,11 @@ button {
   }
 }
 
-/* Theme flip runs through a View Transition (src/react-app/App.jsx): the new
-   theme is wiped in as a circle growing from the toggle. Drop the UA
-   cross-fade so only the wipe shows, and let the frozen overlay pass clicks
-   through - it sits above the fixed navbar for the length of the wipe. */
+/* Theme flip runs through a View Transition (the toggle script in
+   Home.astro): the new theme is wiped in as a circle growing from the
+   toggle. Drop the UA cross-fade so only the wipe shows, and let the frozen
+   overlay pass clicks through - it sits above the whole page for the length
+   of the wipe. */
 ::view-transition-image-pair(root) {
   isolation: auto;
 }
@@ -286,12 +319,12 @@ button {
   pointer-events: none;
 }
 
-/* The terminal underneath the page: one character cell of JetBrains Mono at
-   the body size, tiled across the viewport as two 1px gradients, and shown
-   only through a soft circle that the pointer drags around. The layer is
-   inert - no hit testing, no repaint outside the mask - and it starts fully
-   hidden, so a visitor who never moves a mouse never sees it.
-   The script gates it on a real pointer and on motion being welcome. */
+/* The terminal underneath the page: a canvas painted with faint punctuation
+   in 9.6 x 24 JetBrains Mono character cells, shown only through a soft
+   circle that the pointer drags around. The layer is inert - no hit
+   testing - and it starts fully hidden, so a visitor who never moves a mouse
+   never sees it. The script in Home.astro creates it, gated on a real
+   pointer and on motion being welcome. */
 .aa-grid {
   position: fixed;
   inset: 0;
@@ -317,8 +350,11 @@ button {
 
 /* The one terminal signal that carries the register: a thin beam cursor
    standing at the end of the services line. The Ghostty config runs
-   cursor-style-blink = true, so it blinks - except under reduced motion,
-   where it stays solid rather than disappearing. */
+   cursor-style-blink = true, so it blinks - four times, about 4.2s, then
+   rests solid: blinking that runs past five seconds would need a pause
+   control. The animation has no fill mode, so once it ends the cursor is
+   back at its unanimated, fully visible state. Under reduced motion it never
+   blinks at all. */
 @keyframes aa-blink {
   0%,
   49% {
@@ -342,7 +378,7 @@ button {
   position: relative;
   top: -0.09em;
   background: var(--color-accent);
-  animation: aa-blink 1.06s steps(1, end) infinite;
+  animation: aa-blink 1.06s steps(1, end) 4;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -352,13 +388,17 @@ button {
 }
 
 /* Theme-conditional icons: the toggle ships both glyphs and the theme
-   attribute picks one, so the right icon is there at first paint. */
-html[data-theme="light"] .only-dark {
-  display: none;
+   variant picks one, so the right icon is there at first paint. */
+.only-dark {
+  @variant theme-light {
+    display: none;
+  }
 }
 
-html[data-theme="dark"] .only-light {
-  display: none;
+.only-light {
+  @variant theme-dark {
+    display: none;
+  }
 }
 
 .doc {

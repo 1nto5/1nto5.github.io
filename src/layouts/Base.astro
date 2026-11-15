@@ -34,6 +34,10 @@ const websiteJsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Light when the system says so, dark otherwise, so the no-JS page gets
+         the right bar color (the first matching meta wins).
+         The theme script below sets both to the resolved theme. -->
+    <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1e1e2e" />
     <meta name="color-scheme" content="light dark" />
 
@@ -81,7 +85,10 @@ const websiteJsonLd = {
 
     <script is:inline>
       // Resolve the theme before first paint: stored choice wins, then the
-      // system preference, then dark. Keep in sync with theme.js.
+      // system preference, then dark. Keep in sync with the copy in 404.astro
+      // and with the toggle script in Home.astro. Without JS none of this
+      // runs: global.css and the media-qualified theme-color metas follow
+      // the system instead.
       (function () {
         var q = window.matchMedia("(prefers-color-scheme: light)");
         function resolve() {
@@ -91,8 +98,8 @@ const websiteJsonLd = {
             t = s === "light" || s === "dark" ? s : q.matches ? "light" : "dark";
           } catch (e) {}
           document.documentElement.dataset.theme = t;
-          var m = document.querySelector('meta[name="theme-color"]');
-          if (m) m.setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
+          var ms = document.querySelectorAll('meta[name="theme-color"]');
+          for (var i = 0; i < ms.length; i++) ms[i].setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
         }
         resolve();
         // Follow live, with no wipe: the system theme while nothing is

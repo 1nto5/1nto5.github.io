@@ -8,6 +8,10 @@ import "../styles/global.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Light when the system says so, dark otherwise, so the no-JS page gets
+         the right bar color (the first matching meta wins).
+         The theme script below sets both to the resolved theme. -->
+    <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1e1e2e" />
     <meta name="color-scheme" content="light dark" />
     <title>404 - Adrian Antosiak</title>
@@ -26,8 +30,8 @@ import "../styles/global.css";
             t = s === "light" || s === "dark" ? s : q.matches ? "light" : "dark";
           } catch (e) {}
           document.documentElement.dataset.theme = t;
-          var m = document.querySelector('meta[name="theme-color"]');
-          if (m) m.setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
+          var ms = document.querySelectorAll('meta[name="theme-color"]');
+          for (var i = 0; i < ms.length; i++) ms[i].setAttribute("content", t === "light" ? "#eff1f5" : "#1e1e2e");
         }
         resolve();
         // Follow live, with no wipe: the system theme while nothing is
@@ -47,13 +51,13 @@ import "../styles/global.css";
       <div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col">
         <main class="flex flex-1 items-center">
           <div class="max-w-[620px]">
-            <p class="aa-rise text-[13px] leading-none text-ink-3" style="animation-delay: 0.05s">404</p>
+            <p class="aa-rise text-[0.8125rem] leading-none text-ink-3" style="animation-delay: 0.05s">404</p>
 
-            <h1 class="aa-rise mt-5 text-[clamp(28px,6.2vw,52px)] font-bold leading-[1.1] text-ink" style="animation-delay: 0.16s">
+            <h1 class="aa-rise mt-5 text-[clamp(1.75rem,0.48rem_+_5.2vw,3.25rem)] font-bold leading-[1.1] text-ink" style="animation-delay: 0.16s">
               Nie ma takiej strony
             </h1>
 
-            <p class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]" style="animation-delay: 0.28s">
+            <p class="aa-rise mt-4 text-[0.9375rem] leading-[1.6] text-ink-2 md:text-[1rem]" style="animation-delay: 0.28s">
               Adres jest nieaktualny albo wkradła się literówka.<br />
               <span lang="en">This page does not exist.</span><span class="aa-cursor ml-1.5" aria-hidden="true"></span>
             </p>
@@ -62,7 +66,7 @@ import "../styles/global.css";
               <a
                 href="/"
                 data-label="strona główna"
-                class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+                class="aa-rev text-[0.9375rem] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[1rem]"
               >
                 strona główna
               </a>
@@ -71,14 +75,14 @@ import "../styles/global.css";
                 hreflang="en"
                 lang="en"
                 data-label="home (EN)"
-                class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+                class="aa-rev text-[0.9375rem] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[1rem]"
               >
                 home (EN)
               </a>
               <a
                 href="mailto:czesc@adrianantosiak.pl"
                 data-label="czesc@adrianantosiak.pl"
-                class="aa-rev text-[15px] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[16px]"
+                class="aa-rev text-[0.9375rem] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[1rem]"
               >
                 czesc@adrianantosiak.pl
               </a>

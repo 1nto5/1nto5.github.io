@@ -9,12 +9,12 @@ const otherHref = otherLocale === "en" ? "/en/" : "/";
 const otherLabel = otherLocale === "en" ? "EN" : "PL";
 const privacyHref = locale === "en" ? "/en/privacy/" : "/prywatnosc/";
 const tel = t.phone.replace(/\s/g, "");
-const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-ink-3";
+const railClass = "aa-rev aa-rise text-[0.6875rem] uppercase tracking-[0.18em] text-ink-3";
 ---
 
-<!-- Terminal register: everything is mono, the copy sits between a prompt
-     line and a waiting block cursor, and 16px / 1.6 echoes the Ghostty
-     config's font-size 16 with adjust-cell-height 12%. -->
+<!-- Terminal register: everything is mono, the services line ends in a
+     beam cursor, and 1rem (16px at the default root size) / 1.6 echoes the
+     Ghostty config's font-size 16 with adjust-cell-height 12%. -->
 <Intro />
 
 <div class="relative z-10 flex min-h-svh flex-col px-6 py-6 font-mono md:px-10 md:py-8 lg:px-16">
@@ -55,12 +55,12 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
              aria-label keeps the spoken name a name, not "Adrian dot". -->
         <h1
           aria-label="Adrian Antosiak"
-          class="aa-rise text-[clamp(28px,6.2vw,52px)] font-bold leading-[1.1] text-ink"
+          class="aa-rise text-[clamp(1.75rem,0.48rem_+_5.2vw,3.25rem)] font-bold leading-[1.1] text-ink"
           style="animation-delay: calc(var(--rise-base, 0s) + 0.16s)"
         ><span data-glyph="a1">A</span>drian<span data-glyph="dot" class="text-accent">.</span><span data-glyph="a2">A</span>ntosiak</h1>
 
         <p
-          class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]"
+          class="aa-rise mt-4 text-[0.9375rem] leading-[1.6] text-ink-2 md:text-[1rem]"
           style="animation-delay: calc(var(--rise-base, 0s) + 0.28s)"
         >
           {t.lead}<span class="aa-cursor ml-1.5" aria-hidden="true"></span>
@@ -70,14 +70,14 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
           <a
             href={`mailto:${t.email_addr}`}
             data-label={t.email_addr}
-            class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+            class="aa-rev text-[0.9375rem] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[1rem]"
           >
             {t.email_addr}
           </a>
           <a
             href={`tel:${tel}`}
             data-label={t.phone}
-            class="aa-rev text-[15px] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[16px]"
+            class="aa-rev text-[0.9375rem] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[1rem]"
           >
             {t.phone}
           </a>
@@ -90,12 +90,12 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
            Escape) brings the page back. -->
       <div id="aa-end" class="aa-iris max-w-[620px]" hidden>
         <p
-          class="aa-rise text-[clamp(28px,6.2vw,52px)] font-bold leading-[1.1] text-ink"
+          class="aa-rise text-[clamp(1.75rem,0.48rem_+_5.2vw,3.25rem)] font-bold leading-[1.1] text-ink"
           style="animation-delay: 0.16s"
         >{t.end_title}<span class="text-accent">.</span></p>
 
         <p
-          class="aa-rise mt-4 text-[15px] leading-[1.6] text-ink-2 md:text-[16px]"
+          class="aa-rise mt-4 text-[0.9375rem] leading-[1.6] text-ink-2 md:text-[1rem]"
           style="animation-delay: 0.28s"
         >{t.end_l}</p>
 
@@ -103,12 +103,12 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
           <a
             href={`mailto:${t.email_addr}`}
             data-label={t.email_addr}
-            class="aa-rev text-[15px] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[16px]"
+            class="aa-rev text-[0.9375rem] leading-[1.6] text-ink underline decoration-line underline-offset-[5px] md:text-[1rem]"
           >{t.email_addr}</a>
           <a
             href={`tel:${tel}`}
             data-label={t.phone}
-            class="aa-rev text-[15px] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[16px]"
+            class="aa-rev text-[0.9375rem] leading-[1.6] text-ink-3 underline decoration-transparent underline-offset-[5px] md:text-[1rem]"
           >{t.phone}</a>
         </div>
       </div>
@@ -130,9 +130,11 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
   // The pointer uncovers the terminal underneath the page: a buffer that is
   // still computing something - faint, meaningless punctuation sitting in
   // the same 9.6 x 24 character cells the intro assembles from, shown only
-  // inside a soft circle that follows the cursor. While the layer is
-  // visible, a few dozen cells around the pointer are rewritten every tick,
-  // so the buffer keeps churning; the rest of the canvas is never touched.
+  // inside a soft circle that follows the cursor. While the pointer moves, a
+  // few dozen cells around it are rewritten every tick, so the buffer keeps
+  // churning; the rest of the canvas is never touched. Three seconds after
+  // the last move the loop stops - the layer stays where it is, but nothing
+  // keeps changing or running on its own - and the next move restarts it.
   // A move writes two custom properties on rAF and touches no layout.
   // Pointer-only and motion-safe: touch and prefers-reduced-motion never see
   // it. The canvas is created here rather than in the markup: Astro's
@@ -156,6 +158,9 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
     const RADIUS = 150;
     const TICK = 70;
     const CHURN = 36;
+    // Stop churning this long after the last move. Moving content that runs
+    // past five seconds needs a pause control; a still pointer is the pause.
+    const IDLE = 3000;
     let px = 0;
     let py = 0;
     let raf = 0;
@@ -164,6 +169,7 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
     let rows = 0;
     let visible = false;
     let last = 0;
+    let moved = 0;
 
     const cell = (c: number, r: number) => {
       if (!ctx || c < 0 || r < 0 || c >= cols || r >= rows) return;
@@ -209,7 +215,7 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
         last = t;
         churn();
       }
-      if (visible) raf = requestAnimationFrame(frame);
+      if (visible && t - moved < IDLE) raf = requestAnimationFrame(frame);
     };
 
     document.fonts.ready.then(paint);
@@ -225,6 +231,7 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
         if (e.pointerType === "touch") return;
         px = e.clientX;
         py = e.clientY;
+        moved = performance.now();
         if (!visible) {
           visible = true;
           grid.style.opacity = "1";
@@ -316,8 +323,11 @@ const railClass = "aa-rev aa-rise text-[11px] uppercase tracking-[0.18em] text-i
       if (next === system) localStorage.removeItem("aa_theme");
       else localStorage.setItem("aa_theme", next);
     } catch (e) {}
-    const m = document.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute("content", next === "light" ? "#eff1f5" : "#1e1e2e");
+    // Both theme-color metas (one per system scheme, for the no-JS case) get
+    // the chosen color, so whichever one the browser picks is right.
+    document
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach((m) => m.setAttribute("content", next === "light" ? "#eff1f5" : "#1e1e2e"));
   }
 
   btn?.addEventListener("click", (e) => {

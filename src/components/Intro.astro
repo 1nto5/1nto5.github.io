@@ -1,9 +1,9 @@
 ---
 // Entry intro: the A.A monogram assembles out of terminal cells, holds, then
-// dissolves and hands the screen to the copy. Same mark as the favicon, but
-// every particle is snapped to the 9.6 x 24 character cell the pointer reveal
-// already uses - the old canvas version drew free-floating points, which no
-// longer belongs on a page set entirely in one mono grid.
+// collapses onto the wordmark and hands the screen to the copy. Same mark as
+// the favicon, but every particle is snapped to the 9.6 x 24 character cell
+// the pointer reveal already uses - the old canvas version drew free-floating
+// points, which no longer belongs on a page set entirely in one mono grid.
 ---
 
 <canvas id="aa-intro" aria-hidden="true"></canvas>
@@ -102,9 +102,7 @@
     ctx.scale(dpr, dpr);
 
     // The mark stands above the copy, then collapses onto the wordmark's
-    // first character. The target has to be the wordmark's RESTING box: it
-    // carries .aa-rise, which parks it 14px low until its cue, so the live
-    // transform is subtracted rather than hard-coded.
+    // three glyphs (see measure below).
     // The cell is a fixed 9.6 x 24 regardless of screen, so a phone needs a
     // proportionally bigger mark - at desktop proportions it quantises down
     // to seven rows and stops reading as two letters.
@@ -168,7 +166,7 @@
           // subtracting it anyway keeps this correct if the reveal ever goes
           // back to a transform.
           cx: b.left + b.width / 2 - wm.e,
-          // Cap band, not line box: the same 0.09em correction the caret uses.
+          // Cap band, not line box: the same 0.09em correction the cursor beam uses.
           cy: b.top + b.height / 2 - wm.f - 0.09 * fs,
         };
       };
